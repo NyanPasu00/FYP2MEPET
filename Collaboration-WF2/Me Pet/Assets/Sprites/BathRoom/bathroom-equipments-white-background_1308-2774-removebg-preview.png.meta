@@ -1,0 +1,403 @@
+fileFormatVersion: 2
+guid: 7f2d70dee092be944b641a0a5ee6a4f2
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: 891583219640675330
+    second: bathroom-equipments-white-background_1308-2774-removebg-preview_0
+  - first:
+      213: 4637840681435530549
+    second: bathroom-equipments-white-background_1308-2774-removebg-preview_1
+  - first:
+      213: 1773065444572853582
+    second: bathroom-equipments-white-background_1308-2774-removebg-preview_2
+  - first:
+      213: 893814412808326105
+    second: bathroom-equipments-white-background_1308-2774-removebg-preview_3
+  - first:
+      213: -7626623891414624873
+    second: bathroom-equipments-white-background_1308-2774-removebg-preview_4
+  - first:
+      213: 1007813804769371732
+    second: bathroom-equipments-white-background_1308-2774-removebg-preview_5
+  - first:
+      213: -4790033976677040300
+    second: bathroom-equipments-white-background_1308-2774-removebg-preview_6
+  - first:
+      213: -7926243315488305197
+    second: bathroom-equipments-white-background_1308-2774-removebg-preview_7
+  - first:
+      213: 7210482478547285359
+    second: bathroom-equipments-white-background_1308-2774-removebg-preview_8
+  - first:
+      213: 4155608403737036122
+    second: bathroom-equipments-white-background_1308-2774-removebg-preview_9
+  - first:
+      213: 6808058744271245483
+    second: bathroom-equipments-white-background_1308-2774-removebg-preview_10
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: bathroom-equipments-white-background_1308-2774-removebg-preview_0
+      rect:
+        serializedVersion: 2
+        x: 26
+        y: 320
+        width: 102
+        height: 121
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 20ca166e63a8f5c00800000000000000
+      internalID: 891583219640675330
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: bathroom-equipments-white-background_1308-2774-removebg-preview_1
+      rect:
+        serializedVersion: 2
+        x: 145
+        y: 360
+        width: 132
+        height: 70
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 53502d5078bec5040800000000000000
+      internalID: 4637840681435530549
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: bathroom-equipments-white-background_1308-2774-removebg-preview_2
+      rect:
+        serializedVersion: 2
+        x: 287
+        y: 360
+        width: 114
+        height: 67
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e45f843b0a13b9810800000000000000
+      internalID: 1773065444572853582
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: bathroom-equipments-white-background_1308-2774-removebg-preview_3
+      rect:
+        serializedVersion: 2
+        x: 389
+        y: 10
+        width: 155
+        height: 440
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9db809a0977776c00800000000000000
+      internalID: 893814412808326105
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: bathroom-equipments-white-background_1308-2774-removebg-preview_4
+      rect:
+        serializedVersion: 2
+        x: 6
+        y: 163
+        width: 142
+        height: 152
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 79559b47af9c82690800000000000000
+      internalID: -7626623891414624873
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: bathroom-equipments-white-background_1308-2774-removebg-preview_5
+      rect:
+        serializedVersion: 2
+        x: 172
+        y: 163
+        width: 97
+        height: 180
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4566309d0597cfd00800000000000000
+      internalID: 1007813804769371732
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: bathroom-equipments-white-background_1308-2774-removebg-preview_6
+      rect:
+        serializedVersion: 2
+        x: 290
+        y: 203
+        width: 108
+        height: 98
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 45ffc161a71668db0800000000000000
+      internalID: -4790033976677040300
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: bathroom-equipments-white-background_1308-2774-removebg-preview_7
+      rect:
+        serializedVersion: 2
+        x: 6
+        y: 10
+        width: 142
+        height: 140
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3df410913b3500290800000000000000
+      internalID: -7926243315488305197
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: bathroom-equipments-white-background_1308-2774-removebg-preview_8
+      rect:
+        serializedVersion: 2
+        x: 175
+        y: 125
+        width: 11
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f653df88c97c01460800000000000000
+      internalID: 7210482478547285359
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: bathroom-equipments-white-background_1308-2774-removebg-preview_9
+      rect:
+        serializedVersion: 2
+        x: 217
+        y: 134
+        width: 15
+        height: 14
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a55cf5a63dfaba930800000000000000
+      internalID: 4155608403737036122
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: bathroom-equipments-white-background_1308-2774-removebg-preview_10
+      rect:
+        serializedVersion: 2
+        x: 175
+        y: 9
+        width: 222
+        height: 121
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ba097467b551b7e50800000000000000
+      internalID: 6808058744271245483
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      bathroom-equipments-white-background_1308-2774-removebg-preview_0: 891583219640675330
+      bathroom-equipments-white-background_1308-2774-removebg-preview_1: 4637840681435530549
+      bathroom-equipments-white-background_1308-2774-removebg-preview_10: 6808058744271245483
+      bathroom-equipments-white-background_1308-2774-removebg-preview_2: 1773065444572853582
+      bathroom-equipments-white-background_1308-2774-removebg-preview_3: 893814412808326105
+      bathroom-equipments-white-background_1308-2774-removebg-preview_4: -7626623891414624873
+      bathroom-equipments-white-background_1308-2774-removebg-preview_5: 1007813804769371732
+      bathroom-equipments-white-background_1308-2774-removebg-preview_6: -4790033976677040300
+      bathroom-equipments-white-background_1308-2774-removebg-preview_7: -7926243315488305197
+      bathroom-equipments-white-background_1308-2774-removebg-preview_8: 7210482478547285359
+      bathroom-equipments-white-background_1308-2774-removebg-preview_9: 4155608403737036122
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

@@ -1,0 +1,299 @@
+fileFormatVersion: 2
+guid: 6507a8017b5d480408e6cb4d3de94f0c
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: 3784068035807065796
+    second: Kawaii_Cat_Stickers__Adorable_Feline_Designs_for_DIY_Crafts__Journaling_and_Scrapbooking-removebg-preview_0
+  - first:
+      213: 910635459738541895
+    second: Kawaii_Cat_Stickers__Adorable_Feline_Designs_for_DIY_Crafts__Journaling_and_Scrapbooking-removebg-preview_1
+  - first:
+      213: 4318643541608051254
+    second: Kawaii_Cat_Stickers__Adorable_Feline_Designs_for_DIY_Crafts__Journaling_and_Scrapbooking-removebg-preview_2
+  - first:
+      213: -5831689391628990894
+    second: Kawaii_Cat_Stickers__Adorable_Feline_Designs_for_DIY_Crafts__Journaling_and_Scrapbooking-removebg-preview_3
+  - first:
+      213: 5967114492053431242
+    second: Kawaii_Cat_Stickers__Adorable_Feline_Designs_for_DIY_Crafts__Journaling_and_Scrapbooking-removebg-preview_4
+  - first:
+      213: -6267784407995117334
+    second: Kawaii_Cat_Stickers__Adorable_Feline_Designs_for_DIY_Crafts__Journaling_and_Scrapbooking-removebg-preview_5
+  - first:
+      213: 6021117832969854741
+    second: Kawaii_Cat_Stickers__Adorable_Feline_Designs_for_DIY_Crafts__Journaling_and_Scrapbooking-removebg-preview_6
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: Kawaii_Cat_Stickers__Adorable_Feline_Designs_for_DIY_Crafts__Journaling_and_Scrapbooking-removebg-preview_0
+      rect:
+        serializedVersion: 2
+        x: 120
+        y: 387
+        width: 13
+        height: 14
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4c6b03864d5b38430800000000000000
+      internalID: 3784068035807065796
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Kawaii_Cat_Stickers__Adorable_Feline_Designs_for_DIY_Crafts__Journaling_and_Scrapbooking-removebg-preview_1
+      rect:
+        serializedVersion: 2
+        x: 130
+        y: 58
+        width: 223
+        height: 384
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 74f1799302a33ac00800000000000000
+      internalID: 910635459738541895
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Kawaii_Cat_Stickers__Adorable_Feline_Designs_for_DIY_Crafts__Journaling_and_Scrapbooking-removebg-preview_2
+      rect:
+        serializedVersion: 2
+        x: 353
+        y: 384
+        width: 20
+        height: 21
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 63235118b67eeeb30800000000000000
+      internalID: 4318643541608051254
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Kawaii_Cat_Stickers__Adorable_Feline_Designs_for_DIY_Crafts__Journaling_and_Scrapbooking-removebg-preview_3
+      rect:
+        serializedVersion: 2
+        x: 90
+        y: 355
+        width: 28
+        height: 28
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2564a8b556da11fa0800000000000000
+      internalID: -5831689391628990894
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Kawaii_Cat_Stickers__Adorable_Feline_Designs_for_DIY_Crafts__Journaling_and_Scrapbooking-removebg-preview_4
+      rect:
+        serializedVersion: 2
+        x: 107
+        y: 158
+        width: 24
+        height: 22
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ac32ee0f3037fc250800000000000000
+      internalID: 5967114492053431242
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Kawaii_Cat_Stickers__Adorable_Feline_Designs_for_DIY_Crafts__Journaling_and_Scrapbooking-removebg-preview_5
+      rect:
+        serializedVersion: 2
+        x: 355
+        y: 105
+        width: 27
+        height: 30
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ae018b00a4b5409a0800000000000000
+      internalID: -6267784407995117334
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Kawaii_Cat_Stickers__Adorable_Feline_Designs_for_DIY_Crafts__Journaling_and_Scrapbooking-removebg-preview_6
+      rect:
+        serializedVersion: 2
+        x: 335
+        y: 67
+        width: 20
+        height: 17
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 51f10f094ce4f8350800000000000000
+      internalID: 6021117832969854741
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      Kawaii_Cat_Stickers__Adorable_Feline_Designs_for_DIY_Crafts__Journaling_and_Scrapbooking-removebg-preview_0: 3784068035807065796
+      Kawaii_Cat_Stickers__Adorable_Feline_Designs_for_DIY_Crafts__Journaling_and_Scrapbooking-removebg-preview_1: 910635459738541895
+      Kawaii_Cat_Stickers__Adorable_Feline_Designs_for_DIY_Crafts__Journaling_and_Scrapbooking-removebg-preview_2: 4318643541608051254
+      Kawaii_Cat_Stickers__Adorable_Feline_Designs_for_DIY_Crafts__Journaling_and_Scrapbooking-removebg-preview_3: -5831689391628990894
+      Kawaii_Cat_Stickers__Adorable_Feline_Designs_for_DIY_Crafts__Journaling_and_Scrapbooking-removebg-preview_4: 5967114492053431242
+      Kawaii_Cat_Stickers__Adorable_Feline_Designs_for_DIY_Crafts__Journaling_and_Scrapbooking-removebg-preview_5: -6267784407995117334
+      Kawaii_Cat_Stickers__Adorable_Feline_Designs_for_DIY_Crafts__Journaling_and_Scrapbooking-removebg-preview_6: 6021117832969854741
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

@@ -1,0 +1,84 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!78 &1
+TagManager:
+  serializedVersion: 3
+  tags:
+  - Pet
+  - Water
+  - Plate
+  - Cat
+  - Floor
+  - CatMouth
+  layers:
+  - Default
+  - TransparentFX
+  - Ignore Raycast
+  - Panel
+  - Water
+  - UI
+  - Cat
+  - Bed
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  m_SortingLayers:
+  - name: Default
+    uniqueID: 0
+    locked: 0
+  - name: Background
+    uniqueID: 3575415113
+    locked: 0
+  - name: Cat
+    uniqueID: 973510837
+    locked: 0
+  - name: Dirty
+    uniqueID: 1521540487
+    locked: 0
+  - name: Ditry UI
+    uniqueID: 861439107
+    locked: 0
+  - name: Food
+    uniqueID: 2233343023
+    locked: 0
+  - name: Bubble
+    uniqueID: 348157113
+    locked: 0
+  - name: UI
+    uniqueID: 2728926863
+    locked: 0
+  - name: water
+    uniqueID: 4262094343
+    locked: 0
+  - name: Clean
+    uniqueID: 706837585
+    locked: 0
+  - name: Status UI
+    uniqueID: 755965731
+    locked: 0
+  - name: Digital Album
+    uniqueID: 2829993243
+    locked: 0
+  m_RenderingLayers:
+  - Default
