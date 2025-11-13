@@ -339,9 +339,6 @@ public class Energy_Bar : MonoBehaviour
 
         }
 
-        
-
-
 
         progress_current += value;
         GetProgressFill();
@@ -352,30 +349,7 @@ public class Energy_Bar : MonoBehaviour
         {
             if (isBathing == false && isAlbumOpen == false && isDancing == false && isSleeping == false && isEating == false)
             {
-                if (currentStage == PetStage.Teen && !hasReachedTeenHalf)
-                {
-                    progress_increase_time = 60f;
-                    hasReachedTeenHalf = true;
-                    PlayerPrefs.SetInt("hasReachedTeenHalf", hasReachedTeenHalf ? 1 : 0);
-                    PlayerPrefs.Save();
-                    HandleTeenHalfProgressEvent();
-                }
-                else if (currentStage == PetStage.Adult && !hasReachedAdultHalf)
-                {
-                    progress_increase_time = 60f;
-                    hasReachedAdultHalf = true;
-                    PlayerPrefs.SetInt("hasReachedAdultHalf", hasReachedAdultHalf ? 1 : 0);
-                    PlayerPrefs.Save();
-                    HandleAdultHalfProgressEvent();
-                }
-                else if (currentStage == PetStage.Old && !hasReachedOldHalf)
-                {
-                    progress_increase_time = 60f;
-                    hasReachedOldHalf = true;
-                    PlayerPrefs.SetInt("hasReachedOldHalf", hasReachedOldHalf ? 1 : 0);
-                    PlayerPrefs.Save();
-                    HandleOldHalfProgressEvent();
-                }
+                changeEventScene();
             }
             else if (isBathing == true || isAlbumOpen == true || isDancing == true || isSleeping == true || isEating == true)
             {
@@ -414,7 +388,36 @@ public class Energy_Bar : MonoBehaviour
 
     }
 
-
+    void changeEventScene()
+    {
+        if (currentStage == PetStage.Teen && !hasReachedTeenHalf)
+        {
+            progress_increase_time = 60f;
+            hasReachedTeenHalf = true;
+            PlayerPrefs.SetInt("hasReachedTeenHalf", hasReachedTeenHalf ? 1 : 0);
+            PlayerPrefs.Save();
+            HandleHalfProgressEvent();
+            UnityEngine.SceneManagement.SceneManager.LoadScene("TeenStressEvent");
+        }
+        else if (currentStage == PetStage.Adult && !hasReachedAdultHalf)
+        {
+            progress_increase_time = 60f;
+            hasReachedAdultHalf = true;
+            PlayerPrefs.SetInt("hasReachedAdultHalf", hasReachedAdultHalf ? 1 : 0);
+            PlayerPrefs.Save();
+            HandleHalfProgressEvent();
+            UnityEngine.SceneManagement.SceneManager.LoadScene("AdultStressEvent");
+        }
+        else if (currentStage == PetStage.Old && !hasReachedOldHalf)
+        {
+            progress_increase_time = 60f;
+            hasReachedOldHalf = true;
+            PlayerPrefs.SetInt("hasReachedOldHalf", hasReachedOldHalf ? 1 : 0);
+            PlayerPrefs.Save();
+            HandleHalfProgressEvent();
+            UnityEngine.SceneManagement.SceneManager.LoadScene("FindFriendSceneTest");
+        }
+    }
     void AdvanceStage()
     {
         string currentScene = SceneManager.GetActiveScene().name;
@@ -738,7 +741,8 @@ public class Energy_Bar : MonoBehaviour
         }
     }
 
-    private void HandleOldHalfProgressEvent()
+
+    private void HandleHalfProgressEvent()
     {
         progressStop = false;
         Debug.Log("Progress reached 50%, switching scene.");
@@ -750,38 +754,9 @@ public class Energy_Bar : MonoBehaviour
         DontDestroyOnLoad(this.gameObject);
 
         // Load next scene (you can also use a loading scene or fade-out effect)
-        UnityEngine.SceneManagement.SceneManager.LoadScene("FindFriendSceneTest");
+      
     }
 
-    private void HandleTeenHalfProgressEvent()
-    {
-        progressStop = false;
-        Debug.Log("Progress reached 50%, switching scene.");
-        StopAllCoroutines();
-        // Optional: Save before switching
-        SavePetData();
-
-        // Prevent GameObject from being destroyed so you can do work in next scene
-        DontDestroyOnLoad(this.gameObject);
-
-        // Load next scene (you can also use a loading scene or fade-out effect)
-        UnityEngine.SceneManagement.SceneManager.LoadScene("TeenStressEvent");
-    }
-
-    private void HandleAdultHalfProgressEvent()
-    {
-        progressStop = false;
-        Debug.Log("Progress reached 50%, switching scene.");
-        StopAllCoroutines();
-        // Optional: Save before switching
-        SavePetData();
-
-        // Prevent GameObject from being destroyed so you can do work in next scene
-        DontDestroyOnLoad(this.gameObject);
-
-        // Load next scene (you can also use a loading scene or fade-out effect)
-        UnityEngine.SceneManagement.SceneManager.LoadScene("AdultStressEvent");
-    }
 
     //public void CheckWhichScene(string currentScene)
     //{
@@ -816,30 +791,7 @@ public class Energy_Bar : MonoBehaviour
             {
                 if (isBathing == false && isAlbumOpen == false && isDancing == false && isSleeping == false && isEating == false)
                 {
-                    if (currentStage == PetStage.Teen && !hasReachedTeenHalf)
-                    {
-                        hasReachedTeenHalf = true;
-                        PlayerPrefs.SetInt("hasReachedTeenHalf", hasReachedTeenHalf ? 1 : 0);
-                        PlayerPrefs.Save();
-                        StartCoroutine(IncreaseProgressOverTime());
-                        HandleTeenHalfProgressEvent();
-                    }
-                    else if (currentStage == PetStage.Adult && !hasReachedAdultHalf)
-                    {
-                        hasReachedAdultHalf = true;
-                        PlayerPrefs.SetInt("hasReachedAdultHalf", hasReachedAdultHalf ? 1 : 0);
-                        PlayerPrefs.Save();
-                        StartCoroutine(IncreaseProgressOverTime());
-                        HandleAdultHalfProgressEvent();
-                    }
-                    else if (currentStage == PetStage.Old && !hasReachedOldHalf)
-                    {
-                        hasReachedOldHalf = true;
-                        PlayerPrefs.SetInt("hasReachedOldHalf", hasReachedOldHalf ? 1 : 0);
-                        PlayerPrefs.Save();
-                        StartCoroutine(IncreaseProgressOverTime());
-                        HandleOldHalfProgressEvent();
-                    }
+                    changeEventScene();
                 }
             }
             else if (progress_current >= progress_max)

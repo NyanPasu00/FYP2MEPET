@@ -2473,7 +2473,6 @@ GameObject:
   - component: {fileID: 1312233580}
   - component: {fileID: 1312233581}
   - component: {fileID: 1312233582}
-  - component: {fileID: 1312233583}
   - component: {fileID: 1312233584}
   - component: {fileID: 1312233585}
   m_Layer: 0
@@ -2511,12 +2510,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   audioClip: {fileID: 1312233584}
-  energy: {fileID: 1312233583}
+  energy: {fileID: 0}
   hall: 0
   kitchen: 0
   bathroom: 0
   gameroom: 0
   currentStage: 0
+  isEating: 0
+  isSleeping: 0
+  isDancing: 0
+  isBathing: 0
+  isAlbumOpen: 0
 --- !u!114 &1312233582
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2530,54 +2534,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   digitalAlbumPanel: {fileID: 0}
---- !u!114 &1312233583
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1312233579}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f3bbea115abb51d44bb8bea3d7a57f1b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  firstTimePlay: 1
-  petDead: 0
-  isEating: 0
-  isDancing: 0
-  isSleeping: 0
-  isBathing: 0
-  isAlbumOpen: 0
-  progressStop: 0
-  dirtyManager: {fileID: 0}
-  energy_max: 100
-  energy_current: 0
-  energy_Slider: {fileID: 0}
-  energyDetail_Slider: {fileID: 0}
-  energy_deduct_time: 60
-  hunger_max: 100
-  hunger_current: 0
-  hunger_Slider: {fileID: 0}
-  hungerDetail_Slider: {fileID: 0}
-  hunger_deduct_time: 60
-  happiness_max: 100
-  happiness_current: 0
-  happiness_Slider: {fileID: 0}
-  happinessDetail_Slider: {fileID: 0}
-  happiness_deduct_time: 60
-  health_max: 100
-  health_current: 0
-  health_Slider: {fileID: 0}
-  healthDetail_Slider: {fileID: 0}
-  health_deduct_time: 60
-  progress_max: 100
-  progress_current: 0
-  progress_Image: {fileID: 0}
-  progressDetail_Slider: {fileID: 0}
-  progress_increase_time: 60
-  currentStage: 0
-  stageRepresent: {fileID: 0}
 --- !u!82 &1312233584
 AudioSource:
   m_ObjectHideFlags: 0

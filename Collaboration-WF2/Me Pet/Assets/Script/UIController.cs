@@ -1,6 +1,8 @@
-using UnityEngine;
-using UnityEngine.UI;
 using System.Collections;
+using TMPro;
+using UnityEngine;
+using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 public class UIController : MonoBehaviour
 {
     //public PetStatus petStatus;
@@ -24,6 +26,9 @@ public class UIController : MonoBehaviour
     public GameObject HallLightScreen;
     public GameObject HallDarkScreen;
     public Animator petAnimator;
+
+
+    public TMP_InputField nameInputField;
     void Start()
     {
         
@@ -72,7 +77,19 @@ public class UIController : MonoBehaviour
 
     public void createPet()
     {
+        string petName = nameInputField.text.Trim();
 
+        if (string.IsNullOrEmpty(petName))
+        {
+            Debug.LogWarning("Pet name is empty!");
+            return;
+        }
+
+        FindFirstObjectByType<PetStatus>()?.createPetStatus(petName);
+
+        // Load your main game scene
+        SceneManager.LoadScene("HallScene");
+    
     }
 
     public void onDrag()
@@ -239,4 +256,6 @@ public class UIController : MonoBehaviour
     {
 
     }
+
+
 }

@@ -4180,8 +4180,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1635414631}
-        m_TargetAssemblyTypeName: StatusDetail, Assembly-CSharp
+      - m_Target: {fileID: 1635414634}
+        m_TargetAssemblyTypeName: GameUI, Assembly-CSharp
         m_MethodName: ToggleStatusPanel
         m_Mode: 1
         m_Arguments:
@@ -4326,8 +4326,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1635414631}
-        m_TargetAssemblyTypeName: StatusDetail, Assembly-CSharp
+      - m_Target: {fileID: 1635414634}
+        m_TargetAssemblyTypeName: GameUI, Assembly-CSharp
         m_MethodName: ToggleStatusPanel
         m_Mode: 1
         m_Arguments:
@@ -7194,8 +7194,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1635414631}
-        m_TargetAssemblyTypeName: StatusDetail, Assembly-CSharp
+      - m_Target: {fileID: 1635414634}
+        m_TargetAssemblyTypeName: GameUI, Assembly-CSharp
         m_MethodName: ToggleStatusPanel
         m_Mode: 1
         m_Arguments:
@@ -9675,8 +9675,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1635414631}
-        m_TargetAssemblyTypeName: StatusDetail, Assembly-CSharp
+      - m_Target: {fileID: 1635414634}
+        m_TargetAssemblyTypeName: GameUI, Assembly-CSharp
         m_MethodName: ToggleStatusPanel
         m_Mode: 1
         m_Arguments:
@@ -10791,7 +10791,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1635414631}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: StatusDetail, Assembly-CSharp
         m_MethodName: ToggleStatusPanel
         m_Mode: 1
@@ -17021,7 +17021,7 @@ GameObject:
   - component: {fileID: 1635414630}
   - component: {fileID: 1635414633}
   - component: {fileID: 1635414632}
-  - component: {fileID: 1635414631}
+  - component: {fileID: 1635414634}
   m_Layer: 5
   m_Name: StatusDetail
   m_TagString: Untagged
@@ -17057,25 +17057,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 158}
   m_SizeDelta: {x: 222944.81, y: 309226.62}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &1635414631
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1635414629}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 04f7daa211cc40144b56bba914d777ed, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  statusPanel: {fileID: 1635414629}
-  statusText: {fileID: 2004027664}
-  statusTitle: {fileID: 439220278}
-  stageText: {fileID: 1257753967}
-  stats: {fileID: 255022664}
-  loader: {fileID: 0}
-  panelOpen: 0
 --- !u!114 &1635414632
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -17114,6 +17095,24 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1635414629}
   m_CullTransparentMesh: 1
+--- !u!114 &1635414634
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1635414629}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2bf3493ba44c2de44a77799cd61dc70a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  statusPanel: {fileID: 1635414629}
+  statusText: {fileID: 2004027664}
+  statusTitle: {fileID: 439220278}
+  stageText: {fileID: 1257753967}
+  stats: {fileID: 255022664}
+  panelOpen: 0
 --- !u!1 &1650490882
 GameObject:
   m_ObjectHideFlags: 0
@@ -18198,7 +18197,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c576bf75064013844b1e965735529aac, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  petStatus: {fileID: 0}
   isLogin: 0
   isOnPet: 0
   isSleep: 1
@@ -24077,7 +24075,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1635414631}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: StatusDetail, Assembly-CSharp
         m_MethodName: ToggleStatusPanel
         m_Mode: 1
@@ -24800,8 +24798,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1635414631}
-        m_TargetAssemblyTypeName: StatusDetail, Assembly-CSharp
+      - m_Target: {fileID: 1635414634}
+        m_TargetAssemblyTypeName: GameUI, Assembly-CSharp
         m_MethodName: ToggleStatusPanel
         m_Mode: 1
         m_Arguments:
