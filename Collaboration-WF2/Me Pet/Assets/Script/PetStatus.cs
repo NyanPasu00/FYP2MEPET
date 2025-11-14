@@ -2,6 +2,8 @@
 //using System.Collections.Generic;
 //using Unity.VisualScripting.Antlr3.Runtime;
 //using UnityEngine;
+//using UnityEngine.SceneManagement;
+//using static Energy_Bar;
 
 ////[Serializable] <--- Duplicate If need put look like need delete the file from other side , Status bar or Digital album 
 //public class PetData
@@ -244,7 +246,7 @@
 //        }
 //    }
 
-    
+
 
 //    public int RetrieveValue(string key)
 //    {
@@ -326,4 +328,5 @@
 //    {
 
 //    }
+
 //}

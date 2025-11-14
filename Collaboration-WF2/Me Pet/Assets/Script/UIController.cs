@@ -85,7 +85,7 @@ public class UIController : MonoBehaviour
             return;
         }
 
-        FindFirstObjectByType<PetStatus>()?.createPetStatus(petName);
+        //FindFirstObjectByType<PetStatus>()?.createPetStatus(petName);
 
         // Load your main game scene
         SceneManager.LoadScene("HallScene");

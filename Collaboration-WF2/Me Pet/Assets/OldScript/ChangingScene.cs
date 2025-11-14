@@ -76,7 +76,7 @@ public class SceneLoader : MonoBehaviour
     // Reconnect Energy_Bar after scene changes
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
-        energy = FindObjectOfType<Energy_Bar>();
+        //energy = FindObjectOfType<Energy_Bar>();
     }
 
     // Public function to use in button OnClick
@@ -126,7 +126,7 @@ public class SceneLoader : MonoBehaviour
     // Optional: Scene-specific wrappers for buttons
     public void LoadPetNameScene()
     {
-        FindFirstObjectByType<Energy_Bar>()?.newPetData();
+        FindFirstObjectByType<Energy_Bar>()?.createPetData();
         PlayAndLoad("PetNameScene");
     }
 
@@ -143,9 +143,10 @@ public class SceneLoader : MonoBehaviour
         SaveCurrentRoom();
 
         if (energy.currentStage == Energy_Bar.PetStage.Kid)
-        { 
+        {
             PlayAndLoad("HallScene");
-        }else if (energy.currentStage == Energy_Bar.PetStage.Teen)
+        }
+        else if (energy.currentStage == Energy_Bar.PetStage.Teen)
         {
             PlayAndLoad("TeenHallScene");
         }
@@ -153,7 +154,7 @@ public class SceneLoader : MonoBehaviour
         {
             PlayAndLoad("AdultHallScene");
         }
-        else if(energy.currentStage == Energy_Bar.PetStage.Old)
+        else if (energy.currentStage == Energy_Bar.PetStage.Old)
         {
             PlayAndLoad("OldHallScene");
         }
@@ -294,7 +295,7 @@ public class SceneLoader : MonoBehaviour
         LoadCurrentStage();
 
         stageToGameRoomScene();
-       
+
     }
 
     private void SaveCurrentRoom()
