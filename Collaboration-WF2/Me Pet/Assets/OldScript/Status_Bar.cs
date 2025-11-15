@@ -8,9 +8,11 @@ using static UnityEngine.EventSystems.EventTrigger;
 
 public class Energy_Bar : MonoBehaviour
 {
+    [Header("Player First Time? / Pet Die?")]
     public bool firstTimePlay = true;
     public bool petDead;
 
+    [Header("Is the player having movement?")]
     public bool isEating;
     public bool isDancing;
     public bool isSleeping;
@@ -19,14 +21,21 @@ public class Energy_Bar : MonoBehaviour
 
     public bool progressStop = false;
 
-
+    [Header("Which Stage Player Reach?")]
     public static bool hasReachedTeenHalf = false;
     public static bool hasReachedAdultHalf = false;
     public static bool hasReachedOldHalf = false;
 
+
+    //New Game Enter Name
+    [SerializeField]
+    [Header("Input Name Field")]
+    public TMP_InputField nameInputField;
+
     [System.Serializable]
     public class PetData
     {
+        public string petName;
         public float dirty;
         public int energy;
         public int hunger;
@@ -42,8 +51,10 @@ public class Energy_Bar : MonoBehaviour
         public float lastProgressSecond;
         public float lastHappinessSecond;
         public float lastHungerSecond;
+        public int moneyValue;
     }
 
+    [Header("Dirty Manager")]
     public CatDirtyManager dirtyManager;
 
     [SerializeField]
@@ -533,7 +544,16 @@ public class Energy_Bar : MonoBehaviour
 
     public void createPetData()
     {
+        string petNewName = nameInputField.text.Trim();
+
+        if (string.IsNullOrEmpty(petNewName))
+        {
+            Debug.LogWarning("Pet name is empty!");
+            return;
+        }
+
         PetData data = new PetData();
+        data.petName = petNewName;
         data.dirty = 0;
         data.energy = 100;
         data.hunger = 100;
@@ -548,17 +568,35 @@ public class Energy_Bar : MonoBehaviour
         data.lastHealthSecond = 0f;
         data.lastProgressSecond = 0f;
         data.lastHungerSecond = 0f;
+        data.moneyValue = 0;
+
         string json = JsonUtility.ToJson(data);
         PlayerPrefs.SetString("PetData", json);
         PlayerPrefs.Save();
+
         petDead = false;
         PlayerPrefs.SetInt("PetDead", petDead ? 1 : 0);
         PlayerPrefs.Save();
+
+        SceneManager.LoadScene("HallScene");
     }
 
     public void SavePetData()
     {
-        PetData data = new PetData();
+        PetData data;
+
+        // Load existing data first so we keep petName
+        if (PlayerPrefs.HasKey("PetData"))
+        {
+            string oldJson = PlayerPrefs.GetString("PetData");
+            data = JsonUtility.FromJson<PetData>(oldJson) ?? new PetData();
+        }
+        else
+        {
+            data = new PetData();
+        }
+
+
         data.dirty = dirtyManager.dirty;
         data.energy = energy_current;
         data.hunger = hunger_current;

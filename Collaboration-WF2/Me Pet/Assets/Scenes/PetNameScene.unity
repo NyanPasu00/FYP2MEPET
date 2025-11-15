@@ -547,7 +547,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 712692422}
-  - component: {fileID: 712692421}
   - component: {fileID: 712692423}
   - component: {fileID: 712692424}
   - component: {fileID: 712692425}
@@ -558,19 +557,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &712692421
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 712692420}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7734dbf614dbfc7438c6a8523e77de82, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  nameInputField: {fileID: 338226030}
 --- !u!4 &712692422
 Transform:
   m_ObjectHideFlags: 0
@@ -630,6 +616,7 @@ MonoBehaviour:
   isBathing: 0
   isAlbumOpen: 0
   progressStop: 0
+  nameInputField: {fileID: 338226030}
   dirtyManager: {fileID: 0}
   energy_max: 100
   energy_current: 0
@@ -1052,9 +1039,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 712692421}
-        m_TargetAssemblyTypeName: PetNameManager, Assembly-CSharp
-        m_MethodName: SavePetNameAndContinue
+      - m_Target: {fileID: 712692424}
+        m_TargetAssemblyTypeName: Energy_Bar, Assembly-CSharp
+        m_MethodName: createPetData
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

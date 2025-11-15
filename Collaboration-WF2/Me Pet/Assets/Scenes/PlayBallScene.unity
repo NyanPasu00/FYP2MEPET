@@ -130,6 +130,7 @@ GameObject:
   - component: {fileID: 37912191}
   - component: {fileID: 37912190}
   - component: {fileID: 37912189}
+  - component: {fileID: 37912192}
   m_Layer: 0
   m_Name: UiManager
   m_TagString: Untagged
@@ -248,6 +249,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   audioClip: {fileID: 37912189}
   energy: {fileID: 0}
+  hall: 0
+  kitchen: 0
+  bathroom: 0
+  gameroom: 0
+  currentStage: 0
+  isEating: 0
+  isSleeping: 0
+  isDancing: 0
+  isBathing: 0
+  isAlbumOpen: 0
 --- !u!4 &37912191
 Transform:
   m_ObjectHideFlags: 0
@@ -257,12 +268,44 @@ Transform:
   m_GameObject: {fileID: 37912188}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.14086021, y: -3.5508087, z: 181.14842}
+  m_LocalPosition: {x: -0.04, y: 6.97, z: 181.14842}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &37912192
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 37912188}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 153ee7203bd0a984f8a82bc9e6f09b60, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  scoreText: {fileID: 1099188828}
+  catchSound: {fileID: 8300000, guid: f6c478c28b046114e919027632087681, type: 3}
+  catchAudioSource: {fileID: 306068461}
+  missedText: {fileID: 220452558}
+  gameOverPanel: {fileID: 1283930640}
+  pausePanel: {fileID: 1565204818}
+  currentScoreText: {fileID: 1567326127}
+  highScoreText: {fileID: 1147306237}
+  missSound: {fileID: 8300000, guid: b8adc972d0d04e64590e024af9fff11a, type: 3}
+  missAudioSource: {fileID: 306068461}
+  maxMisses: 8
+  redBallPrefab: {fileID: 5623561766735952830, guid: 3f2a93504e741ca48bcb788bac6a4be8, type: 3}
+  orangeBallPrefab: {fileID: 792156348505901172, guid: 1aa4fa78c69c95d4fb02ed52a7a3790c, type: 3}
+  spawnInterval: 1.2
+  spawnXRange: 2
+  minScale: 0.5
+  maxScale: 1.2
+  gravityScale: 0.4
+  catTransform: {fileID: 105544375}
+  moveSpeed: 5
 --- !u!1 &70141903
 GameObject:
   m_ObjectHideFlags: 0
@@ -324,7 +367,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -1566040433
-  m_SortingLayer: 6
+  m_SortingLayer: 7
   m_SortingOrder: 0
   m_Sprite: {fileID: -2799692873189853672, guid: 0da2cbc64529b5548b4d70670e5080ff, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -369,8 +412,8 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 105544378}
-          m_TargetAssemblyTypeName: CatMovement, Assembly-CSharp
+        - m_Target: {fileID: 37912192}
+          m_TargetAssemblyTypeName: MiniGameController, Assembly-CSharp
           m_MethodName: MoveLeft
           m_Mode: 1
           m_Arguments:
@@ -385,8 +428,8 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 105544378}
-          m_TargetAssemblyTypeName: CatMovement, Assembly-CSharp
+        - m_Target: {fileID: 37912192}
+          m_TargetAssemblyTypeName: MiniGameController, Assembly-CSharp
           m_MethodName: StopMoving
           m_Mode: 1
           m_Arguments:
@@ -1500,8 +1543,8 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 958577684}
-        m_TargetAssemblyTypeName: BallMissed, Assembly-CSharp
+      - m_Target: {fileID: 37912192}
+        m_TargetAssemblyTypeName: MiniGameController, Assembly-CSharp
         m_MethodName: QuitGame
         m_Mode: 1
         m_Arguments:
@@ -2105,8 +2148,8 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 958577684}
-        m_TargetAssemblyTypeName: BallMissed, Assembly-CSharp
+      - m_Target: {fileID: 37912192}
+        m_TargetAssemblyTypeName: MiniGameController, Assembly-CSharp
         m_MethodName: RestartGame
         m_Mode: 1
         m_Arguments:
@@ -2280,8 +2323,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 958577684}
-        m_TargetAssemblyTypeName: BallMissed, Assembly-CSharp
+      - m_Target: {fileID: 37912192}
+        m_TargetAssemblyTypeName: MiniGameController, Assembly-CSharp
         m_MethodName: PauseGame
         m_Mode: 1
         m_Arguments:
@@ -2631,7 +2674,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &958577682
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2681,57 +2724,6 @@ MonoBehaviour:
   highScoreText: {fileID: 1147306237}
   missSound: {fileID: 8300000, guid: b8adc972d0d04e64590e024af9fff11a, type: 3}
   audioSource: {fileID: 306068461}
---- !u!1 &975662629
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 975662631}
-  - component: {fileID: 975662630}
-  m_Layer: 0
-  m_Name: BallSpawner
-  m_TagString: Cat
-  m_Icon: {fileID: 7148428337604731935, guid: 0000000000000000d000000000000000, type: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &975662630
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 975662629}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f5e1e8b7813ad6b43b6ceebe1fb3fae5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  redBallPrefab: {fileID: 5623561766735952830, guid: 3f2a93504e741ca48bcb788bac6a4be8, type: 3}
-  orangeBallPrefab: {fileID: 792156348505901172, guid: 1aa4fa78c69c95d4fb02ed52a7a3790c, type: 3}
-  spawnInterval: 1.2
-  spawnXRange: 2
-  minScale: 0.5
-  maxScale: 0.8
-  gravityScale: 0.3
---- !u!4 &975662631
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 975662629}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 7, z: -0.06532667}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1064607261
 GameObject:
   m_ObjectHideFlags: 0
@@ -3261,8 +3253,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 958577684}
-        m_TargetAssemblyTypeName: BallMissed, Assembly-CSharp
+      - m_Target: {fileID: 37912192}
+        m_TargetAssemblyTypeName: MiniGameController, Assembly-CSharp
         m_MethodName: QuitGame
         m_Mode: 1
         m_Arguments:
@@ -4640,7 +4632,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -1566040433
-  m_SortingLayer: 6
+  m_SortingLayer: 7
   m_SortingOrder: 0
   m_Sprite: {fileID: -2799692873189853672, guid: 0da2cbc64529b5548b4d70670e5080ff, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -4685,8 +4677,8 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 105544378}
-          m_TargetAssemblyTypeName: CatMovement, Assembly-CSharp
+        - m_Target: {fileID: 37912192}
+          m_TargetAssemblyTypeName: MiniGameController, Assembly-CSharp
           m_MethodName: MoveRight
           m_Mode: 1
           m_Arguments:
@@ -4701,8 +4693,8 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 105544378}
-          m_TargetAssemblyTypeName: CatMovement, Assembly-CSharp
+        - m_Target: {fileID: 37912192}
+          m_TargetAssemblyTypeName: MiniGameController, Assembly-CSharp
           m_MethodName: StopMoving
           m_Mode: 1
           m_Arguments:
@@ -4854,8 +4846,8 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 958577684}
-        m_TargetAssemblyTypeName: BallMissed, Assembly-CSharp
+      - m_Target: {fileID: 37912192}
+        m_TargetAssemblyTypeName: MiniGameController, Assembly-CSharp
         m_MethodName: ResumeGame
         m_Mode: 1
         m_Arguments:
@@ -4999,8 +4991,8 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 958577684}
-        m_TargetAssemblyTypeName: BallMissed, Assembly-CSharp
+      - m_Target: {fileID: 37912192}
+        m_TargetAssemblyTypeName: MiniGameController, Assembly-CSharp
         m_MethodName: RestartGame
         m_Mode: 1
         m_Arguments:
@@ -5058,7 +5050,6 @@ SceneRoots:
   - {fileID: 1865114427}
   - {fileID: 105544375}
   - {fileID: 554648281}
-  - {fileID: 975662631}
   - {fileID: 958577683}
   - {fileID: 1448491716}
   - {fileID: 486084418}

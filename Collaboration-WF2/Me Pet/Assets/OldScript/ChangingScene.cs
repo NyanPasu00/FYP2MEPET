@@ -7,6 +7,7 @@ public class SceneLoader : MonoBehaviour
 {
     public class PetData
     {
+        public string petName;
         public float dirty;
         public int energy;
         public int hunger;
@@ -126,7 +127,6 @@ public class SceneLoader : MonoBehaviour
     // Optional: Scene-specific wrappers for buttons
     public void LoadPetNameScene()
     {
-        FindFirstObjectByType<Energy_Bar>()?.createPetData();
         PlayAndLoad("PetNameScene");
     }
 

@@ -83,7 +83,17 @@ public class GameUI : MonoBehaviour
     {
         float progressPercent = (float)stats.progress_current / stats.progress_max * 100f;
 
-        string petName = PlayerPrefs.GetString("PetName", "Pet");
+        string json = PlayerPrefs.GetString("PetData", string.Empty);
+
+    string petName = "Pet";
+    if (!string.IsNullOrEmpty(json))
+    {
+        Energy_Bar.PetData data = JsonUtility.FromJson<Energy_Bar.PetData>(json);
+            if (data != null && !string.IsNullOrEmpty(data.petName))
+        {
+            petName = data.petName;
+        }
+    }
 
         statusTitle.text = $"{petName}'s Conditions";
 
