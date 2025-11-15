@@ -1,22 +1,155 @@
+﻿using System.Collections;
+using System.Collections.Generic;
+using TMPro;
+using Unity.VisualScripting;
+using Unity.VisualScripting.Antlr3.Runtime.Misc;
 using UnityEngine;
-
+using UnityEngine.EventSystems;
+using UnityEngine.InputSystem;
+using UnityEngine.SceneManagement;
+using UnityEngine.UI;
+using static UnityEngine.Rendering.DebugUI;
 public class GameUI : MonoBehaviour
 {
-    
+    [SerializeField]
+    [Header("Status Panel")]
+    public GameObject statusPanel;
+    public TextMeshProUGUI statusText;
+    public TextMeshProUGUI statusTitle;
+    public TextMeshProUGUI stageText;
+
+    private bool panelOpen = false;
+
+    public Energy_Bar stats;
+
+    [SerializeField]
+    [Header("Transition")]
+    public Animator transition;
+    public Transform HallCameraPosition;
+    public Transform KitchenCameraPosition;
+    public Transform GameRoomCameraPosition;
+    public Transform BathroomCameraPosition;
+    public Transform MainCameraPosition;
+    public float TransitionSpeed = 4f;
+    public TextMeshProUGUI Title;
+
+    //Kitchen Shop and Cart Design
+    [SerializeField]
+    [Header("Shop and Cart")]
+    private bool isCartOpen = false;
+    private bool isShopOpen = false;
+    private bool isPaymentOpen = false;
+    public GameObject ShopPage;
+    public GameObject CartPage;
+    public GameObject PaymentPage;
+    public Transform cartContentParent;
+    public GameObject cartItemPrefab;
+    public TMP_Text totalCostText;
+    public TMP_Text paymentCostText;
+    public TMP_Text currentMoneyText;
+    public TMP_Text remainMoneyText;
+    public TMP_Text coinValueInShop;
+    public TMP_Text coinValueInCart;
+
+    //Display Food and SelectedFood
+    public Transform availableFoodParent;     
+    public GameObject foodItemPrefab;
+    public GameObject FoodSelection;
+    public Dictionary<string, Sprite> foodSprites = new Dictionary<string, Sprite>();
+    public Image selectedFoodIcon;
+    public TMP_Text selectedFoodName;
+
+    private int currentRoomIndex = 2;
+    private bool isMoving = false;
+
+    //Changing Scene
+    public AudioSource audioClip; //click sound
+    public bool isEating;
+    public bool isSleeping;
+    public bool isDancing;
+    public bool isBathing;
+    public bool isAlbumOpen;
+
     void Start()
     {
-        
+        statusPanel.SetActive(false);
+
+        MainCameraPosition.position = new Vector3(HallCameraPosition.position.x, HallCameraPosition.position.y, -10);
+        currentRoomIndex = 2;
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+        //------------------------------------------------------------------STATUS PANEL START-------------------------------------------------------------------
+        // Only update if panel is open
+        if (panelOpen == true)
+        {
+            UpdateStatusText();
+
+            // Hide if clicking outside
+            if (Input.GetMouseButtonDown(0) && !IsPointerOverUIElement())
+            {
+                ClosePanel();
+            }
+        }
+        //-------------------------------------------------------------------STATUS PANEL END--------------------------------------------------------------------
     }
 
+    //--------------------------------------------------------------------STATUS PANEL START-------------------------------------------------------------------
+    public void ToggleStatusPanel()
+    {
+        Debug.Log("Correct");
+        panelOpen = !panelOpen;
+        statusPanel.SetActive(panelOpen);
+        if (panelOpen == true)
+        {
+            UpdateStatusText();
+        }
+    }
+
+    void ClosePanel()
+    {
+        statusPanel.SetActive(false);
+        panelOpen = false;
+    }
+
+    void UpdateStatusText()
+    {
+        float progressPercent = (float)stats.progress_current / stats.progress_max * 100f;
+
+        string json = PlayerPrefs.GetString("PetData", string.Empty);
+
+    string petName = "Pet";
+    if (!string.IsNullOrEmpty(json))
+    {
+        Energy_Bar.PetData data = JsonUtility.FromJson<Energy_Bar.PetData>(json);
+            if (data != null && !string.IsNullOrEmpty(data.petName))
+        {
+            petName = data.petName;
+        }
+    }
+
+        statusTitle.text = $"{petName}'s Conditions";
+
+        stageText.text = $"Stage: {stats.currentStage}";
+
+        statusText.text = $"Progress: {progressPercent:F0}%\n" +
+                          $"Energy: {stats.energy_current}%\n" +
+                          $"Hunger: {stats.hunger_current}%\n" +
+                          $"Happiness: {stats.happiness_current}%\n" +
+                          $"Health: {stats.health_current}%";
+
+    }
+
+    bool IsPointerOverUIElement()
+    {
+        return EventSystem.current.IsPointerOverGameObject();
+    }
+
+    //---------------------------------------------------------------STATUS PANEL END--------------------------------------------------------------------------------
     public void displayGameplay()
     {
-
     }
 
     public void displayNewGame()
@@ -24,14 +157,38 @@ public class GameUI : MonoBehaviour
 
     }
 
-    public void displayAvailableFood()
+    public void displayAvailableFood(Dictionary<string, int> ownedItems, Dictionary<string, Sprite> foodSprites)
     {
+        // Clear old UI
+        foreach (Transform t in availableFoodParent)
+            Destroy(t.gameObject);
 
+        // Create one UI item per food
+        foreach (var kvp in ownedItems)
+        {
+            string foodName = kvp.Key;
+            int quantity = kvp.Value;
+
+            GameObject go = Instantiate(foodItemPrefab, availableFoodParent);
+            go.transform.localScale = Vector3.one;
+
+            // Assign UI
+            FoodItemUI ui = go.GetComponent<FoodItemUI>();
+            ui.foodIcon.sprite = foodSprites[foodName];
+            ui.quantityText.text = quantity.ToString();
+
+            // handle click → select food
+            ui.selectButton.onClick.AddListener(() =>
+            {
+                UIController.instance.SelectFood(foodName);
+            });
+        }
     }
 
-    public void displaySelectedFood()
+    public void displaySelectedFood(string foodName, Sprite sprite)
     {
-
+        selectedFoodName.text = foodName;
+        selectedFoodIcon.sprite = sprite;
     }
 
     public void displayPetMessage(string message)
@@ -49,14 +206,104 @@ public class GameUI : MonoBehaviour
 
     }
 
+    //Display Kitchen Shop Product
     public void displayProduct()
     {
-
+        coinValueInShop.text = stats.RetrieveValue("moneyValue").ToString();
+        isShopOpen = !isShopOpen;
+        ShopPage.SetActive(isShopOpen);
     }
 
-    public void displayConfirmationPayment()
+    public void displayCart(Cart cart)
     {
 
+        cart.calculateTotalCost();
+        coinValueInCart.text = stats.RetrieveValue("moneyValue").ToString();
+        totalCostText.text = cart.totalCost.ToString();
+
+        if (cartContentParent == null)
+        {
+            Debug.LogError("cartContentParent is not assigned!");
+            return;
+        }
+        if (cartItemPrefab == null)
+        {
+            Debug.LogError("cartItemPrefab is not assigned!");
+            return;
+        }
+
+        // Clear previous UI
+        foreach (Transform child in cartContentParent)
+            Destroy(child.gameObject);
+
+        UIController uiController = FindObjectOfType<UIController>();
+        if (uiController == null)
+        {
+            Debug.LogError("UIController not found in scene!");
+            return;
+        }
+
+        // Populate UI
+        foreach (CartItem item in cart.items)
+        {
+
+            GameObject go = Instantiate(cartItemPrefab, cartContentParent);
+            go.transform.localScale = Vector3.one;
+
+            CartItemUI ui = go.GetComponent<CartItemUI>();
+            if (ui == null)
+            {
+                Debug.LogError("CartItemUI component not found on prefab!");
+                continue;
+            }
+
+            // Assign values
+
+            ui.priceText.text = item.price.ToString();
+            ui.quantityText.text = item.quantity.ToString();
+            ui.totalProductPrice.text = (item.quantity * item.price).ToString();
+            ui.iconImage.sprite = item.icon;
+
+            // Assign button listeners
+            ui.addButton.onClick.RemoveAllListeners();
+            ui.addButton.onClick.AddListener(() => uiController.modifyItemQuantity(item.itemName, +1));
+
+            ui.minusButton.onClick.RemoveAllListeners();
+            ui.minusButton.onClick.AddListener(() => uiController.modifyItemQuantity(item.itemName, -1));
+
+            ui.removeButton.onClick.RemoveAllListeners();
+            ui.removeButton.onClick.AddListener(() => uiController.removeItemFromCart(item.itemName));
+
+        }
+    }
+
+    public void displayConfirmationPayment(int current, int payment)
+    {
+        currentMoneyText.text = current.ToString();
+        paymentCostText.text = payment.ToString();
+        remainMoneyText.text = (current - payment).ToString();
+        openPaymentPage();
+    }
+
+    public void openPaymentPage()
+    {
+        isPaymentOpen = !isPaymentOpen;
+        PaymentPage.SetActive(isPaymentOpen);
+    }
+
+    public void openCart(Cart cart)
+    {
+        isCartOpen = !isCartOpen;
+        CartPage.SetActive(isCartOpen);
+
+        displayCart(cart);
+    }
+
+    public void closeCartandShop()
+    {
+        ShopPage.SetActive(false);
+        PaymentPage.SetActive(false);
+        CartPage.SetActive(false);
     }
 
     public void displayGameSelection()
@@ -66,7 +313,7 @@ public class GameUI : MonoBehaviour
 
     public void displaySelectedGame()
     {
-
+        PlayAndLoad("PlayBallScene");
     }
 
     public void displayMusicCategory()
@@ -94,8 +341,202 @@ public class GameUI : MonoBehaviour
 
     }
 
-    public void displayCart()
-    {
+    
 
+    public void transitionToRight()
+    {
+        // If already moving, ignore extra clicks
+        if (isMoving) return;
+
+        StartCoroutine(backgroundTransition());
+
+        Transform target = null;
+
+        if (currentRoomIndex == 0)     
+        {
+            currentRoomIndex = 1;
+            target = GameRoomCameraPosition;
+        }
+        else if (currentRoomIndex == 1) 
+        {
+            currentRoomIndex = 2;
+            target = HallCameraPosition;
+        }
+        else if (currentRoomIndex == 2) 
+        {
+            currentRoomIndex = 3;
+            target = KitchenCameraPosition;
+        }
+        else
+        {
+          
+            StartCoroutine(EdgeShake());
+            return;
+        }
+
+        UpdateRoomTitle();
+
+        // Move camera smoothly to next room
+        Vector3 targetPos = new Vector3(target.position.x, target.position.y, -10);
+        StartCoroutine(MoveCamera(targetPos));
+    }
+
+    public void transitionToLeft()
+    {
+        // If already moving, ignore extra clicks
+        if (isMoving) return;
+
+        StartCoroutine(backgroundTransition());
+
+        Transform target = null;
+
+        if (currentRoomIndex == 3)
+        {
+            currentRoomIndex = 2;
+            target = HallCameraPosition;
+        }
+        else if (currentRoomIndex == 2)
+        {
+            currentRoomIndex = 1;
+            target = GameRoomCameraPosition;
+        }
+        else if (currentRoomIndex == 1)
+        {
+            currentRoomIndex = 0;
+            target = BathroomCameraPosition;
+        }
+        else
+        {
+
+            StartCoroutine(EdgeShake());
+            return;
+        }
+
+        UpdateRoomTitle();
+
+        // Move camera smoothly to next room
+        Vector3 targetPos = new Vector3(target.position.x, target.position.y, -10);
+        StartCoroutine(MoveCamera(targetPos));
+    }
+
+    private IEnumerator MoveCamera(Vector3 targetPos)
+    {
+        isMoving = true;
+
+        Vector3 startPos = MainCameraPosition.position;
+        float t = 0f;
+
+        while (t < 1f)
+        {
+            t += Time.deltaTime * TransitionSpeed;
+            MainCameraPosition.position = Vector3.Lerp(startPos, targetPos, t);
+            yield return null;
+        }
+
+        MainCameraPosition.position = targetPos;
+        isMoving = false;
+    }
+
+    public IEnumerator backgroundTransition()
+    {
+        transition.SetBool("Run", true);
+        yield return new WaitForSeconds(0.4f);
+        transition.SetBool("Run", false);
+    }
+
+    private IEnumerator EdgeShake()
+    {
+        Vector3 originalPos;
+        if (currentRoomIndex == 0)
+        {
+            originalPos = BathroomCameraPosition.position;
+        }
+        else 
+        {
+            originalPos = KitchenCameraPosition.position; 
+        }
+
+        float duration = 0.2f;   // how long the shake lasts
+        float magnitude = 0.2f;  // how strong the shake is
+        float elapsed = 0f;
+
+        while (elapsed < duration)
+        {
+            // left-right only
+            float offsetX = Mathf.Sin(elapsed * 50f) * magnitude;
+
+            MainCameraPosition.position = new Vector3(
+                originalPos.x + offsetX,
+                originalPos.y,
+                originalPos.z
+            );
+
+            elapsed += Time.deltaTime;
+            yield return null;
+        }
+
+        // reset back to original
+        MainCameraPosition.position = originalPos;
+    }
+    private void UpdateRoomTitle()
+    {
+        switch (currentRoomIndex)
+        {
+            case 0:
+                Title.text = $"Bathroom";
+                break;
+            case 1:
+                Title.text = $"Game Room";
+                break;
+            case 2:
+                Title.text = $"Hall";
+                break;
+            case 3:
+                Title.text = $"Kitchen";
+                break;
+        }
+    }
+
+    public void PlayAndLoad(string sceneName)
+    {
+        if (audioClip != null)
+        {
+            StartCoroutine(PlaySoundAndLoad(sceneName));
+        }
+        else
+        {
+            isBathing = false;
+            PlayerPrefs.SetInt("IsBathing", isBathing ? 1 : 0);
+            isDancing = false;
+            PlayerPrefs.SetInt("IsDancing", isDancing ? 1 : 0);
+            isEating = false;
+            PlayerPrefs.SetInt("IsEating", isEating ? 1 : 0);
+            isAlbumOpen = false;
+            PlayerPrefs.SetInt("IsAlbumOpen", isAlbumOpen ? 1 : 0);
+            isSleeping = false;
+            PlayerPrefs.SetInt("IsSleeping", isSleeping ? 1 : 0);
+
+            PlayerPrefs.Save();
+            SceneManager.LoadScene(sceneName); // fallback
+        }
+    }
+
+    private System.Collections.IEnumerator PlaySoundAndLoad(string sceneName)
+    {
+        isBathing = false;
+        PlayerPrefs.SetInt("IsBathing", isBathing ? 1 : 0);
+        isDancing = false;
+        PlayerPrefs.SetInt("IsDancing", isDancing ? 1 : 0);
+        isEating = false;
+        PlayerPrefs.SetInt("IsEating", isEating ? 1 : 0);
+        isAlbumOpen = false;
+        PlayerPrefs.SetInt("IsAlbumOpen", isAlbumOpen ? 1 : 0);
+        isSleeping = false;
+        PlayerPrefs.SetInt("IsSleeping", isSleeping ? 1 : 0);
+
+        PlayerPrefs.Save();
+        audioClip.Play();
+        yield return new WaitForSeconds(0.4f); // wait short delay (or audioClip.clip.length)
+        SceneManager.LoadScene(sceneName);
     }
 }

@@ -1,14 +1,19 @@
-using UnityEngine;
-using UnityEngine.UI;
 using System.Collections;
+using System.Collections.Generic;
 using TMPro;
+using UnityEngine;
+using UnityEngine.InputSystem.EnhancedTouch;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
+using static UnityEngine.EventSystems.EventTrigger;
 
 public class Energy_Bar : MonoBehaviour
 {
+    [Header("Player First Time? / Pet Die?")]
     public bool firstTimePlay = true;
     public bool petDead;
 
+    [Header("Is the player having movement?")]
     public bool isEating;
     public bool isDancing;
     public bool isSleeping;
@@ -17,14 +22,21 @@ public class Energy_Bar : MonoBehaviour
 
     public bool progressStop = false;
 
-
+    [Header("Which Stage Player Reach?")]
     public static bool hasReachedTeenHalf = false;
     public static bool hasReachedAdultHalf = false;
     public static bool hasReachedOldHalf = false;
 
+
+    //New Game Enter Name
+    [SerializeField]
+    [Header("Input Name Field")]
+    public TMP_InputField nameInputField;
+
     [System.Serializable]
     public class PetData
     {
+        public string petName;
         public float dirty;
         public int energy;
         public int hunger;
@@ -40,8 +52,14 @@ public class Energy_Bar : MonoBehaviour
         public float lastProgressSecond;
         public float lastHappinessSecond;
         public float lastHungerSecond;
+        public int moneyValue;
+        public Dictionary<string, int> ownedItems;
     }
 
+    public int moneyValue;
+    public Dictionary<string, int> ownedItems = new Dictionary<string, int>();
+
+    [Header("Dirty Manager")]
     public CatDirtyManager dirtyManager;
 
     [SerializeField]
@@ -100,7 +118,7 @@ public class Energy_Bar : MonoBehaviour
 
     public PetStage currentStage = PetStage.Kid;
     public TextMeshProUGUI stageRepresent;
-
+    public TMP_Text moneyText;
 
     private float lastEnergyTime = 0f;
     private float lastHungerTime = 0f;
@@ -108,6 +126,9 @@ public class Energy_Bar : MonoBehaviour
     private float lastHealthTime = 0f;
     private float lastProgressTime = 0f;
 
+    //public Dictionary<> eventCompleted;
+    //public Dictionary<> musicPreferences;
+    
     void Start()
     {
         LoadPetData();
@@ -339,9 +360,6 @@ public class Energy_Bar : MonoBehaviour
 
         }
 
-        
-
-
 
         progress_current += value;
         GetProgressFill();
@@ -352,30 +370,7 @@ public class Energy_Bar : MonoBehaviour
         {
             if (isBathing == false && isAlbumOpen == false && isDancing == false && isSleeping == false && isEating == false)
             {
-                if (currentStage == PetStage.Teen && !hasReachedTeenHalf)
-                {
-                    progress_increase_time = 60f;
-                    hasReachedTeenHalf = true;
-                    PlayerPrefs.SetInt("hasReachedTeenHalf", hasReachedTeenHalf ? 1 : 0);
-                    PlayerPrefs.Save();
-                    HandleTeenHalfProgressEvent();
-                }
-                else if (currentStage == PetStage.Adult && !hasReachedAdultHalf)
-                {
-                    progress_increase_time = 60f;
-                    hasReachedAdultHalf = true;
-                    PlayerPrefs.SetInt("hasReachedAdultHalf", hasReachedAdultHalf ? 1 : 0);
-                    PlayerPrefs.Save();
-                    HandleAdultHalfProgressEvent();
-                }
-                else if (currentStage == PetStage.Old && !hasReachedOldHalf)
-                {
-                    progress_increase_time = 60f;
-                    hasReachedOldHalf = true;
-                    PlayerPrefs.SetInt("hasReachedOldHalf", hasReachedOldHalf ? 1 : 0);
-                    PlayerPrefs.Save();
-                    HandleOldHalfProgressEvent();
-                }
+                changeEventScene();
             }
             else if (isBathing == true || isAlbumOpen == true || isDancing == true || isSleeping == true || isEating == true)
             {
@@ -414,7 +409,36 @@ public class Energy_Bar : MonoBehaviour
 
     }
 
-
+    void changeEventScene()
+    {
+        if (currentStage == PetStage.Teen && !hasReachedTeenHalf)
+        {
+            progress_increase_time = 60f;
+            hasReachedTeenHalf = true;
+            PlayerPrefs.SetInt("hasReachedTeenHalf", hasReachedTeenHalf ? 1 : 0);
+            PlayerPrefs.Save();
+            HandleHalfProgressEvent();
+            UnityEngine.SceneManagement.SceneManager.LoadScene("TeenStressEvent");
+        }
+        else if (currentStage == PetStage.Adult && !hasReachedAdultHalf)
+        {
+            progress_increase_time = 60f;
+            hasReachedAdultHalf = true;
+            PlayerPrefs.SetInt("hasReachedAdultHalf", hasReachedAdultHalf ? 1 : 0);
+            PlayerPrefs.Save();
+            HandleHalfProgressEvent();
+            UnityEngine.SceneManagement.SceneManager.LoadScene("AdultStressEvent");
+        }
+        else if (currentStage == PetStage.Old && !hasReachedOldHalf)
+        {
+            progress_increase_time = 60f;
+            hasReachedOldHalf = true;
+            PlayerPrefs.SetInt("hasReachedOldHalf", hasReachedOldHalf ? 1 : 0);
+            PlayerPrefs.Save();
+            HandleHalfProgressEvent();
+            UnityEngine.SceneManagement.SceneManager.LoadScene("FindFriendSceneTest");
+        }
+    }
     void AdvanceStage()
     {
         string currentScene = SceneManager.GetActiveScene().name;
@@ -523,9 +547,18 @@ public class Energy_Bar : MonoBehaviour
         }
     }
 
-    public void newPetData()
+    public void createPetData()
     {
+        string petNewName = nameInputField.text.Trim();
+
+        if (string.IsNullOrEmpty(petNewName))
+        {
+            Debug.LogWarning("Pet name is empty!");
+            return;
+        }
+
         PetData data = new PetData();
+        data.petName = petNewName;
         data.dirty = 0;
         data.energy = 100;
         data.hunger = 100;
@@ -540,17 +573,35 @@ public class Energy_Bar : MonoBehaviour
         data.lastHealthSecond = 0f;
         data.lastProgressSecond = 0f;
         data.lastHungerSecond = 0f;
+        data.moneyValue = 0;
+
         string json = JsonUtility.ToJson(data);
         PlayerPrefs.SetString("PetData", json);
         PlayerPrefs.Save();
+
         petDead = false;
         PlayerPrefs.SetInt("PetDead", petDead ? 1 : 0);
         PlayerPrefs.Save();
+
+        SceneManager.LoadScene("HallScene");
     }
 
     public void SavePetData()
     {
-        PetData data = new PetData();
+        PetData data;
+
+        // Load existing data first so we keep petName
+        if (PlayerPrefs.HasKey("PetData"))
+        {
+            string oldJson = PlayerPrefs.GetString("PetData");
+            data = JsonUtility.FromJson<PetData>(oldJson) ?? new PetData();
+        }
+        else
+        {
+            data = new PetData();
+        }
+
+
         data.dirty = dirtyManager.dirty;
         data.energy = energy_current;
         data.hunger = hunger_current;
@@ -558,6 +609,8 @@ public class Energy_Bar : MonoBehaviour
         data.health = health_current;
         data.progress = progress_current;
         data.stage = currentStage;
+        data.moneyValue = moneyValue;
+        data.ownedItems = ownedItems;
         data.lastSavedTime = System.DateTime.Now.ToString();
         data.firstTime = false;
         data.lastEnergySecond = lastEnergyTime;
@@ -587,6 +640,10 @@ public class Energy_Bar : MonoBehaviour
 
             if (firstTimePlay == false)
             {
+                //Money
+                moneyValue = data.moneyValue;
+                ownedItems = data.ownedItems ?? new Dictionary<string, int>();
+
                 // Calculate time difference
                 System.DateTime lastTime = System.DateTime.Parse(data.lastSavedTime);
                 System.TimeSpan timeDiff = System.DateTime.Now - lastTime;
@@ -738,7 +795,8 @@ public class Energy_Bar : MonoBehaviour
         }
     }
 
-    private void HandleOldHalfProgressEvent()
+
+    private void HandleHalfProgressEvent()
     {
         progressStop = false;
         Debug.Log("Progress reached 50%, switching scene.");
@@ -750,49 +808,8 @@ public class Energy_Bar : MonoBehaviour
         DontDestroyOnLoad(this.gameObject);
 
         // Load next scene (you can also use a loading scene or fade-out effect)
-        UnityEngine.SceneManagement.SceneManager.LoadScene("FindFriendSceneTest");
+
     }
-
-    private void HandleTeenHalfProgressEvent()
-    {
-        progressStop = false;
-        Debug.Log("Progress reached 50%, switching scene.");
-        StopAllCoroutines();
-        // Optional: Save before switching
-        SavePetData();
-
-        // Prevent GameObject from being destroyed so you can do work in next scene
-        DontDestroyOnLoad(this.gameObject);
-
-        // Load next scene (you can also use a loading scene or fade-out effect)
-        UnityEngine.SceneManagement.SceneManager.LoadScene("TeenStressEvent");
-    }
-
-    private void HandleAdultHalfProgressEvent()
-    {
-        progressStop = false;
-        Debug.Log("Progress reached 50%, switching scene.");
-        StopAllCoroutines();
-        // Optional: Save before switching
-        SavePetData();
-
-        // Prevent GameObject from being destroyed so you can do work in next scene
-        DontDestroyOnLoad(this.gameObject);
-
-        // Load next scene (you can also use a loading scene or fade-out effect)
-        UnityEngine.SceneManagement.SceneManager.LoadScene("AdultStressEvent");
-    }
-
-    //public void CheckWhichScene(string currentScene)
-    //{
-    //    if(currentScene == "HallScene" ||  currentScene == "TeenHallScene" || currentScene == "AdultHallScene" || currentScene == "OldHallScene")
-    //    {
-    //        InHallScene = true;
-    //    }else if (currentScene == "KitchenScene" || currentScene == "TeenKitchenScene" || currentScene == "AdultKitchenScene" || currentScene == "OldKitchenScene")
-    //    {
-    //        InKitchenScene = true;
-    //    }
-    //}
 
 
     private void Update()
@@ -816,30 +833,7 @@ public class Energy_Bar : MonoBehaviour
             {
                 if (isBathing == false && isAlbumOpen == false && isDancing == false && isSleeping == false && isEating == false)
                 {
-                    if (currentStage == PetStage.Teen && !hasReachedTeenHalf)
-                    {
-                        hasReachedTeenHalf = true;
-                        PlayerPrefs.SetInt("hasReachedTeenHalf", hasReachedTeenHalf ? 1 : 0);
-                        PlayerPrefs.Save();
-                        StartCoroutine(IncreaseProgressOverTime());
-                        HandleTeenHalfProgressEvent();
-                    }
-                    else if (currentStage == PetStage.Adult && !hasReachedAdultHalf)
-                    {
-                        hasReachedAdultHalf = true;
-                        PlayerPrefs.SetInt("hasReachedAdultHalf", hasReachedAdultHalf ? 1 : 0);
-                        PlayerPrefs.Save();
-                        StartCoroutine(IncreaseProgressOverTime());
-                        HandleAdultHalfProgressEvent();
-                    }
-                    else if (currentStage == PetStage.Old && !hasReachedOldHalf)
-                    {
-                        hasReachedOldHalf = true;
-                        PlayerPrefs.SetInt("hasReachedOldHalf", hasReachedOldHalf ? 1 : 0);
-                        PlayerPrefs.Save();
-                        StartCoroutine(IncreaseProgressOverTime());
-                        HandleOldHalfProgressEvent();
-                    }
+                    changeEventScene();
                 }
             }
             else if (progress_current >= progress_max)
@@ -852,97 +846,187 @@ public class Energy_Bar : MonoBehaviour
             }
         }
 
-            if (energy_current == 0)
-            {
-                PlayerPrefs.SetInt("CauseOfDeath", 2); // 5 = Energy death (you can define it)
-                PlayerPrefs.SetString("CurrentStage", currentStage.ToString()); // assume you have this variable
-                PlayerPrefs.Save();
+        if (energy_current == 0)
+        {
+            PlayerPrefs.SetInt("CauseOfDeath", 2); // 5 = Energy death (you can define it)
+            PlayerPrefs.SetString("CurrentStage", currentStage.ToString()); // assume you have this variable
+            PlayerPrefs.Save();
 
-                FindFirstObjectByType<BGMScript>().StopMusic();
-                // Load the 1LastWord scene
-                petDead = true;
-                hasReachedTeenHalf = false;
-                hasReachedAdultHalf = false;
-                hasReachedTeenHalf = false;
-                PlayerPrefs.SetInt("hasReachedTeenHalf", hasReachedTeenHalf ? 1 : 0);
-                PlayerPrefs.Save();
-                PlayerPrefs.SetInt("hasReachedAdultHalf", hasReachedAdultHalf ? 1 : 0);
-                PlayerPrefs.Save();
-                PlayerPrefs.SetInt("hasReachedOldHalf", hasReachedTeenHalf ? 1 : 0);
-                PlayerPrefs.Save();
-                PlayerPrefs.SetInt("PetDead", petDead ? 1 : 0);
-                PlayerPrefs.Save();
-                SceneManager.LoadScene("1LastWord");
+            FindFirstObjectByType<BGMScript>().StopMusic();
+            // Load the 1LastWord scene
+            petDead = true;
+            hasReachedTeenHalf = false;
+            hasReachedAdultHalf = false;
+            hasReachedTeenHalf = false;
+            PlayerPrefs.SetInt("hasReachedTeenHalf", hasReachedTeenHalf ? 1 : 0);
+            PlayerPrefs.Save();
+            PlayerPrefs.SetInt("hasReachedAdultHalf", hasReachedAdultHalf ? 1 : 0);
+            PlayerPrefs.Save();
+            PlayerPrefs.SetInt("hasReachedOldHalf", hasReachedTeenHalf ? 1 : 0);
+            PlayerPrefs.Save();
+            PlayerPrefs.SetInt("PetDead", petDead ? 1 : 0);
+            PlayerPrefs.Save();
+            SceneManager.LoadScene("1LastWord");
+        }
+
+        if (hunger_current == 0)
+        {
+            PlayerPrefs.SetInt("CauseOfDeath", 0); // 5 = Energy death (you can define it)
+            PlayerPrefs.SetString("CurrentStage", currentStage.ToString()); // assume you have this variable
+            PlayerPrefs.Save();
+
+            FindFirstObjectByType<BGMScript>().StopMusic();
+            // Load the 1LastWord scene
+            petDead = true;
+            hasReachedTeenHalf = false;
+            hasReachedAdultHalf = false;
+            hasReachedTeenHalf = false;
+            PlayerPrefs.SetInt("hasReachedTeenHalf", hasReachedTeenHalf ? 1 : 0);
+            PlayerPrefs.Save();
+            PlayerPrefs.SetInt("hasReachedAdultHalf", hasReachedAdultHalf ? 1 : 0);
+            PlayerPrefs.Save();
+            PlayerPrefs.SetInt("hasReachedOldHalf", hasReachedTeenHalf ? 1 : 0);
+            PlayerPrefs.Save();
+            PlayerPrefs.SetInt("PetDead", petDead ? 1 : 0);
+            PlayerPrefs.Save();
+            SceneManager.LoadScene("1LastWord");
+        }
+
+        if (happiness_current == 0)
+        {
+            PlayerPrefs.SetInt("CauseOfDeath", 1); // 5 = Energy death (you can define it)
+            PlayerPrefs.SetString("CurrentStage", currentStage.ToString()); // assume you have this variable
+            PlayerPrefs.Save();
+
+            FindFirstObjectByType<BGMScript>().StopMusic();
+            // Load the 1LastWord scene
+            petDead = true;
+            hasReachedTeenHalf = false;
+            hasReachedAdultHalf = false;
+            hasReachedTeenHalf = false;
+            PlayerPrefs.SetInt("hasReachedTeenHalf", hasReachedTeenHalf ? 1 : 0);
+            PlayerPrefs.Save();
+            PlayerPrefs.SetInt("hasReachedAdultHalf", hasReachedAdultHalf ? 1 : 0);
+            PlayerPrefs.Save();
+            PlayerPrefs.SetInt("hasReachedOldHalf", hasReachedTeenHalf ? 1 : 0);
+            PlayerPrefs.Save();
+            PlayerPrefs.SetInt("PetDead", petDead ? 1 : 0);
+            PlayerPrefs.Save();
+            SceneManager.LoadScene("1LastWord");
+        }
+
+        if (health_current == 0)
+        {
+            PlayerPrefs.SetInt("CauseOfDeath", 3); // 5 = Energy death (you can define it)
+            PlayerPrefs.SetString("CurrentStage", currentStage.ToString()); // assume you have this variable
+            PlayerPrefs.Save();
+
+            FindFirstObjectByType<BGMScript>().StopMusic();
+            // Load the 1LastWord scene
+            petDead = true;
+            hasReachedTeenHalf = false;
+            hasReachedAdultHalf = false;
+            hasReachedTeenHalf = false;
+            PlayerPrefs.SetInt("hasReachedTeenHalf", hasReachedTeenHalf ? 1 : 0);
+            PlayerPrefs.Save();
+            PlayerPrefs.SetInt("hasReachedAdultHalf", hasReachedAdultHalf ? 1 : 0);
+            PlayerPrefs.Save();
+            PlayerPrefs.SetInt("hasReachedOldHalf", hasReachedTeenHalf ? 1 : 0);
+            PlayerPrefs.Save();
+            PlayerPrefs.SetInt("PetDead", petDead ? 1 : 0);
+            PlayerPrefs.Save();
+            SceneManager.LoadScene("1LastWord");
+        }
+    }
+
+    public int RetrieveValue(string key)
+    {
+        return key switch
+        {
+            "energy" => energy_current,
+            "hunger" => hunger_current,
+            "happiness" => happiness_current,
+            "health" => health_current,
+            "progress" => progress_current,
+            "moneyValue" => moneyValue,
+            _ => -1
+        };
+    }
+
+    public void updateFoodStatus()
+    {
+
+    }
+
+    public void updateMedicineStatus()
+    {
+
+    }
+
+    public void updateProductandMoney(List<CartItem> purchasedItems, int totalCost)
+    {
+        // 1. Deduct money
+        moneyValue -= totalCost;
+
+        // 2. Add items to inventory
+        foreach (CartItem item in purchasedItems)
+        {
+            if (ownedItems.ContainsKey(item.itemName))
+            {
+                ownedItems[item.itemName] += item.quantity;   // add quantity
             }
-
-            if (hunger_current == 0)
+            else
             {
-                PlayerPrefs.SetInt("CauseOfDeath", 0); // 5 = Energy death (you can define it)
-                PlayerPrefs.SetString("CurrentStage", currentStage.ToString()); // assume you have this variable
-                PlayerPrefs.Save();
-
-                FindFirstObjectByType<BGMScript>().StopMusic();
-                // Load the 1LastWord scene
-                petDead = true;
-                hasReachedTeenHalf = false;
-                hasReachedAdultHalf = false;
-                hasReachedTeenHalf = false;
-                PlayerPrefs.SetInt("hasReachedTeenHalf", hasReachedTeenHalf ? 1 : 0);
-                PlayerPrefs.Save();
-                PlayerPrefs.SetInt("hasReachedAdultHalf", hasReachedAdultHalf ? 1 : 0);
-                PlayerPrefs.Save();
-                PlayerPrefs.SetInt("hasReachedOldHalf", hasReachedTeenHalf ? 1 : 0);
-                PlayerPrefs.Save();
-                PlayerPrefs.SetInt("PetDead", petDead ? 1 : 0);
-                PlayerPrefs.Save();
-                SceneManager.LoadScene("1LastWord");
-            }
-
-            if (happiness_current == 0)
-            {
-                PlayerPrefs.SetInt("CauseOfDeath", 1); // 5 = Energy death (you can define it)
-                PlayerPrefs.SetString("CurrentStage", currentStage.ToString()); // assume you have this variable
-                PlayerPrefs.Save();
-
-                FindFirstObjectByType<BGMScript>().StopMusic();
-                // Load the 1LastWord scene
-                petDead = true;
-                hasReachedTeenHalf = false;
-                hasReachedAdultHalf = false;
-                hasReachedTeenHalf = false;
-                PlayerPrefs.SetInt("hasReachedTeenHalf", hasReachedTeenHalf ? 1 : 0);
-                PlayerPrefs.Save();
-                PlayerPrefs.SetInt("hasReachedAdultHalf", hasReachedAdultHalf ? 1 : 0);
-                PlayerPrefs.Save();
-                PlayerPrefs.SetInt("hasReachedOldHalf", hasReachedTeenHalf ? 1 : 0);
-                PlayerPrefs.Save();
-                PlayerPrefs.SetInt("PetDead", petDead ? 1 : 0);
-                PlayerPrefs.Save();
-                SceneManager.LoadScene("1LastWord");
-            }
-
-            if (health_current == 0)
-            {
-                PlayerPrefs.SetInt("CauseOfDeath", 3); // 5 = Energy death (you can define it)
-                PlayerPrefs.SetString("CurrentStage", currentStage.ToString()); // assume you have this variable
-                PlayerPrefs.Save();
-
-                FindFirstObjectByType<BGMScript>().StopMusic();
-                // Load the 1LastWord scene
-                petDead = true;
-                hasReachedTeenHalf = false;
-                hasReachedAdultHalf = false;
-                hasReachedTeenHalf = false;
-                PlayerPrefs.SetInt("hasReachedTeenHalf", hasReachedTeenHalf ? 1 : 0);
-                PlayerPrefs.Save();
-                PlayerPrefs.SetInt("hasReachedAdultHalf", hasReachedAdultHalf ? 1 : 0);
-                PlayerPrefs.Save();
-                PlayerPrefs.SetInt("hasReachedOldHalf", hasReachedTeenHalf ? 1 : 0);
-                PlayerPrefs.Save();
-                PlayerPrefs.SetInt("PetDead", petDead ? 1 : 0);
-                PlayerPrefs.Save();
-                SceneManager.LoadScene("1LastWord");
+                ownedItems.Add(item.itemName, item.quantity);
             }
         }
-    
+
+        // 3. Save updated data
+        SavePetData();
+
+        Debug.Log("Products and money updated & saved.");
+    }
+
+    public void updateLikeMusicStatus()
+    {
+
+    }
+
+    public void updateUnlikeMusicStatus()
+    {
+
+    }
+
+    public void resetStatusRate()
+    {
+
+    }
+
+    public void updateSleepStatus()
+    {
+
+    }
+
+    public void updateBathStatus()
+    {
+
+    }
+
+    public void updateEventStatus()
+    {
+
+    }
+
+    public void onConnectionReload()
+    {
+
+
+
+    }
+
+    public void connectionLost()
+    {
+
+    }
+
 }

@@ -1767,6 +1767,8 @@ MonoBehaviour:
   isBathing: 0
   isAlbumOpen: 0
   progressStop: 0
+  nameInputField: {fileID: 0}
+  moneyValue: 0
   dirtyManager: {fileID: 1771371949}
   energy_max: 100
   energy_current: 0
@@ -1795,6 +1797,7 @@ MonoBehaviour:
   progress_increase_time: 60
   currentStage: 0
   stageRepresent: {fileID: 409689387}
+  moneyText: {fileID: 0}
 --- !u!224 &277346830
 RectTransform:
   m_ObjectHideFlags: 0
@@ -11464,6 +11467,11 @@ MonoBehaviour:
   bathroom: 0
   gameroom: 0
   currentStage: 0
+  isEating: 0
+  isSleeping: 0
+  isDancing: 0
+  isBathing: 0
+  isAlbumOpen: 0
 --- !u!4 &1771371947
 Transform:
   m_ObjectHideFlags: 0

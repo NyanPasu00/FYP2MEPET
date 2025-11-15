@@ -2,9 +2,11 @@
 //using System.Collections.Generic;
 //using Unity.VisualScripting.Antlr3.Runtime;
 //using UnityEngine;
+//using UnityEngine.SceneManagement;
+//using static Energy_Bar;
 
-////[System.Serializable] <--- Duplicate If need put look like need delete the file from other side , Status bar or Digital album 
-//public class PetData 
+////[Serializable] <--- Duplicate If need put look like need delete the file from other side , Status bar or Digital album 
+//public class PetData
 //{
 //    public float dirty;
 //    public int energy;
@@ -129,7 +131,7 @@
 
 
 
-//    public void CreatePetStatus(string name)
+//    public void createPetStatus(string name)
 //    {
 //        PetData data = new PetData
 //        {
@@ -244,10 +246,7 @@
 //        }
 //    }
 
-//    public void createPetStatus()
-//    {
 
-//    }
 
 //    public int RetrieveValue(string key)
 //    {
@@ -312,7 +311,7 @@
 //        updatePetStatus();
 //    }
 
-//    public void OnApplicationStop(bool paused)
+//    public void OnApplicationPause(bool paused) //Class Diagram is OnApplicationStop()
 //    {
 //        if (paused)
 //            updatePetStatus();
@@ -329,4 +328,5 @@
 //    {
 
 //    }
+
 //}

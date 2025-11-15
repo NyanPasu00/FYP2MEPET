@@ -3,7 +3,7 @@ using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using TMPro;
 
-public class StatusDetail: MonoBehaviour
+public class StatusDetail : MonoBehaviour
 {
     public GameObject statusPanel;
     public TextMeshProUGUI statusText;

@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: 973f79e49da0f1d41ac559f34dc5cac8
+guid: 30158245c42a69446bd0b5d7644a0ead
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 2302138931199125565
-    second: "Basura_Simulaci\xF3n_Chatarra_Papel_De_Simulaci\xF3n_PNG__dibujos__Basura__Simulaci\xF3n__Chatarra_PNG_y_PSD_para_Descargar_Gratis___Pngtree-removebg-preview_0"
+      213: 6277800990665863796
+    second: CartImage_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -100,13 +100,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: "Basura_Simulaci\xF3n_Chatarra_Papel_De_Simulaci\xF3n_PNG__dibujos__Basura__Simulaci\xF3n__Chatarra_PNG_y_PSD_para_Descargar_Gratis___Pngtree-removebg-preview_0"
+      name: CartImage_0
       rect:
         serializedVersion: 2
-        x: 123
-        y: 102
-        width: 140
-        height: 130
+        x: 7
+        y: 3
+        width: 559
+        height: 432
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -115,8 +115,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: d38a8b12927d2ff10800000000000000
-      internalID: 2302138931199125565
+      spriteID: 472fb336dba3f1750800000000000000
+      internalID: 6277800990665863796
       vertices: []
       indices: 
       edges: []
@@ -135,7 +135,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      "Basura_Simulaci\xF3n_Chatarra_Papel_De_Simulaci\xF3n_PNG__dibujos__Basura__Simulaci\xF3n__Chatarra_PNG_y_PSD_para_Descargar_Gratis___Pngtree-removebg-preview_0": 2302138931199125565
+      CartImage_0: 6277800990665863796
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

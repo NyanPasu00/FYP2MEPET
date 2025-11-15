@@ -18,16 +18,24 @@ public class RedBall : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Cat"))
         {
-            
-            ScoreManager.instance.AddScore(pointValue);
-            collision.gameObject.GetComponent<CatMovement>()?.PlayCatchAnimation();
+
+            if (MiniGameController.instance != null)
+            {
+                MiniGameController.instance.AddScore(pointValue);
+                MiniGameController.instance.PlayCatchAnimation();
+            }
+
             Destroy(gameObject);
             Debug.Log("Cat collided with a ball!");
         }
 
         if (collision.gameObject.CompareTag("Floor"))
         {
-            BallMissed.instance.MissScore();
+            if (MiniGameController.instance != null)
+            {
+                MiniGameController.instance.MissScore();
+            }
+
             Destroy(gameObject);
             Debug.Log("Ball Miss!");
         }
