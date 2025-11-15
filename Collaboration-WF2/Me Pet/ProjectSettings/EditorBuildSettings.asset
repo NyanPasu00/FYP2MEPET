@@ -15,9 +15,6 @@ EditorBuildSettings:
     path: Assets/OldScenes/PetNameScene.unity
     guid: 7c448b30b058de642a7098edbb131f7a
   - enabled: 1
-    path: Assets/OldScenes/PlayBallScene.unity
-    guid: e5f04253c2590fb4788c6deac2d39b7e
-  - enabled: 1
     path: Assets/OldScenes/1 KidModuleScene/KitchenScene.unity
     guid: 266351c0574d07b43aac92a06c9e38bd
   - enabled: 1
@@ -95,6 +92,9 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/OldScenes/DieModuleScene/3Cause.unity
     guid: 0b6d918b8a40a604a8aef7de801bcc4b
+  - enabled: 1
+    path: Assets/Scenes/PlayBallScene.unity
+    guid: 8aefd7373e35bab4b96955c491682db5
   m_configObjects:
     com.unity.adaptiveperformance.simulator.provider_settings: {fileID: 11400000, guid: 7ce01ab533dc43d4b93271488de3d6e4, type: 2}
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
