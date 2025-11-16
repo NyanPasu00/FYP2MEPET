@@ -18,6 +18,8 @@ public class SoapBubbleSpawner : MonoBehaviour
     private List<GameObject> activeBubbles = new List<GameObject>();
     public AudioSource audio;
 
+    public BathController bathController;
+
 
     private void Start()
     {
@@ -42,93 +44,111 @@ public class SoapBubbleSpawner : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        
-        if (collision.CompareTag("Pet")){
-            CatDirtyManager catManager = FindAnyObjectByType<CatDirtyManager>();
+        if (!collision.CompareTag("Pet"))
+            return;
 
-            if (catManager == null)
-            {
-                return;
-            }
-            if (catManager.dirty >= 20)
-            {
-                audio.Play();
-            }
-           
+        if (bathController == null)
+            bathController = FindAnyObjectByType<BathController>();
+
+        if (bathController == null)
+            return;
+
+        if (bathController.dirty >= 20f && audio != null)
+        {
+            audio.Play();
         }
     }
 
     private void OnTriggerExit2D(Collider2D collision)
     {
-        if (collision.CompareTag("Pet"))
-        {
+        if (!collision.CompareTag("Pet"))
+            return;
+
+        if (audio != null)
             audio.Stop();
-        }
     }
-    void OnTriggerStay2D(Collider2D other)
+
+    private void OnTriggerStay2D(Collider2D other)
     {
-        if (other.CompareTag("Pet"))
+        if (!other.CompareTag("Pet"))
+            return;
+
+        if (bathController == null)
+            bathController = FindAnyObjectByType<BathController>();
+
+        if (bathController == null)
+            return;
+
+        // Not dirty enough
+        if (bathController.dirty < 20f)
         {
+            bathController.ShowCloudMessage("I still not so dirty yet >_<", 2f);
+            return;
+        }
 
-            CatDirtyManager catManager = FindAnyObjectByType<CatDirtyManager>();
+        // ✅ Dirty enough: spawn bubbles / apply soap
+        if (Time.time - lastBubbleTime > bubbleDelay && activeBubbles.Count < maxBubbles)
+        {
+            isBathing = true;
+            PlayerPrefs.SetInt("IsBathing", isBathing ? 1 : 0);
+            PlayerPrefs.Save();
 
-            if (catManager == null)
-                return;
+            if (rightButton != null) rightButton.interactable = false;
+            if (leftButton != null) leftButton.interactable = false;
 
-            // ❌ Show message if not dirty
-            if (catManager.dirty < 20)
+            Vector3 spawnPos = other.ClosestPoint(transform.position);
+
+            bool tooClose = false;
+            foreach (GameObject bubbleObj in activeBubbles)
             {
-                catManager.ShowCloudMessage("I still not so dirty yet >_<", 2f);
-                return;
+                if (bubbleObj != null &&
+                    Vector3.Distance(bubbleObj.transform.position, spawnPos) < minDistanceBetweenBubbles)
+                {
+                    tooClose = true;
+                    break;
+                }
             }
 
-            // ✅ Dirty enough: apply soap
-            if (Time.time - lastBubbleTime > bubbleDelay && activeBubbles.Count < maxBubbles)
+            if (!tooClose)
             {
-                isBathing = true;
-                PlayerPrefs.SetInt("IsBathing", isBathing ? 1 : 0);
-                PlayerPrefs.Save();
-                rightButton.interactable = false;
-                leftButton.interactable = false;
-                Vector3 spawnPos = other.ClosestPoint(transform.position);
+                GameObject newBubble = Instantiate(bubble, spawnPos, Quaternion.identity);
+                activeBubbles.Add(newBubble);
+                lastBubbleTime = Time.time;
 
-                bool tooClose = false;
-                foreach (GameObject bubbleObj in activeBubbles)
-                {
-                    if (bubbleObj != null && Vector3.Distance(bubbleObj.transform.position, spawnPos) < minDistanceBetweenBubbles)
-                    {
-                        tooClose = true;
-                        break;
-                    }
-                }
+                // Tell BathController that soap has been used
+                bathController.OnSoapUsed();
+            }
 
-                if (!tooClose)
-                {
-                    GameObject newBubble = Instantiate(bubble, spawnPos, Quaternion.identity);
-                    activeBubbles.Add(newBubble);
-                    lastBubbleTime = Time.time;
-
-                    catManager.OnSoapUsed();
-
-                }
-                if (activeBubbles.Count >= maxBubbles)
-                {
-                    water.SetActive(true);
-                }
+            // Enough bubbles -> show water drop
+            if (activeBubbles.Count >= maxBubbles && water != null)
+            {
+                water.SetActive(true);
             }
         }
     }
 
-    void Update()
+    private void Update()
     {
+        // Clean up destroyed bubbles
         activeBubbles.RemoveAll(b => b == null);
-        CatDirtyManager catManager = FindAnyObjectByType<CatDirtyManager>();
 
-        if (activeBubbles.Count > maxBubbles/2 && activeBubbles.Count != maxBubbles && !hasShownHalfCleanMessage)
+        if (bathController == null)
+            bathController = FindAnyObjectByType<BathController>();
+
+        if (bathController == null)
+            return;
+
+        // Show "almost there" message once
+        if (!hasShownHalfCleanMessage &&
+            activeBubbles.Count > maxBubbles / 2 &&
+            activeBubbles.Count != maxBubbles)
         {
-            catManager.ShowCloudMessage("Almost there! Keep scrubbing to make your pet shine!", 2.5f);
+            bathController.ShowCloudMessage(
+                "Almost there! Keep scrubbing to make your pet shine!",
+                2.5f
+            );
             Debug.Log("Message shown: Almost there!");
-            
+            hasShownHalfCleanMessage = true;
         }
     }
 }

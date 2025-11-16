@@ -9,45 +9,47 @@ public class FadeWhenHitByWater : MonoBehaviour
     public bool isFading = false;
     private SpriteRenderer sr;
 
-    private CatDirtyManager catDirtyManager;
+    private BathController bathController;
 
     void Start()
     {
-        sr = GetComponent<SpriteRenderer>(); 
-        catDirtyManager = FindAnyObjectByType<CatDirtyManager>(); // Use the new method here
-
+        sr = GetComponent<SpriteRenderer>();
+        bathController = FindAnyObjectByType<BathController>();
     }
 
     void Update()
     {
-        if (isFading)
+        if (!isFading) return;
+
+        lifeTimer += Time.deltaTime;
+
+        // bubble float up
+        transform.position += Vector3.up * floatSpeed * Time.deltaTime;
+
+        // fade alpha
+        if (sr != null)
         {
-            lifeTimer += Time.deltaTime;
+            float alpha = Mathf.Lerp(1f, 0f, lifeTimer / fadeTime);
+            sr.color = new Color(sr.color.r, sr.color.g, sr.color.b, alpha);
+        }
 
-            transform.position += Vector3.up * floatSpeed * Time.deltaTime;
-
-            if (sr != null)
+        // when finished fading
+        if (lifeTimer >= fadeTime)
+        {
+            if (bathController != null)
             {
-                float alpha = Mathf.Lerp(1f, 0f, lifeTimer / fadeTime);
-                sr.color = new Color(sr.color.r, sr.color.g, sr.color.b, alpha);
+                // fully clean at the end of fade
+                bathController.dirty = 0f;
+                bathController.HandleFullyCleaned();
             }
 
-            if (lifeTimer >= fadeTime)
-            {
-                if (catDirtyManager != null)
-                {
-                    catDirtyManager.dirty = 0f;
-                    catDirtyManager.HandleFullyCleaned();
-                }
+            Destroy(gameObject);
+        }
 
-                Destroy(gameObject);
-            }
-
-            if (catDirtyManager != null)
-            {
-                catDirtyManager.DecreaseDirtGradually(Time.deltaTime);
-            }
-
+        // gradually reduce dirt while fading
+        if (bathController != null)
+        {
+            bathController.DecreaseDirtGradually(Time.deltaTime);
         }
     }
 
@@ -56,8 +58,6 @@ public class FadeWhenHitByWater : MonoBehaviour
         if (other.CompareTag("Water") && !isFading)
         {
             isFading = true;
-            
-
         }
     }
 }

@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem.EnhancedTouch;
@@ -52,10 +53,14 @@ public class Energy_Bar : MonoBehaviour
         public float lastHappinessSecond;
         public float lastHungerSecond;
         public int moneyValue;
+        public Dictionary<string, int> ownedItems;
     }
 
-    [Header("Dirty Manager")]
-    public CatDirtyManager dirtyManager;
+    public int moneyValue;
+    public Dictionary<string, int> ownedItems = new Dictionary<string, int>();
+
+    [Header("Bath / Dirty Controller")]
+    public BathController bathController;
 
     [SerializeField]
     [Header("Energy")]
@@ -113,7 +118,7 @@ public class Energy_Bar : MonoBehaviour
 
     public PetStage currentStage = PetStage.Kid;
     public TextMeshProUGUI stageRepresent;
-
+    public TMP_Text moneyText;
 
     private float lastEnergyTime = 0f;
     private float lastHungerTime = 0f;
@@ -123,7 +128,7 @@ public class Energy_Bar : MonoBehaviour
 
     //public Dictionary<> eventCompleted;
     //public Dictionary<> musicPreferences;
-    //public List<FoodItem> foodInventory;
+    
     void Start()
     {
         LoadPetData();
@@ -578,7 +583,7 @@ public class Energy_Bar : MonoBehaviour
         PlayerPrefs.SetInt("PetDead", petDead ? 1 : 0);
         PlayerPrefs.Save();
 
-        SceneManager.LoadScene("HallScene");
+        SceneManager.LoadScene("KidScene");
     }
 
     public void SavePetData()
@@ -597,13 +602,18 @@ public class Energy_Bar : MonoBehaviour
         }
 
 
-        data.dirty = dirtyManager.dirty;
+        if (bathController == null)
+            bathController = FindAnyObjectByType<BathController>();
+
+        data.dirty = bathController != null ? bathController.dirty : 0f;
         data.energy = energy_current;
         data.hunger = hunger_current;
         data.happiness = happiness_current;
         data.health = health_current;
         data.progress = progress_current;
         data.stage = currentStage;
+        data.moneyValue = moneyValue;
+        data.ownedItems = ownedItems;
         data.lastSavedTime = System.DateTime.Now.ToString();
         data.firstTime = false;
         data.lastEnergySecond = lastEnergyTime;
@@ -623,6 +633,8 @@ public class Energy_Bar : MonoBehaviour
     {
         if (PlayerPrefs.HasKey("PetData"))
         {
+            if (bathController == null)
+                bathController = FindAnyObjectByType<BathController>();
             string json = PlayerPrefs.GetString("PetData");
             PetData data = JsonUtility.FromJson<PetData>(json);
 
@@ -633,6 +645,10 @@ public class Energy_Bar : MonoBehaviour
 
             if (firstTimePlay == false)
             {
+                //Money
+                moneyValue = data.moneyValue;
+                ownedItems = data.ownedItems ?? new Dictionary<string, int>();
+
                 // Calculate time difference
                 System.DateTime lastTime = System.DateTime.Parse(data.lastSavedTime);
                 System.TimeSpan timeDiff = System.DateTime.Now - lastTime;
@@ -665,7 +681,10 @@ public class Energy_Bar : MonoBehaviour
 
                 // DIRTY (no leftover logic needed, always starts at 0 per session)
                 int dirtyIncrease = Mathf.FloorToInt((float)(secondsPassed / 60f * 100 * 0.01f));
-                dirtyManager.dirty = Mathf.Max(0, data.dirty + dirtyIncrease);
+                if (bathController != null)
+                {
+                    bathController.dirty = Mathf.Max(0, data.dirty + dirtyIncrease);
+                }
 
                 // HEALTH (Only if Old stage)
                 if (currentStage == PetStage.Old)
@@ -730,7 +749,10 @@ public class Energy_Bar : MonoBehaviour
                 health_current = data.health;
                 progress_current = data.progress;
                 currentStage = data.stage;
-                dirtyManager.dirty = data.dirty;
+                if (bathController != null)
+                {
+                    bathController.dirty = data.dirty;
+                }
 
             }
 
@@ -937,6 +959,7 @@ public class Energy_Bar : MonoBehaviour
             "happiness" => happiness_current,
             "health" => health_current,
             "progress" => progress_current,
+            "moneyValue" => moneyValue,
             _ => -1
         };
     }
@@ -951,9 +974,28 @@ public class Energy_Bar : MonoBehaviour
 
     }
 
-    public void updateProductandMoney()
+    public void updateProductandMoney(List<CartItem> purchasedItems, int totalCost)
     {
+        // 1. Deduct money
+        moneyValue -= totalCost;
 
+        // 2. Add items to inventory
+        foreach (CartItem item in purchasedItems)
+        {
+            if (ownedItems.ContainsKey(item.itemName))
+            {
+                ownedItems[item.itemName] += item.quantity;   // add quantity
+            }
+            else
+            {
+                ownedItems.Add(item.itemName, item.quantity);
+            }
+        }
+
+        // 3. Save updated data
+        SavePetData();
+
+        Debug.Log("Products and money updated & saved.");
     }
 
     public void updateLikeMusicStatus()

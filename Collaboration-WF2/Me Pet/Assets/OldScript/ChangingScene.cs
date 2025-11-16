@@ -293,7 +293,6 @@ public class SceneLoader : MonoBehaviour
     public void gameBackScene()
     {
         LoadCurrentStage();
-
         stageToGameRoomScene();
 
     }
@@ -426,7 +425,7 @@ public class SceneLoader : MonoBehaviour
 
         if (currentStage == PetStage.Kid)
         {
-            PlayAndLoad("GameRoomScene");
+            PlayAndLoad("KidScene");
         }
         else if (currentStage == PetStage.Teen)
         {
