@@ -256,7 +256,7 @@ RectTransform:
   m_Father: {fileID: 1320925918}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 15728, y: 64240}
   m_SizeDelta: {x: 0, y: 5583.6}
   m_Pivot: {x: 0.5, y: 0}
@@ -990,7 +990,7 @@ RectTransform:
   m_Father: {fileID: 1003026965}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 106860, y: -105025}
   m_SizeDelta: {x: 0, y: 5583.6}
   m_Pivot: {x: 0.5, y: 0}
@@ -1155,7 +1155,7 @@ RectTransform:
   m_Father: {fileID: 69599665}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: -93.72, y: 950.1001}
   m_SizeDelta: {x: -7.31, y: 2.8}
   m_Pivot: {x: 0, y: 0}
@@ -1230,7 +1230,7 @@ RectTransform:
   m_Father: {fileID: 877530256}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 106860, y: -151783}
   m_SizeDelta: {x: 0, y: 5583.6}
   m_Pivot: {x: 0.5, y: 0}
@@ -1305,7 +1305,7 @@ RectTransform:
   m_Father: {fileID: 128246722}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 266.02, y: 952.44}
   m_SizeDelta: {x: -6.76, y: 0}
   m_Pivot: {x: 0, y: 0}
@@ -1866,7 +1866,7 @@ RectTransform:
   m_Father: {fileID: 65241860}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 106860, y: -57937}
   m_SizeDelta: {x: 0, y: 5583.6}
   m_Pivot: {x: 0.5, y: 0}
@@ -2326,6 +2326,8 @@ MonoBehaviour:
   isBathing: 0
   isAlbumOpen: 0
   progressStop: 0
+  nameInputField: {fileID: 0}
+  moneyValue: 0
   dirtyManager: {fileID: 1089409761}
   energy_max: 100
   energy_current: 100
@@ -2354,6 +2356,7 @@ MonoBehaviour:
   progress_increase_time: 60
   currentStage: 0
   stageRepresent: {fileID: 866458144}
+  moneyText: {fileID: 0}
 --- !u!224 &364142237
 RectTransform:
   m_ObjectHideFlags: 0
@@ -5499,7 +5502,7 @@ RectTransform:
   m_Father: {fileID: 877402449}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 106860, y: -10512}
   m_SizeDelta: {x: 0, y: 5583.6}
   m_Pivot: {x: 0.5, y: 0}
@@ -6170,7 +6173,7 @@ RectTransform:
   m_Father: {fileID: 1307018579}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 80.9, y: 950.04596}
   m_SizeDelta: {x: 2.03, y: 0}
   m_Pivot: {x: 0, y: 0}
@@ -9431,7 +9434,7 @@ RectTransform:
   m_Father: {fileID: 1126814790}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: -272, y: 951}
   m_SizeDelta: {x: -7.52, y: 1.1}
   m_Pivot: {x: 0, y: 0}
@@ -10047,7 +10050,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1954964902
 Transform:
   m_ObjectHideFlags: 0

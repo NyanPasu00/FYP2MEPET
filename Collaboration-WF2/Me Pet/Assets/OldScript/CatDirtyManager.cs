@@ -12,14 +12,18 @@ public class CatDirtyManager : MonoBehaviour
     public Button leftButton;
     public Button rightButton;
     public TMP_Text messageText;
+
     public float maxDirty = 100;
     public float dirty = 0;
+
     public bool hasUsedSoap = false;
     private bool hasShownHalfCleanMessage = false;
     public bool firstTime = true;
+
     private float dirtyTimer = 0f;
     public float dirtyInterval = 50f; // seconds
     private float lastMilestone = 0;
+
     public ShowerController currentShower;
     public Animator catAnimator;
     public bool isBathing;
@@ -28,12 +32,45 @@ public class CatDirtyManager : MonoBehaviour
     public BoxCollider2D spawnArea;
     public BoxCollider2D spawnAreaLying;
     private List<GameObject> activeSpots = new List<GameObject>();
+
+
     void Start()
     {
         //cat.transform.position = new Vector3(0.62f, -1.5f, 0f);
         dirty = dirty;
         CheckMilestoneAndSpawn();
-        
+    }
+
+    void Update()
+    {
+        dirtyTimer += Time.deltaTime;
+
+        if (dirtyTimer >= dirtyInterval)
+        {
+            dirtyTimer = 0f;
+            IncreaseDirt();
+        }
+
+        if (dirty <= 0 && currentShower != null)
+        {
+            currentShower.StopShower();
+            currentShower = null;
+
+            hasShownHalfCleanMessage = false; // Reset for future use
+            firstTime = true;
+
+            if (catAnimator != null && hasUsedSoap)
+            {
+                cat.transform.position = new Vector3(-0.04f, -1.5f, 0f);
+                catAnimator.SetBool("isClean", true);
+                energy.increaseHappiness(10);
+                Debug.Log("clean cat");
+                ShowCloudMessage("All clean! Great job!", 2.5f);  // Clean message
+
+                // After 2 seconds, set isClean back to false
+                Invoke(nameof(ResetToIdle), 2f);
+            }
+        }
     }
 
     void CheckMilestoneAndSpawn()
@@ -89,48 +126,10 @@ public class CatDirtyManager : MonoBehaviour
         }
     }
 
-    void Update()
-    {
-        dirtyTimer += Time.deltaTime;
-
-        if (dirtyTimer >= dirtyInterval)
-        {
-            dirtyTimer = 0f;
-            IncreaseDirt();
-        }
-
-        if (dirty <= 0 && currentShower != null)
-        {
-            currentShower.StopShower();
-            currentShower = null;
-
-            
-            hasShownHalfCleanMessage = false; // Reset for future use
-            firstTime = true;
-
-            if (catAnimator != null && hasUsedSoap)
-            {
-                
-                cat.transform.position = new Vector3(-0.04f, -1.5f, 0f);
-                catAnimator.SetBool("isClean", true);
-                energy.increaseHappiness(10);
-                Debug.Log("clean cat");
-                ShowCloudMessage("All clean! Great job!", 2.5f);  // Clean message
-
-                // 🆕 After 2 seconds, set isClean back to false
-                Invoke(nameof(ResetToIdle), 2f);
-            }
-                
-            
-
-        }
-    }
-
     void ResetToIdle()
     {
         if (catAnimator != null)
         {
-            
             cat.transform.position = new Vector3(0.197f, -1.5f, 0f);
             catAnimator.SetBool("isClean", false);
             leftButton.interactable = true;
@@ -165,17 +164,13 @@ public class CatDirtyManager : MonoBehaviour
                 ShowCloudMessage("I need to bath !!! :(", 2.5f);
                 Debug.Log("The cat needs a bath!");
             }
-
         }
     }
 
     void SpawnDirtySpots(int amount)
     {
-       
-
         // Choose correct spawn area
         BoxCollider2D areaToUse = spawnArea;
-
 
         Bounds bounds = areaToUse.bounds;
 
@@ -205,7 +200,6 @@ public class CatDirtyManager : MonoBehaviour
         }
     }
 
-
     public void ShowCloudMessage(string msg, float duration = 2f)
     {
         if (cloud != null)
@@ -214,7 +208,7 @@ public class CatDirtyManager : MonoBehaviour
         if (messageText != null)
             messageText.text = msg;
 
-        CancelInvoke("HideCloudMessage");
+        CancelInvoke(nameof(HideCloudMessage));
         Invoke(nameof(HideCloudMessage), duration);
     }
 
@@ -222,6 +216,7 @@ public class CatDirtyManager : MonoBehaviour
     {
         if (cloud != null)
             cloud.SetActive(false);
+
         hasShownHalfCleanMessage = true;
     }
 
@@ -238,7 +233,7 @@ public class CatDirtyManager : MonoBehaviour
     // Handle the soap being used (called from SoapBubbleSpawner)
     public void OnSoapUsed()
     {
-        hasUsedSoap = true; // Set soap flag to true
+        hasUsedSoap = true;              // Set soap flag to true
         hasShownHalfCleanMessage = false; // Reset for future use
 
         if (firstTime == true && dirty >= maxDirty)

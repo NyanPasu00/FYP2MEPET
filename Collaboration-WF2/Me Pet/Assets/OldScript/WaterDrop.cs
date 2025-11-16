@@ -3,52 +3,67 @@ using TMPro;
 
 public class WaterDrop : MonoBehaviour
 {
-    public GameObject showerController;
+    public BathController bathController;
     public Transform waterDropStartPos;
     public TMP_Text messageText;
     public GameObject cloud;
 
-    void OnTriggerEnter2D(Collider2D other)
+    [HideInInspector] public Vector3 initialPosition;
+
+    void Start()
     {
-        if (other.CompareTag("Pet"))
+        initialPosition = transform.position;
+    }
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        if (!other.CompareTag("Pet"))
+            return;
+
+        // Make sure we have a BathController
+        if (bathController == null)
         {
-            CatDirtyManager catManager = FindAnyObjectByType<CatDirtyManager>();
-            if (catManager != null)
+            bathController = FindAnyObjectByType<BathController>();
+            if (bathController == null)
             {
-                // Block shower if not dirty enough
-                if (catManager.dirty <= 20)
-                {
-                    catManager.ShowCloudMessage("I still not so dirty yet >_<", 2f);
-                    return;
-                }
-
-                if (!catManager.hasUsedSoap) // Only show message if soap not used
-                {
-                    catManager.ShowCloudMessage("Oops! I look so dirty. Try using soap!", 2f);
-                    return;
-                }
-
-                // ✅ Soap was used — allow shower
-                Debug.Log("Water drop touched the pet, transforming into shower!");
-
-                Vector3 showerPosition = other.transform.position + new Vector3(0, 2.3f, 0);
-                GameObject shower = Instantiate(showerController, showerPosition, Quaternion.identity);
-
-                ShowerController controller = shower.GetComponent<ShowerController>();
-                if (controller != null)
-                {
-                    controller.petTarget = other.transform;
-                    controller.waterDrop = this.gameObject;
-                    controller.waterDropStartPos = waterDropStartPos;
-                    controller.StartShower();
-                }
-
-                catManager.currentShower = controller;
-                gameObject.SetActive(false); // Hide instead of destroy
+                Debug.LogError("WaterDrop: No BathController found in scene!");
+                return;
             }
         }
+
+        // Too clean -> block shower
+        if (bathController.dirty <= 20f)
+        {
+            bathController.ShowCloudMessage("I still not so dirty yet >_<", 2f);
+            return;
+        }
+
+        // No soap yet -> remind player
+        if (!bathController.hasUsedSoap)
+        {
+            bathController.ShowCloudMessage("Oops! I look so dirty. Try using soap!", 2f);
+            return;
+        }
+
+        // Soap was used — allow shower
+        Debug.Log("Water drop touched the pet, starting shower!");
+
+        // Tell BathController which pet / drop we are using
+        bathController.petTarget = other.transform;
+        bathController.waterDrop = gameObject;
+        bathController.waterDropStartPos = waterDropStartPos;
+
+        // Move the shower object above the pet
+        bathController.transform.position = other.transform.position + new Vector3(0f, 1f, 0f);
+
+        gameObject.transform.position = waterDropStartPos.position;
+
+        // Start shower
+        bathController.StartShower();
+
+   
     }
 
+    // Optional: if you still want to clear text from this script
     void ClearMessage()
     {
         if (messageText != null)
@@ -57,4 +72,5 @@ public class WaterDrop : MonoBehaviour
         }
     }
 }
+
 

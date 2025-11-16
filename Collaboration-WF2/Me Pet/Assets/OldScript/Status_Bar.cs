@@ -59,8 +59,8 @@ public class Energy_Bar : MonoBehaviour
     public int moneyValue;
     public Dictionary<string, int> ownedItems = new Dictionary<string, int>();
 
-    [Header("Dirty Manager")]
-    public CatDirtyManager dirtyManager;
+    [Header("Bath / Dirty Controller")]
+    public BathController bathController;
 
     [SerializeField]
     [Header("Energy")]
@@ -583,7 +583,7 @@ public class Energy_Bar : MonoBehaviour
         PlayerPrefs.SetInt("PetDead", petDead ? 1 : 0);
         PlayerPrefs.Save();
 
-        SceneManager.LoadScene("HallScene");
+        SceneManager.LoadScene("KidScene");
     }
 
     public void SavePetData()
@@ -602,7 +602,10 @@ public class Energy_Bar : MonoBehaviour
         }
 
 
-        data.dirty = dirtyManager.dirty;
+        if (bathController == null)
+            bathController = FindAnyObjectByType<BathController>();
+
+        data.dirty = bathController != null ? bathController.dirty : 0f;
         data.energy = energy_current;
         data.hunger = hunger_current;
         data.happiness = happiness_current;
@@ -630,6 +633,8 @@ public class Energy_Bar : MonoBehaviour
     {
         if (PlayerPrefs.HasKey("PetData"))
         {
+            if (bathController == null)
+                bathController = FindAnyObjectByType<BathController>();
             string json = PlayerPrefs.GetString("PetData");
             PetData data = JsonUtility.FromJson<PetData>(json);
 
@@ -676,7 +681,10 @@ public class Energy_Bar : MonoBehaviour
 
                 // DIRTY (no leftover logic needed, always starts at 0 per session)
                 int dirtyIncrease = Mathf.FloorToInt((float)(secondsPassed / 60f * 100 * 0.01f));
-                dirtyManager.dirty = Mathf.Max(0, data.dirty + dirtyIncrease);
+                if (bathController != null)
+                {
+                    bathController.dirty = Mathf.Max(0, data.dirty + dirtyIncrease);
+                }
 
                 // HEALTH (Only if Old stage)
                 if (currentStage == PetStage.Old)
@@ -741,7 +749,10 @@ public class Energy_Bar : MonoBehaviour
                 health_current = data.health;
                 progress_current = data.progress;
                 currentStage = data.stage;
-                dirtyManager.dirty = data.dirty;
+                if (bathController != null)
+                {
+                    bathController.dirty = data.dirty;
+                }
 
             }
 
@@ -820,12 +831,12 @@ public class Energy_Bar : MonoBehaviour
         isAlbumOpen = PlayerPrefs.GetInt("IsAlbumOpen", 0) == 1;
         isSleeping = PlayerPrefs.GetInt("IsSleeping", 0) == 1;
 
-        Debug.Log("isSleeping" + isSleeping);
-        Debug.Log("isDancing" + isDancing);
-        Debug.Log("isEating" + isEating);
-        Debug.Log("isAlbumOpen" + isAlbumOpen);
-        Debug.Log("isBathing" + isBathing);
-        Debug.Log("progressStop" + progressStop);
+        //Debug.Log("isSleeping" + isSleeping);
+        //Debug.Log("isDancing" + isDancing);
+        //Debug.Log("isEating" + isEating);
+        //Debug.Log("isAlbumOpen" + isAlbumOpen);
+        //Debug.Log("isBathing" + isBathing);
+        //Debug.Log("progressStop" + progressStop);
 
         if (progressStop == true)
         {

@@ -38,7 +38,7 @@ public class UIController : MonoBehaviour
     //Draggable Food
     public RectTransform draggableFood;
     public Canvas canvas;
-    public Transform foodOriginalParent;
+    //public Transform foodOriginalParent;
     public Transform plateArea;
     private Vector2 originalPos;
     private CanvasGroup dragCanvasGroup;

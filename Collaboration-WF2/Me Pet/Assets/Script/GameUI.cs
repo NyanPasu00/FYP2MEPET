@@ -9,6 +9,13 @@ using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using static UnityEngine.Rendering.DebugUI;
+
+[System.Serializable]
+public class FoodSpriteEntry
+{
+    public string foodName;
+    public Sprite foodSprite;
+}
 public class GameUI : MonoBehaviour
 {
     [SerializeField]
@@ -18,7 +25,8 @@ public class GameUI : MonoBehaviour
     public TextMeshProUGUI statusTitle;
     public TextMeshProUGUI stageText;
 
-    private bool panelOpen = false;
+    private bool justOpened = false;
+    public bool panelOpen = false;
 
     public Energy_Bar stats;
 
@@ -52,12 +60,13 @@ public class GameUI : MonoBehaviour
     public TMP_Text coinValueInCart;
 
     //Display Food and SelectedFood
+    private bool isFridgeOpen = false;
+    public GameObject FridgePage;
     public Transform availableFoodParent;     
     public GameObject foodItemPrefab;
     public GameObject FoodSelection;
-    public Dictionary<string, Sprite> foodSprites = new Dictionary<string, Sprite>();
     public Image selectedFoodIcon;
-    public TMP_Text selectedFoodName;
+    //public TMP_Text selectedFoodName;
 
     private int currentRoomIndex = 2;
     private bool isMoving = false;
@@ -70,9 +79,15 @@ public class GameUI : MonoBehaviour
     public bool isBathing;
     public bool isAlbumOpen;
 
+    public List<FoodSpriteEntry> foodSpriteList;
+    [HideInInspector]
+    public Dictionary<string, Sprite> foodSprites = new Dictionary<string, Sprite>();
     void Start()
     {
-        statusPanel.SetActive(false);
+        if (statusPanel != null)
+        {
+            statusPanel.SetActive(false);
+        }
 
         MainCameraPosition.position = new Vector3(HallCameraPosition.position.x, HallCameraPosition.position.y, -10);
         currentRoomIndex = 2;
@@ -83,14 +98,20 @@ public class GameUI : MonoBehaviour
     {
         //------------------------------------------------------------------STATUS PANEL START-------------------------------------------------------------------
         // Only update if panel is open
-        if (panelOpen == true)
+        if (panelOpen)
         {
             UpdateStatusText();
 
-            // Hide if clicking outside
-            if (Input.GetMouseButtonDown(0) && !IsPointerOverUIElement())
+            // Skip outside-click detection on the first frame
+            if (!justOpened && Input.GetMouseButtonDown(0) && !IsPointerOverUIElement())
             {
                 ClosePanel();
+            }
+
+            // Clear the flag after one frame
+            if (justOpened)
+            {
+                justOpened = false;
             }
         }
         //-------------------------------------------------------------------STATUS PANEL END--------------------------------------------------------------------
@@ -102,8 +123,10 @@ public class GameUI : MonoBehaviour
         Debug.Log("Correct");
         panelOpen = !panelOpen;
         statusPanel.SetActive(panelOpen);
-        if (panelOpen == true)
+
+        if (panelOpen)
         {
+            justOpened = true;          // <-- mark that we just opened this frame
             UpdateStatusText();
         }
     }
@@ -157,13 +180,28 @@ public class GameUI : MonoBehaviour
 
     }
 
+    public void openFridge()
+    {
+        foodSprites = new Dictionary<string, Sprite>();
+        for (int i = 0; i < foodSpriteList.Count; i++)
+        {
+            foodSprites[foodSpriteList[i].foodName.ToLower()] = foodSpriteList[i].foodSprite;
+        }
+
+        // Toggle fridge UI first
+        isFridgeOpen = !isFridgeOpen;
+
+        displayAvailableFood(stats.ownedItems, foodSprites);
+
+        FridgePage.SetActive(isFridgeOpen);
+
+    }
+
     public void displayAvailableFood(Dictionary<string, int> ownedItems, Dictionary<string, Sprite> foodSprites)
     {
-        // Clear old UI
         foreach (Transform t in availableFoodParent)
             Destroy(t.gameObject);
 
-        // Create one UI item per food
         foreach (var kvp in ownedItems)
         {
             string foodName = kvp.Key;
@@ -172,12 +210,22 @@ public class GameUI : MonoBehaviour
             GameObject go = Instantiate(foodItemPrefab, availableFoodParent);
             go.transform.localScale = Vector3.one;
 
-            // Assign UI
             FoodItemUI ui = go.GetComponent<FoodItemUI>();
-            ui.foodIcon.sprite = foodSprites[foodName];
-            ui.quantityText.text = quantity.ToString();
 
-            // handle click → select food
+            string key = foodName.Trim().ToLower();
+            if (foodSprites.ContainsKey(key))
+            {
+                ui.foodIcon.sprite = foodSprites[key];
+            }
+            else
+            {
+                Debug.LogWarning($"Food sprite for '{key}' not found!");
+                ui.foodIcon.sprite = null; // fallback
+            }
+            ui.quantityText.text = "x" + quantity.ToString();
+            ui.foodNameText.text = foodName;
+
+            ui.selectButton.onClick.RemoveAllListeners();
             ui.selectButton.onClick.AddListener(() =>
             {
                 UIController.instance.SelectFood(foodName);
@@ -187,8 +235,17 @@ public class GameUI : MonoBehaviour
 
     public void displaySelectedFood(string foodName, Sprite sprite)
     {
-        selectedFoodName.text = foodName;
-        selectedFoodIcon.sprite = sprite;
+        
+        if (selectedFoodIcon != null && sprite != null)
+        {
+            selectedFoodIcon.sprite = sprite;
+            selectedFoodIcon.enabled = true; // show image
+            selectedFoodIcon.color = Color.white; // ensure visible
+        }
+        else
+        {
+            Debug.LogWarning("SelectedFoodIcon or sprite is null!");
+        }
     }
 
     public void displayPetMessage(string message)
@@ -499,6 +556,8 @@ public class GameUI : MonoBehaviour
 
     public void PlayAndLoad(string sceneName)
     {
+        StartCoroutine(backgroundTransition());
+
         if (audioClip != null)
         {
             StartCoroutine(PlaySoundAndLoad(sceneName));
@@ -523,6 +582,7 @@ public class GameUI : MonoBehaviour
 
     private System.Collections.IEnumerator PlaySoundAndLoad(string sceneName)
     {
+
         isBathing = false;
         PlayerPrefs.SetInt("IsBathing", isBathing ? 1 : 0);
         isDancing = false;
@@ -535,6 +595,7 @@ public class GameUI : MonoBehaviour
         PlayerPrefs.SetInt("IsSleeping", isSleeping ? 1 : 0);
 
         PlayerPrefs.Save();
+        StartCoroutine(backgroundTransition());
         audioClip.Play();
         yield return new WaitForSeconds(0.4f); // wait short delay (or audioClip.clip.length)
         SceneManager.LoadScene(sceneName);
