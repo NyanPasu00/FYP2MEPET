@@ -315,7 +315,7 @@ public class Energy_Bar : MonoBehaviour
 
     }
 
-    void GetEnergyFill()
+    public void GetEnergyFill()
     {
         energy_Slider.value = (float)energy_current / energy_max;
         energyDetail_Slider.value = (float)energy_current / energy_max;
@@ -831,12 +831,12 @@ public class Energy_Bar : MonoBehaviour
         isAlbumOpen = PlayerPrefs.GetInt("IsAlbumOpen", 0) == 1;
         isSleeping = PlayerPrefs.GetInt("IsSleeping", 0) == 1;
 
-        Debug.Log("isSleeping" + isSleeping);
-        Debug.Log("isDancing" + isDancing);
-        Debug.Log("isEating" + isEating);
-        Debug.Log("isAlbumOpen" + isAlbumOpen);
-        Debug.Log("isBathing" + isBathing);
-        Debug.Log("progressStop" + progressStop);
+        //Debug.Log("isSleeping" + isSleeping);
+        //Debug.Log("isDancing" + isDancing);
+        //Debug.Log("isEating" + isEating);
+        //Debug.Log("isAlbumOpen" + isAlbumOpen);
+        //Debug.Log("isBathing" + isBathing);
+        //Debug.Log("progressStop" + progressStop);
 
         if (progressStop == true)
         {
@@ -962,6 +962,21 @@ public class Energy_Bar : MonoBehaviour
             "moneyValue" => moneyValue,
             _ => -1
         };
+    }
+
+    public void AddMoney(int amount)
+    {
+        moneyValue += amount;
+        if (moneyValue < 0)
+            moneyValue = 0;
+
+        // update UI text if assigned
+        if (moneyText != null)
+        {
+            moneyText.text = moneyValue.ToString();
+        }
+
+        SavePetData();
     }
 
     public void updateFoodStatus()

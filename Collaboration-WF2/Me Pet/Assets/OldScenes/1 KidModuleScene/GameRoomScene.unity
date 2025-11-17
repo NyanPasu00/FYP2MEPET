@@ -152,7 +152,7 @@ RectTransform:
   m_Father: {fileID: 1521775975}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 106860, y: -57937}
   m_SizeDelta: {x: 0, y: 5583.6}
   m_Pivot: {x: 0.5, y: 0}
@@ -490,7 +490,9 @@ MonoBehaviour:
   isBathing: 0
   isAlbumOpen: 0
   progressStop: 0
-  dirtyManager: {fileID: 388585454}
+  nameInputField: {fileID: 0}
+  moneyValue: 0
+  bathController: {fileID: 0}
   energy_max: 100
   energy_current: 0
   energy_Slider: {fileID: 309006892}
@@ -518,6 +520,7 @@ MonoBehaviour:
   progress_increase_time: 60
   currentStage: 0
   stageRepresent: {fileID: 1695077398}
+  moneyText: {fileID: 0}
 --- !u!224 &117622425
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1818,6 +1821,11 @@ MonoBehaviour:
   bathroom: 0
   gameroom: 0
   currentStage: 0
+  isEating: 0
+  isSleeping: 0
+  isDancing: 0
+  isBathing: 0
+  isAlbumOpen: 0
 --- !u!114 &388585454
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1992,7 +2000,7 @@ RectTransform:
   m_Father: {fileID: 2047823959}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 15728, y: 64240}
   m_SizeDelta: {x: 0, y: 5583.6}
   m_Pivot: {x: 0.5, y: 0}
@@ -3370,7 +3378,7 @@ RectTransform:
   m_Father: {fileID: 830938709}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 106860, y: -10512}
   m_SizeDelta: {x: 0, y: 5583.6}
   m_Pivot: {x: 0.5, y: 0}
@@ -3536,7 +3544,7 @@ RectTransform:
   m_Father: {fileID: 309006891}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: -272, y: 951}
   m_SizeDelta: {x: -7.52, y: 1.1}
   m_Pivot: {x: 0, y: 0}
@@ -4890,7 +4898,7 @@ RectTransform:
   m_Father: {fileID: 1128171807}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 106860, y: -151783}
   m_SizeDelta: {x: 0, y: 5583.6}
   m_Pivot: {x: 0.5, y: 0}
@@ -7223,7 +7231,7 @@ RectTransform:
   m_Father: {fileID: 731198474}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: -93.72, y: 950.1001}
   m_SizeDelta: {x: -7.31, y: 2.8}
   m_Pivot: {x: 0, y: 0}
@@ -7349,7 +7357,7 @@ RectTransform:
   m_Father: {fileID: 157821240}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 106860, y: -105025}
   m_SizeDelta: {x: 0, y: 5583.6}
   m_Pivot: {x: 0.5, y: 0}
@@ -8161,7 +8169,7 @@ RectTransform:
   m_Father: {fileID: 953294911}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 266.02, y: 952.44}
   m_SizeDelta: {x: -6.76, y: 0}
   m_Pivot: {x: 0, y: 0}
@@ -10113,7 +10121,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1854195352
 Transform:
   m_ObjectHideFlags: 0
@@ -10519,7 +10527,7 @@ RectTransform:
   m_Father: {fileID: 1053558613}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 80.9, y: 950.04596}
   m_SizeDelta: {x: 2.03, y: 0}
   m_Pivot: {x: 0, y: 0}
@@ -11815,7 +11823,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5644627037037102582, guid: dde047afb0b15bc43b41531e603af947, type: 3}
       propertyPath: m_Name
-      value: Cat
+      value: GameRoomCat
       objectReference: {fileID: 0}
     - target: {fileID: 9057847366603887012, guid: dde047afb0b15bc43b41531e603af947, type: 3}
       propertyPath: m_LocalScale.x

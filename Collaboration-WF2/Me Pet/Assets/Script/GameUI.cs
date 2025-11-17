@@ -9,6 +9,13 @@ using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using static UnityEngine.Rendering.DebugUI;
+
+[System.Serializable]
+public class FoodSpriteEntry
+{
+    public string foodName;
+    public Sprite foodSprite;
+}
 public class GameUI : MonoBehaviour
 {
     [SerializeField]
@@ -53,12 +60,13 @@ public class GameUI : MonoBehaviour
     public TMP_Text coinValueInCart;
 
     //Display Food and SelectedFood
+    private bool isFridgeOpen = false;
+    public GameObject FridgePage;
     public Transform availableFoodParent;     
     public GameObject foodItemPrefab;
     public GameObject FoodSelection;
-    public Dictionary<string, Sprite> foodSprites = new Dictionary<string, Sprite>();
     public Image selectedFoodIcon;
-    public TMP_Text selectedFoodName;
+    //public TMP_Text selectedFoodName;
 
     private int currentRoomIndex = 2;
     private bool isMoving = false;
@@ -70,6 +78,18 @@ public class GameUI : MonoBehaviour
     public bool isDancing;
     public bool isBathing;
     public bool isAlbumOpen;
+
+    public List<FoodSpriteEntry> foodSpriteList;
+    [HideInInspector]
+    public Dictionary<string, Sprite> foodSprites = new Dictionary<string, Sprite>();
+
+    [Header("Song Panel")]
+    public GameObject SongMenuPanel;
+
+    [Header("Music Screen")]
+    public GameObject HallPanel;
+    public GameObject MusicScreenPanel;
+    public UnityEngine.UI.Button lightToggleButton; // the lamp / sleep toggle button
 
     void Start()
     {
@@ -169,13 +189,28 @@ public class GameUI : MonoBehaviour
 
     }
 
+    public void openFridge()
+    {
+        foodSprites = new Dictionary<string, Sprite>();
+        for (int i = 0; i < foodSpriteList.Count; i++)
+        {
+            foodSprites[foodSpriteList[i].foodName.ToLower()] = foodSpriteList[i].foodSprite;
+        }
+
+        // Toggle fridge UI first
+        isFridgeOpen = !isFridgeOpen;
+
+        displayAvailableFood(stats.ownedItems, foodSprites);
+
+        FridgePage.SetActive(isFridgeOpen);
+
+    }
+
     public void displayAvailableFood(Dictionary<string, int> ownedItems, Dictionary<string, Sprite> foodSprites)
     {
-        // Clear old UI
         foreach (Transform t in availableFoodParent)
             Destroy(t.gameObject);
 
-        // Create one UI item per food
         foreach (var kvp in ownedItems)
         {
             string foodName = kvp.Key;
@@ -184,12 +219,22 @@ public class GameUI : MonoBehaviour
             GameObject go = Instantiate(foodItemPrefab, availableFoodParent);
             go.transform.localScale = Vector3.one;
 
-            // Assign UI
             FoodItemUI ui = go.GetComponent<FoodItemUI>();
-            ui.foodIcon.sprite = foodSprites[foodName];
-            ui.quantityText.text = quantity.ToString();
 
-            // handle click → select food
+            string key = foodName.Trim().ToLower();
+            if (foodSprites.ContainsKey(key))
+            {
+                ui.foodIcon.sprite = foodSprites[key];
+            }
+            else
+            {
+                Debug.LogWarning($"Food sprite for '{key}' not found!");
+                ui.foodIcon.sprite = null; // fallback
+            }
+            ui.quantityText.text = "x" + quantity.ToString();
+            ui.foodNameText.text = foodName;
+
+            ui.selectButton.onClick.RemoveAllListeners();
             ui.selectButton.onClick.AddListener(() =>
             {
                 UIController.instance.SelectFood(foodName);
@@ -199,8 +244,17 @@ public class GameUI : MonoBehaviour
 
     public void displaySelectedFood(string foodName, Sprite sprite)
     {
-        selectedFoodName.text = foodName;
-        selectedFoodIcon.sprite = sprite;
+        
+        if (selectedFoodIcon != null && sprite != null)
+        {
+            selectedFoodIcon.sprite = sprite;
+            selectedFoodIcon.enabled = true; // show image
+            selectedFoodIcon.color = Color.white; // ensure visible
+        }
+        else
+        {
+            Debug.LogWarning("SelectedFoodIcon or sprite is null!");
+        }
     }
 
     public void displayPetMessage(string message)
@@ -330,7 +384,60 @@ public class GameUI : MonoBehaviour
 
     public void displayMusicCategory()
     {
+        Debug.Log("Button Clicked! Toggling Song Menu");
+        SongMenuPanel.SetActive(!SongMenuPanel.activeSelf);
+    }
 
+    // Called by UIController when a category is chosen
+    public void ShowMusicScreen()
+    {
+        SongMenuPanel.SetActive(false);
+
+        if (HallPanel != null)
+            HallPanel.SetActive(false);
+
+        if (MusicScreenPanel != null)
+            MusicScreenPanel.SetActive(true);
+
+        if (lightToggleButton != null)
+            lightToggleButton.gameObject.SetActive(false);
+    }
+
+    // Hook this to your "Back" button on the music screen
+    public void HideMusicScreen()
+    {
+        if (MusicScreenPanel != null)
+            MusicScreenPanel.SetActive(false);
+
+        SongMenuPanel.SetActive(false);
+
+        if (HallPanel != null)
+            HallPanel.SetActive(true);
+
+        if (lightToggleButton != null)
+            lightToggleButton.gameObject.SetActive(true);
+
+        // Tell controller to stop music and reset pet state
+        if (UIController.instance != null)
+        {
+            UIController.instance.OnExitMusicScreen();
+        }
+    }
+
+    public void OnClickMusicCategory(string categoryName)
+    {
+        // Open the music screen UI
+        ShowMusicScreen();
+
+        // Ask UIController to handle the actual music logic
+        if (UIController.instance != null)
+        {
+            UIController.instance.RequestPlayCategorySong(categoryName);
+        }
+        else
+        {
+            Debug.LogWarning("UIController.instance not found in scene!");
+        }
     }
 
     public void spawnBubbleOnPet()
