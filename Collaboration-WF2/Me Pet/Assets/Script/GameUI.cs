@@ -66,7 +66,7 @@ public class GameUI : MonoBehaviour
     public GameObject foodItemPrefab;
     public GameObject FoodSelection;
     public Image selectedFoodIcon;
-    //public TMP_Text selectedFoodName;
+
 
     private int currentRoomIndex = 2;
     private bool isMoving = false;
@@ -82,6 +82,15 @@ public class GameUI : MonoBehaviour
     public List<FoodSpriteEntry> foodSpriteList;
     [HideInInspector]
     public Dictionary<string, Sprite> foodSprites = new Dictionary<string, Sprite>();
+
+    [Header("Song Panel")]
+    public GameObject SongMenuPanel;
+
+    [Header("Music Screen")]
+    public GameObject HallPanel;
+    public GameObject MusicScreenPanel;
+    public UnityEngine.UI.Button lightToggleButton; // the lamp / sleep toggle button
+
     void Start()
     {
         if (statusPanel != null)
@@ -199,7 +208,8 @@ public class GameUI : MonoBehaviour
 
     public void displayAvailableFood(Dictionary<string, int> ownedItems, Dictionary<string, Sprite> foodSprites)
     {
-        foreach (Transform t in availableFoodParent)
+        Transform realParent = GetRealParent();
+        foreach (Transform t in realParent)
             Destroy(t.gameObject);
 
         foreach (var kvp in ownedItems)
@@ -233,6 +243,20 @@ public class GameUI : MonoBehaviour
         }
     }
 
+    private Transform GetRealParent()
+    {
+        // If this parent has no LayoutGroup, check children for one
+        if (availableFoodParent.GetComponent<LayoutGroup>() == null)
+        {
+            foreach (Transform child in availableFoodParent)
+            {
+                if (child.GetComponent<LayoutGroup>() != null)
+                    return child; // This is the actual grid/content
+            }
+        }
+        return availableFoodParent;
+    }
+
     public void displaySelectedFood(string foodName, Sprite sprite)
     {
         
@@ -248,15 +272,32 @@ public class GameUI : MonoBehaviour
         }
     }
 
+    public void clearSelectedFood()
+    {
+        selectedFoodIcon.sprite = null;
+        selectedFoodIcon.color = new Color(1, 1, 1, 0); // fully transparent
+    }
+
+    public void resetFoodLocation()
+    {
+        UIController ui = UIController.instance;
+
+        // return to original parent
+        ui.draggableFood.SetParent(ui.originalParent);
+
+        // reset anchored position
+        ui.draggableFood.anchoredPosition = ui.originalAnchoredPosition;
+
+        // ensure raycast works again
+        ui.draggableFood.GetComponent<CanvasGroup>().blocksRaycasts = true;
+    }
+
     public void displayPetMessage(string message)
     {
 
     }
 
-    public void resetFoodLocation()
-    {
-
-    }
+    
 
     public void resetMedicineLocation()
     {
@@ -375,7 +416,60 @@ public class GameUI : MonoBehaviour
 
     public void displayMusicCategory()
     {
+        Debug.Log("Button Clicked! Toggling Song Menu");
+        SongMenuPanel.SetActive(!SongMenuPanel.activeSelf);
+    }
 
+    // Called by UIController when a category is chosen
+    public void ShowMusicScreen()
+    {
+        SongMenuPanel.SetActive(false);
+
+        if (HallPanel != null)
+            HallPanel.SetActive(false);
+
+        if (MusicScreenPanel != null)
+            MusicScreenPanel.SetActive(true);
+
+        if (lightToggleButton != null)
+            lightToggleButton.gameObject.SetActive(false);
+    }
+
+    // Hook this to your "Back" button on the music screen
+    public void HideMusicScreen()
+    {
+        if (MusicScreenPanel != null)
+            MusicScreenPanel.SetActive(false);
+
+        SongMenuPanel.SetActive(false);
+
+        if (HallPanel != null)
+            HallPanel.SetActive(true);
+
+        if (lightToggleButton != null)
+            lightToggleButton.gameObject.SetActive(true);
+
+        // Tell controller to stop music and reset pet state
+        if (UIController.instance != null)
+        {
+            UIController.instance.OnExitMusicScreen();
+        }
+    }
+
+    public void OnClickMusicCategory(string categoryName)
+    {
+        // Open the music screen UI
+        ShowMusicScreen();
+
+        // Ask UIController to handle the actual music logic
+        if (UIController.instance != null)
+        {
+            UIController.instance.RequestPlayCategorySong(categoryName);
+        }
+        else
+        {
+            Debug.LogWarning("UIController.instance not found in scene!");
+        }
     }
 
     public void spawnBubbleOnPet()

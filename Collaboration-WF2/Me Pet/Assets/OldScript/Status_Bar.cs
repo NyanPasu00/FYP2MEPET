@@ -34,6 +34,19 @@ public class Energy_Bar : MonoBehaviour
     public TMP_InputField nameInputField;
 
     [System.Serializable]
+    public class FoodEntry
+    {
+        public string foodName;
+        public int quantity;
+
+        public FoodEntry(string name, int qty)
+        {
+            foodName = name;
+            quantity = qty;
+        }
+    }
+
+    [System.Serializable]
     public class PetData
     {
         public string petName;
@@ -53,7 +66,7 @@ public class Energy_Bar : MonoBehaviour
         public float lastHappinessSecond;
         public float lastHungerSecond;
         public int moneyValue;
-        public Dictionary<string, int> ownedItems;
+        public List<FoodEntry> ownedItems = new List<FoodEntry>();
     }
 
     public int moneyValue;
@@ -315,7 +328,7 @@ public class Energy_Bar : MonoBehaviour
 
     }
 
-    void GetEnergyFill()
+    public void GetEnergyFill()
     {
         energy_Slider.value = (float)energy_current / energy_max;
         energyDetail_Slider.value = (float)energy_current / energy_max;
@@ -605,6 +618,12 @@ public class Energy_Bar : MonoBehaviour
         if (bathController == null)
             bathController = FindAnyObjectByType<BathController>();
 
+        data.ownedItems.Clear();
+        foreach (var kvp in ownedItems)  // your current dictionary
+        {
+            data.ownedItems.Add(new FoodEntry(kvp.Key, kvp.Value));
+        }
+
         data.dirty = bathController != null ? bathController.dirty : 0f;
         data.energy = energy_current;
         data.hunger = hunger_current;
@@ -613,7 +632,6 @@ public class Energy_Bar : MonoBehaviour
         data.progress = progress_current;
         data.stage = currentStage;
         data.moneyValue = moneyValue;
-        data.ownedItems = ownedItems;
         data.lastSavedTime = System.DateTime.Now.ToString();
         data.firstTime = false;
         data.lastEnergySecond = lastEnergyTime;
@@ -647,7 +665,11 @@ public class Energy_Bar : MonoBehaviour
             {
                 //Money
                 moneyValue = data.moneyValue;
-                ownedItems = data.ownedItems ?? new Dictionary<string, int>();
+                ownedItems = new Dictionary<string, int>();
+                foreach (var entry in data.ownedItems)
+                {
+                    ownedItems[entry.foodName] = entry.quantity;
+                }
 
                 // Calculate time difference
                 System.DateTime lastTime = System.DateTime.Parse(data.lastSavedTime);
@@ -964,9 +986,48 @@ public class Energy_Bar : MonoBehaviour
         };
     }
 
-    public void updateFoodStatus()
+    public void AddMoney(int amount)
     {
+        moneyValue += amount;
+        if (moneyValue < 0)
+            moneyValue = 0;
 
+        // update UI text if assigned
+        if (moneyText != null)
+        {
+            moneyText.text = moneyValue.ToString();
+        }
+
+        SavePetData();
+    }
+
+    public void updateFoodStatus(string currentFoodName)
+    {
+        Debug.Log(currentFoodName);
+
+        if (ownedItems.ContainsKey(currentFoodName))
+        {
+            // decrease quantity
+            ownedItems[currentFoodName]--;
+
+            // remove if zero
+            if (ownedItems[currentFoodName] <= 0)
+            {
+                ownedItems.Remove(currentFoodName);
+                // optional: clear UI if last item
+                if (UIController.instance != null)
+                {
+                    UIController.instance.gameUI.clearSelectedFood();
+                }
+            }
+        }
+
+        // apply food effect (increase hunger)
+        IncreaseFood();
+
+        // save pet data
+        SavePetData();  // internally converts dictionary to List<FoodEntry> before saving
+        Debug.Log("Products updated & saved.");
     }
 
     public void updateMedicineStatus()
@@ -983,13 +1044,9 @@ public class Energy_Bar : MonoBehaviour
         foreach (CartItem item in purchasedItems)
         {
             if (ownedItems.ContainsKey(item.itemName))
-            {
-                ownedItems[item.itemName] += item.quantity;   // add quantity
-            }
+                ownedItems[item.itemName] += item.quantity;
             else
-            {
                 ownedItems.Add(item.itemName, item.quantity);
-            }
         }
 
         // 3. Save updated data

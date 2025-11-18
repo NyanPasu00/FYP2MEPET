@@ -1,11 +1,12 @@
 using NUnit.Framework.Interfaces;
 using System.Collections;
+using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
-public class UIController : MonoBehaviour
+public class UIController : MonoBehaviour , IBeginDragHandler, IDragHandler, IEndDragHandler
 {
     public Energy_Bar petStatus;
     public bool isLogin = false;
@@ -38,15 +39,49 @@ public class UIController : MonoBehaviour
     //Draggable Food
     public RectTransform draggableFood;
     public Canvas canvas;
-    //public Transform foodOriginalParent;
-    public Transform plateArea;
-    private Vector2 originalPos;
-    private CanvasGroup dragCanvasGroup;
+    public GameObject FoodFullDialog;
+    public GameObject FeedSuccessDialogue;
+    public AudioSource eatingSound;
     public static UIController instance;
+    public bool isEating;
+    public Transform originalParent;
+    public Vector2 originalAnchoredPosition;
+    private CanvasGroup dragCanvasGroup;
+    private Vector3 originalPosition;
+    public string currentFoodName;
+
+    [System.Serializable]
+    public class MusicCategory
+    {
+        public string categoryName;       // Rock, Rap, Reggae, etc.
+        public List<AudioClip> songs;     // 5–10 clips per category
+    }
+
+    [Header("Music")]
+    public BGMScript bgm;                    // background BGM controller
+    public AudioSource musicPlayer;          // AudioSource used to play songs
+    public Transform petPosition;            // pet transform
+    public TextMeshProUGUI reactionText;     // text "I love this song" / "I hate this song"
+    public List<MusicCategory> musicCategories = new List<MusicCategory>();
+
+    private HashSet<string> likedCategories = new HashSet<string>();
+    private string lastCategoryName = null;
+    private int sameCategoryCount = 0;
+    private int boredomThreshold = 4;
+    private Coroutine regenHappinessCoroutine;
+
+    private Coroutine musicRewardCoroutine;
+    private int moneyEarnedThisPlay = 0;
+
+
     void Start()
     {
         dragCanvasGroup = draggableFood.GetComponent<CanvasGroup>();
-        originalPos = draggableFood.anchoredPosition;
+        originalAnchoredPosition = draggableFood.anchoredPosition;
+
+        originalParent = draggableFood.parent;
+
+        InitMusicPreferences();
     }
 
     // Update is called once per frame
@@ -58,22 +93,24 @@ public class UIController : MonoBehaviour
     void Awake()
     {
         instance = this;
-    }
 
-    public string currentFoodName;
+        originalParent = draggableFood.parent;
+        dragCanvasGroup = draggableFood.GetComponent<CanvasGroup>();
+        originalAnchoredPosition = draggableFood.anchoredPosition;
+    }
 
     public void SelectFood(string foodName)
     {
         currentFoodName = foodName;
-
+        UIController.instance.currentFoodName = foodName;
         // get sprite
         Sprite sprite = gameUI.foodSprites[foodName];
 
         // update selected UI
         gameUI.displaySelectedFood(foodName, sprite);
 
-        
-        //draggableFood.SetActive(true);
+
+        ////draggableFood.SetActive(true);
         draggableFood.GetComponent<Image>().sprite = sprite;
 
         // reset position
@@ -132,8 +169,9 @@ public class UIController : MonoBehaviour
     
     }
 
-    public void OnBeginDrag()
+    public void OnBeginDrag(PointerEventData e)
     {
+        //originalAnchoredPosition = draggableFood.anchoredPosition;
         dragCanvasGroup.blocksRaycasts = false;
     }
 
@@ -146,10 +184,35 @@ public class UIController : MonoBehaviour
     {
         dragCanvasGroup.blocksRaycasts = true;
 
-        if (IsOnPlate(e))
-            HandleEating();
-        else
-            gameUI.resetFoodLocation();
+
+        GameObject hovered = e.pointerCurrentRaycast.gameObject;
+
+        if (hovered != null && hovered.CompareTag("Plate"))
+        {
+            if (petStatus.hunger_current >= 100)
+            {
+                FoodFullDialog.SetActive(true);
+                // Return potion to original position
+                transform.position = originalPosition;
+            }
+            else
+            {
+                isEating = true;
+                PlayerPrefs.SetInt("IsEating", isEating ? 1 : 0);
+                PlayerPrefs.Save();
+                // Temporarily set parent to plate
+                transform.SetParent(hovered.transform);
+                draggableFood.anchoredPosition = new Vector2(0, 35);
+
+
+                // Start eating process
+                HandleEating();
+                return;
+            }
+        }
+
+        // Invalid drop — reset
+        gameUI.resetFoodLocation();
     }
 
     public bool IsOnPlate(PointerEventData e)
@@ -162,21 +225,67 @@ public class UIController : MonoBehaviour
 
     public void HandleEating()
     {
-        // decrease food quantity
-        petStatus.ownedItems[currentFoodName]--;
+        string foodName = UIController.instance.currentFoodName;
+        // Stop dragging while eating
+        dragCanvasGroup.blocksRaycasts = false;
 
-        if (petStatus.ownedItems[currentFoodName] <= 0)
-            petStatus.ownedItems.Remove(currentFoodName);
+        // Play eating animation
+        if (petAnimator != null)
+            petAnimator.SetBool("Eating", true);
 
-        // give the pet food
-        petStatus.IncreaseFood();
+        // Play sound
+        if (eatingSound != null)
+            eatingSound.Play();
 
-        // save data
-        petStatus.SavePetData();
+        if (foodName == null)
+        {
+            Debug.Log("Name is Null");
+        }
 
-        // update UI
-        gameUI.displayAvailableFood(petStatus.ownedItems, gameUI.foodSprites);
+        petStatus.updateFoodStatus(foodName);
+
+        // Show success popup
+        if (FeedSuccessDialogue != null)
+            FeedSuccessDialogue.SetActive(true);
+
+        Invoke(nameof(FinishEating), 0.8f);
+    }
+
+    private void FinishEating()
+    {
+
+        // Stop eating animation
+        if (petAnimator != null)
+            petAnimator.SetBool("Eating", false);
+
+        // Stop sound
+        if (eatingSound != null)
+            eatingSound.Stop();
+
+        // Hide success popup
+        if (FeedSuccessDialogue != null)
+            FeedSuccessDialogue.SetActive(false);
+
+        // Reset food back to original position
         gameUI.resetFoodLocation();
+
+        string foodName = UIController.instance.currentFoodName;
+
+        if (!petStatus.ownedItems.ContainsKey(foodName) || petStatus.ownedItems[foodName] <= 0)
+        {
+            gameUI.clearSelectedFood();
+            UIController.instance.currentFoodName = null;
+        }
+
+
+
+        // Re-enable drag
+        dragCanvasGroup.blocksRaycasts = true;
+
+        // Update eating flag
+        isEating = false;
+        PlayerPrefs.SetInt("IsEating", 0);
+        PlayerPrefs.Save();
     }
 
     public void isHunger()
@@ -366,5 +475,308 @@ public class UIController : MonoBehaviour
 
     }
 
+    private void InitMusicPreferences()
+    {
+        boredomThreshold = Random.Range(4, 7);   // 4–6 clicks
+        ShuffleLikedCategories();
+    }
+
+    private void ShuffleLikedCategories()
+    {
+        likedCategories.Clear();
+
+        if (musicCategories == null || musicCategories.Count == 0)
+            return;
+
+        // indices 0..N-1
+        List<int> idx = new List<int>();
+        for (int i = 0; i < musicCategories.Count; i++)
+            idx.Add(i);
+
+        // Fisher–Yates shuffle
+        for (int i = 0; i < idx.Count; i++)
+        {
+            int j = Random.Range(i, idx.Count);
+            int temp = idx[i];
+            idx[i] = idx[j];
+            idx[j] = temp;
+        }
+
+        // Pick first 3 as liked
+        int likeCount = Mathf.Min(3, idx.Count);
+        for (int i = 0; i < likeCount; i++)
+        {
+            likedCategories.Add(musicCategories[idx[i]].categoryName);
+        }
+
+        Debug.Log("New liked categories: " + string.Join(", ", likedCategories));
+    }
+
+    private void PlayCategorySong(string categoryName)
+    {
+        // Stop background BGM
+        if (bgm != null)
+        {
+            bgm.StopMusic();
+        }
+
+        // Find the category
+        MusicCategory category = musicCategories.Find(c => c.categoryName == categoryName);
+        if (category == null || category.songs == null || category.songs.Count == 0)
+        {
+            Debug.LogWarning("No songs configured for category " + categoryName);
+            return;
+        }
+
+        // Randomly pick one song from this category
+        int songIndex = Random.Range(0, category.songs.Count);
+        musicPlayer.clip = category.songs[songIndex];
+        musicPlayer.Play();
+
+        // Decide if pet likes this CATEGORY
+        bool categoryLiked = likedCategories.Contains(categoryName);
+        isLikeCategory = categoryLiked;
+
+        // Decide if this particular song is liked
+        // Roll 1–10
+        int roll = Random.Range(1, 11);
+        bool songDisliked;
+
+        if (categoryLiked)
+        {
+            // 10% dislike
+            songDisliked = (roll == 1);
+        }
+        else
+        {
+            // 80% dislike
+            songDisliked = (roll <= 8);
+        }
+
+        bool songLiked = !songDisliked;
+        isLikeMusic = songLiked;
+
+        UpdatePetReaction(songLiked);
+
+        // Boredom logic: same category clicked too many times
+        if (lastCategoryName == categoryName)
+        {
+            sameCategoryCount++;
+        }
+        else
+        {
+            lastCategoryName = categoryName;
+            sameCategoryCount = 1;
+        }
+
+        if (sameCategoryCount >= boredomThreshold)
+        {
+            // Pet is bored; randomise liked categories again
+            ShuffleLikedCategories();
+            sameCategoryCount = 0;
+            boredomThreshold = Random.Range(4, 7);
+
+            if (reactionText != null)
+            {
+                reactionText.text = "I'm bored... let's change music.";
+            }
+        }
+    }
+    private void UpdatePetReaction(bool songLiked)
+    {
+        // Stop previous regen if any
+        if (regenHappinessCoroutine != null)
+        {
+            StopCoroutine(regenHappinessCoroutine);
+            regenHappinessCoroutine = null;
+        }
+
+        // Also stop previous music reward if any
+        if (musicRewardCoroutine != null)
+        {
+            StopCoroutine(musicRewardCoroutine);
+            musicRewardCoroutine = null;
+        }
+
+        if (songLiked)
+        {
+            // Happy / dancing
+            petAnimator.SetBool("Sad", false);
+            petAnimator.SetBool("Laydown", false);
+            petAnimator.SetBool("Dance", true);
+
+            if (petPosition != null)
+            {
+                petPosition.localPosition = new Vector3(-0.41f, -3.93f, 0f);
+            }
+
+            if (reactionText != null)
+            {
+                reactionText.text = "I love this song!";
+            }
+
+            // Regen happiness over time
+            regenHappinessCoroutine = StartCoroutine(RegenerateHappiness());
+            petStatus.PauseHappinessDeduction();
+
+            PlayerPrefs.SetInt("IsDancing", 1);
+            PlayerPrefs.Save();
+
+            // Start reward coroutine: +money, -energy every 10 seconds (max +20 money per play)
+            musicRewardCoroutine = StartCoroutine(MusicRewardRoutine());
+        }
+        else
+        {
+            // Sad / dislike
+            petAnimator.SetBool("Dance", false);
+            petAnimator.SetBool("Laydown", false);
+            petAnimator.SetBool("Sad", true);
+
+            if (petPosition != null)
+            {
+                switch (petStatus.currentStage)
+                {
+                    case Energy_Bar.PetStage.Kid:
+                        petPosition.localPosition = new Vector3(-1.14f, -3.78f, 0f);
+                        break;
+                    case Energy_Bar.PetStage.Teen:
+                        petPosition.localPosition = new Vector3(-1.68f, -3.82f, 0f);
+                        break;
+                    case Energy_Bar.PetStage.Adult:
+                        petPosition.localPosition = new Vector3(-2.08f, -3.91f, 0f);
+                        break;
+                    case Energy_Bar.PetStage.Old:
+                        petPosition.localPosition = new Vector3(-2.08f, -3.91f, 0f);
+                        break;
+                }
+            }
+
+            if (reactionText != null)
+            {
+                reactionText.text = "I hate this song...";
+            }
+
+            PlayerPrefs.SetInt("IsDancing", 0);
+            PlayerPrefs.Save();
+
+            // Punish happiness a bit
+            petStatus.decreaseHappiness(5);
+            petStatus.ResumeHappinessDeduction();
+        }
+    }
+
+    private IEnumerator RegenerateHappiness()
+    {
+        while (petStatus.happiness_current < petStatus.happiness_max)
+        {
+            petStatus.happiness_current += 1;
+            if (petStatus.happiness_current > petStatus.happiness_max)
+                petStatus.happiness_current = petStatus.happiness_max;
+
+            petStatus.happiness_Slider.value =
+                (float)petStatus.happiness_current / petStatus.happiness_max;
+            petStatus.happinessDetail_Slider.value =
+                (float)petStatus.happiness_current / petStatus.happiness_max;
+
+            yield return new WaitForSeconds(1f);
+        }
+
+        regenHappinessCoroutine = null;
+    }
+
+    private IEnumerator MusicRewardRoutine()
+    {
+        moneyEarnedThisPlay = 0;
+
+        // reward only while music is playing AND song is liked
+        while (musicPlayer != null && musicPlayer.isPlaying && isLikeMusic)
+        {
+            if (moneyEarnedThisPlay >= 20)
+                break; // reached max reward for this play
+
+            // wait 10 seconds of continuous listening
+            yield return new WaitForSeconds(10f);
+
+            // check again in case music stopped during the wait
+            if (musicPlayer == null || !musicPlayer.isPlaying || !isLikeMusic)
+                break;
+
+            if (moneyEarnedThisPlay >= 20)
+                break;
+
+            // +5 money
+            petStatus.AddMoney(5);          // uses the new method in Energy_Bar
+            moneyEarnedThisPlay += 5;
+
+            // - energy (for example, 3 points per 10s; adjust as you like)
+            petStatus.energy_current = Mathf.Max(0, petStatus.energy_current - 3);
+
+            petStatus.GetEnergyFill();
+
+            // save data after change
+            petStatus.SavePetData();
+        }
+
+        musicRewardCoroutine = null;
+    }
+
+    public void OnExitMusicScreen()
+    {
+        // Stop song, resume BGM
+        if (musicPlayer != null && musicPlayer.isPlaying)
+        {
+            musicPlayer.Stop();
+        }
+
+        if (bgm != null)
+        {
+            bgm.PlayMusic();
+        }
+
+        PlayerPrefs.SetInt("IsDancing", 0);
+        PlayerPrefs.Save();
+
+        petAnimator.SetBool("Dance", false);
+        petAnimator.SetBool("Sad", false);
+        petAnimator.SetBool("Laydown", true);
+
+        if (petPosition != null)
+        {
+            switch (petStatus.currentStage)
+            {
+                case Energy_Bar.PetStage.Kid:
+                    petPosition.localPosition = new Vector3(-1.25f, -2.4f, 0f);
+                    break;
+                case Energy_Bar.PetStage.Teen:
+                    petPosition.localPosition = new Vector3(-1.83f, -2.65f, 0f);
+                    break;
+                case Energy_Bar.PetStage.Adult:
+                    petPosition.localPosition = new Vector3(-2.38f, -2.7f, 0f);
+                    break;
+                case Energy_Bar.PetStage.Old:
+                    petPosition.localPosition = new Vector3(-2.42f, -2.75f, 0f);
+                    break;
+            }
+        }
+
+        if (regenHappinessCoroutine != null)
+        {
+            StopCoroutine(regenHappinessCoroutine);
+            regenHappinessCoroutine = null;
+        }
+
+        if (musicRewardCoroutine != null)
+        {
+            StopCoroutine(musicRewardCoroutine);
+            musicRewardCoroutine = null;
+        }
+
+        petStatus.ResumeHappinessDeduction();
+    }
+
+    public void RequestPlayCategorySong(string categoryName)
+    {
+        PlayCategorySong(categoryName);   // this is the method we wrote earlier with probabilities etc.
+    }
 
 }
