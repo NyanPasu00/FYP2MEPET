@@ -1,4 +1,4 @@
-using NUnit.Framework.Interfaces;
+ï»¿using NUnit.Framework.Interfaces;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -6,7 +6,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
-public class UIController : MonoBehaviour
+public class UIController : MonoBehaviour , IBeginDragHandler, IDragHandler, IEndDragHandler
 {
     public Energy_Bar petStatus;
     public bool isLogin = false;
@@ -23,12 +23,19 @@ public class UIController : MonoBehaviour
     public int eventOptionSelected;
     public bool isLikeMusic = false;
     public bool isLikeCategory = false;
+
+
     public Button musicToggleButton;
+
     //Hall Sleep and Awake
+    [Header ("Hall Sleep and Awake")]
     private bool isLightOn = true;
     public GameObject HallLightScreen;
     public GameObject HallDarkScreen;
     public Animator petAnimator;
+    private Coroutine regenEnergyCoroutine;
+    private Coroutine stopEnergyCoroutine = null;
+    public bool isWaitingToRegen = false;
 
     //Kitchen Cart
     public Cart cart;
@@ -39,17 +46,22 @@ public class UIController : MonoBehaviour
     //Draggable Food
     public RectTransform draggableFood;
     public Canvas canvas;
-    //public Transform foodOriginalParent;
-    public Transform plateArea;
-    private Vector2 originalPos;
-    private CanvasGroup dragCanvasGroup;
+    public GameObject FoodFullDialog;
+    public GameObject FeedSuccessDialogue;
+    public AudioSource eatingSound;
     public static UIController instance;
+    public bool isEating;
+    public Transform originalParent;
+    public Vector2 originalAnchoredPosition;
+    private CanvasGroup dragCanvasGroup;
+    private Vector3 originalPosition;
+    public string currentFoodName;
 
     [System.Serializable]
     public class MusicCategory
     {
         public string categoryName;       // Rock, Rap, Reggae, etc.
-        public List<AudioClip> songs;     // 5–10 clips per category
+        public List<AudioClip> songs;     // 5â€“10 clips per category
     }
 
     [Header("Music")]
@@ -61,6 +73,7 @@ public class UIController : MonoBehaviour
 
     private HashSet<string> likedCategories = new HashSet<string>();
     private string lastCategoryName = null;
+    private string currentCategoryPlaying = null;
     private int sameCategoryCount = 0;
     private int boredomThreshold = 4;
     private Coroutine regenHappinessCoroutine;
@@ -69,10 +82,13 @@ public class UIController : MonoBehaviour
     private int moneyEarnedThisPlay = 0;
 
 
+
     void Start()
     {
         dragCanvasGroup = draggableFood.GetComponent<CanvasGroup>();
-        originalPos = draggableFood.anchoredPosition;
+        originalAnchoredPosition = draggableFood.anchoredPosition;
+
+        originalParent = draggableFood.parent;
 
         InitMusicPreferences();
     }
@@ -86,22 +102,24 @@ public class UIController : MonoBehaviour
     void Awake()
     {
         instance = this;
-    }
 
-    public string currentFoodName;
+        originalParent = draggableFood.parent;
+        dragCanvasGroup = draggableFood.GetComponent<CanvasGroup>();
+        originalAnchoredPosition = draggableFood.anchoredPosition;
+    }
 
     public void SelectFood(string foodName)
     {
         currentFoodName = foodName;
-
+        UIController.instance.currentFoodName = foodName;
         // get sprite
         Sprite sprite = gameUI.foodSprites[foodName];
 
         // update selected UI
         gameUI.displaySelectedFood(foodName, sprite);
 
-        
-        //draggableFood.SetActive(true);
+
+        ////draggableFood.SetActive(true);
         draggableFood.GetComponent<Image>().sprite = sprite;
 
         // reset position
@@ -160,8 +178,9 @@ public class UIController : MonoBehaviour
     
     }
 
-    public void OnBeginDrag()
+    public void OnBeginDrag(PointerEventData e)
     {
+        //originalAnchoredPosition = draggableFood.anchoredPosition;
         dragCanvasGroup.blocksRaycasts = false;
     }
 
@@ -174,10 +193,35 @@ public class UIController : MonoBehaviour
     {
         dragCanvasGroup.blocksRaycasts = true;
 
-        if (IsOnPlate(e))
-            HandleEating();
-        else
-            gameUI.resetFoodLocation();
+
+        GameObject hovered = e.pointerCurrentRaycast.gameObject;
+
+        if (hovered != null && hovered.CompareTag("Plate"))
+        {
+            if (petStatus.hunger_current >= 100)
+            {
+                FoodFullDialog.SetActive(true);
+                // Return potion to original position
+                transform.position = originalPosition;
+            }
+            else
+            {
+                isEating = true;
+                PlayerPrefs.SetInt("IsEating", isEating ? 1 : 0);
+                PlayerPrefs.Save();
+                // Temporarily set parent to plate
+                transform.SetParent(hovered.transform);
+                draggableFood.anchoredPosition = new Vector2(0, 35);
+
+
+                // Start eating process
+                HandleEating();
+                return;
+            }
+        }
+
+        // Invalid drop â€” reset
+        gameUI.resetFoodLocation();
     }
 
     public bool IsOnPlate(PointerEventData e)
@@ -190,21 +234,67 @@ public class UIController : MonoBehaviour
 
     public void HandleEating()
     {
-        // decrease food quantity
-        petStatus.ownedItems[currentFoodName]--;
+        string foodName = UIController.instance.currentFoodName;
+        // Stop dragging while eating
+        dragCanvasGroup.blocksRaycasts = false;
 
-        if (petStatus.ownedItems[currentFoodName] <= 0)
-            petStatus.ownedItems.Remove(currentFoodName);
+        // Play eating animation
+        if (petAnimator != null)
+            petAnimator.SetBool("Eating", true);
 
-        // give the pet food
-        petStatus.IncreaseFood();
+        // Play sound
+        if (eatingSound != null)
+            eatingSound.Play();
 
-        // save data
-        petStatus.SavePetData();
+        if (foodName == null)
+        {
+            Debug.Log("Name is Null");
+        }
 
-        // update UI
-        gameUI.displayAvailableFood(petStatus.ownedItems, gameUI.foodSprites);
+        petStatus.updateFoodStatus(foodName);
+
+        // Show success popup
+        if (FeedSuccessDialogue != null)
+            FeedSuccessDialogue.SetActive(true);
+
+        Invoke(nameof(FinishEating), 0.8f);
+    }
+
+    private void FinishEating()
+    {
+
+        // Stop eating animation
+        if (petAnimator != null)
+            petAnimator.SetBool("Eating", false);
+
+        // Stop sound
+        if (eatingSound != null)
+            eatingSound.Stop();
+
+        // Hide success popup
+        if (FeedSuccessDialogue != null)
+            FeedSuccessDialogue.SetActive(false);
+
+        // Reset food back to original position
         gameUI.resetFoodLocation();
+
+        string foodName = UIController.instance.currentFoodName;
+
+        if (!petStatus.ownedItems.ContainsKey(foodName) || petStatus.ownedItems[foodName] <= 0)
+        {
+            gameUI.clearSelectedFood();
+            UIController.instance.currentFoodName = null;
+        }
+
+
+
+        // Re-enable drag
+        dragCanvasGroup.blocksRaycasts = true;
+
+        // Update eating flag
+        isEating = false;
+        PlayerPrefs.SetInt("IsEating", 0);
+        PlayerPrefs.Save();
     }
 
     public void isHunger()
@@ -313,50 +403,165 @@ public class UIController : MonoBehaviour
 
     }
 
+
+    public bool IsSleep()
+    {
+        return isSleep;
+    }
+
     public void requestSleepOrAwake()
     {
-        isLightOn = !isLightOn;
-
-        HallLightScreen.SetActive(isLightOn);
-        HallDarkScreen.SetActive(!isLightOn);
-
-        if (isLightOn)
+        // 1) If pet is currently sleeping wake up
+        if (IsSleep())
         {
-            petAnimator.SetBool("Laydown", true);
-            petAnimator.SetBool("Sleep", false);
-            musicToggleButton.gameObject.SetActive(true);
+            WakeUpPet();
 
-            //if (regenEnergyCoroutine != null && stopEnergyCoroutine == null)
-            //{
-            //    stopEnergyCoroutine = StartCoroutine(DelayedStopEnergy());
-            //}
-
-            isSleep = false;
-            //PlayerPrefs.SetInt("IsSleeping", isSleeping ? 1 : 0);
-            //PlayerPrefs.Save();
-            //energyBar.ResumeEnergyDeduction();
+            if (gameUI != null)
+            {
+                gameUI.displayPetMessage("wakeup");
+            }
+            return;
         }
-        else
+
+        // 2) Pet is currently awake check energy
+        int energyValue = (petStatus != null)
+            ? petStatus.energy_current   // or petStatus.RetrieveValue("energyValue")
+            : 0;
+
+        // Energy >= 95 reject sleep
+        if (energyValue >= 95)
         {
-            petAnimator.SetBool("Laydown", false);
-            petAnimator.SetBool("Sleep", true);
-            musicToggleButton.gameObject.SetActive(false);
+            if (gameUI != null)
+            {
+                gameUI.displayPetMessage("rejectsleep");
+            }
+            return;
+        }
 
-            //if (!isWaitingToRegen && regenEnergyCoroutine == null)
-            //{
-            //    regenEnergyCoroutine = StartCoroutine(DelayedRegenerateEnergy());
-            //}
+        // Energy < 95 allow sleep
+        GoToSleep();
 
-            isSleep = true;
-            //PlayerPrefs.SetInt("IsSleeping", isSleep ? 1 : 0);
-            //PlayerPrefs.Save();
-            //energyBar.PauseEnergyDeduction();
+        if (gameUI != null)
+        {
+            gameUI.displayPetMessage("sleep");
         }
     }
 
-    public void IsSleep()
+    private void WakeUpPet()
     {
+        isLightOn = true;
+        isSleep = false;
 
+        // Turn light ON / dark OFF
+        if (HallLightScreen != null) HallLightScreen.SetActive(true);
+        if (HallDarkScreen != null) HallDarkScreen.SetActive(false);
+
+        // Animations
+        if (petAnimator != null)
+        {
+            petAnimator.SetBool("Laydown", true);
+            petAnimator.SetBool("Sleep", false);
+        }
+
+        // Allow music button again
+        if (musicToggleButton != null)
+            musicToggleButton.gameObject.SetActive(true);
+
+        // Stop regen coroutine if running
+        if (regenEnergyCoroutine != null)
+        {
+            StopCoroutine(regenEnergyCoroutine);
+            regenEnergyCoroutine = null;
+        }
+        isWaitingToRegen = false;
+        stopEnergyCoroutine = null;
+
+        // Resume normal energy deduction
+        if (petStatus != null)
+            petStatus.ResumeEnergyDeduction();
+
+        // Save state
+        PlayerPrefs.SetInt("IsSleeping", 0);
+        PlayerPrefs.Save();
+    }
+
+    private void GoToSleep()
+    {
+        isLightOn = false;
+        isSleep = true;
+
+        // Turn light OFF / dark ON
+        if (HallLightScreen != null) HallLightScreen.SetActive(false);
+        if (HallDarkScreen != null) HallDarkScreen.SetActive(true);
+
+        // Animations
+        if (petAnimator != null)
+        {
+            petAnimator.SetBool("Laydown", false);
+            petAnimator.SetBool("Sleep", true);
+        }
+
+        // Hide music button while sleeping
+        if (musicToggleButton != null)
+            musicToggleButton.gameObject.SetActive(false);
+
+        // Start energy regeneration if not already waiting
+        if (!isWaitingToRegen && regenEnergyCoroutine == null)
+        {
+            regenEnergyCoroutine = StartCoroutine(DelayedRegenerateEnergy());
+        }
+
+        // Pause normal energy deduction while sleeping
+        if (petStatus != null)
+            petStatus.PauseEnergyDeduction();
+
+        // Save state
+        PlayerPrefs.SetInt("IsSleeping", 1);
+        PlayerPrefs.Save();
+    }
+
+    private IEnumerator DelayedRegenerateEnergy()
+    {
+        isWaitingToRegen = true;
+        yield return new WaitForSeconds(1f); // delay to prevent spam
+
+        regenEnergyCoroutine = StartCoroutine(RegenerateEnergy());
+        isWaitingToRegen = false;
+        stopEnergyCoroutine = null;
+    }
+
+    private IEnumerator DelayedStopEnergy()
+    {
+        yield return new WaitForSeconds(1f);
+        if (regenEnergyCoroutine != null)
+        {
+            StopCoroutine(regenEnergyCoroutine);
+            regenEnergyCoroutine = null;
+        }
+        isWaitingToRegen = false;
+    }
+
+    private IEnumerator RegenerateEnergy()
+    {
+        // Increase energy slowly while sleeping & light is off
+        while (petStatus != null &&
+               petStatus.energy_current < petStatus.energy_max &&
+               isSleep && !isLightOn)
+        {
+            petStatus.energy_current += 1;
+            if (petStatus.energy_current > petStatus.energy_max)
+                petStatus.energy_current = petStatus.energy_max;
+
+            // Update sliders
+            petStatus.energy_Slider.value =
+                (float)petStatus.energy_current / petStatus.energy_max;
+            petStatus.energyDetail_Slider.value =
+                (float)petStatus.energy_current / petStatus.energy_max;
+
+            yield return new WaitForSeconds(2f);
+        }
+
+        regenEnergyCoroutine = null;
     }
 
     public void isEnergyLow()
@@ -396,7 +601,7 @@ public class UIController : MonoBehaviour
 
     private void InitMusicPreferences()
     {
-        boredomThreshold = Random.Range(4, 7);   // 4–6 clicks
+        boredomThreshold = Random.Range(4, 7);   // 4â€“6 clicks
         ShuffleLikedCategories();
     }
 
@@ -412,7 +617,7 @@ public class UIController : MonoBehaviour
         for (int i = 0; i < musicCategories.Count; i++)
             idx.Add(i);
 
-        // Fisher–Yates shuffle
+        // Fisherâ€“Yates shuffle
         for (int i = 0; i < idx.Count; i++)
         {
             int j = Random.Range(i, idx.Count);
@@ -457,7 +662,7 @@ public class UIController : MonoBehaviour
         isLikeCategory = categoryLiked;
 
         // Decide if this particular song is liked
-        // Roll 1–10
+        // Roll 1â€“10
         int roll = Random.Range(1, 11);
         bool songDisliked;
 
@@ -695,7 +900,9 @@ public class UIController : MonoBehaviour
 
     public void RequestPlayCategorySong(string categoryName)
     {
-        PlayCategorySong(categoryName);   // this is the method we wrote earlier with probabilities etc.
+        // Old behaviour: always play (possibly a new random song)
+        PlayCategorySong(categoryName);
     }
+
 
 }

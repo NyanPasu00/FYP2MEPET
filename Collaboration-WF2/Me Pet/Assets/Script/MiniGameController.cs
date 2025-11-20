@@ -3,6 +3,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
+
 public class MiniGameController : MonoBehaviour
 {
     public static MiniGameController instance;
@@ -63,6 +64,12 @@ public class MiniGameController : MonoBehaviour
     private int moneyEarnedThisMatch = 0;
     [SerializeField] private TextMeshProUGUI matchMoneyText;
 
+
+    [Header("Scene Navigation")]
+    [SerializeField] private string returnSceneName = "KidScene"; // <--- change to your actual scene name
+
+    private BGMScript bgm;
+
     private void Awake()
     {
         if (instance == null && instance != this)
@@ -83,6 +90,13 @@ public class MiniGameController : MonoBehaviour
     private void Start()
     {
         moneyEarnedThisMatch = 0;
+
+        // Stop global BGM when entering mini game
+        bgm = BGMScript.Instance;
+        if (bgm != null)
+        {
+            bgm.StopMusic();
+        }
 
         // High score
         highScore = PlayerPrefs.GetInt("HighScore", 0);
@@ -281,17 +295,38 @@ public class MiniGameController : MonoBehaviour
     public void QuitGame()
     {
         Time.timeScale = 1f;
-        OnDestroy();
+        OnDestroy(); // if you want to keep this, otherwise you can remove this line
 
-        var bgm = FindFirstObjectByType<BGMScript>();
+        if (bgm == null)
+            bgm = BGMScript.Instance;
+
         if (bgm != null)
         {
             bgm.PlayMusic();
         }
 
-        if (SceneLoader.Instance != null)
+            // When the main scene finishes loading, we will jump to Hall
+            SceneManager.sceneLoaded += OnMainSceneLoaded;
+
+        // Load the main pet game scene (the one with GameUI)
+        SceneManager.LoadScene(returnSceneName);
+    }
+
+
+    private void OnMainSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        // We only want this to run once
+        SceneManager.sceneLoaded -= OnMainSceneLoaded;
+
+        // Find GameUI in the newly loaded scene and tell it to go to Hall
+        GameUI gameUI = FindFirstObjectByType<GameUI>();
+        if (gameUI != null)
         {
-            SceneLoader.Instance.gameBackScene();
+            gameUI.gameBackScene();
+        }
+        else
+        {
+            Debug.LogWarning("GameUI not found in main scene after quitting mini game.");
         }
     }
 

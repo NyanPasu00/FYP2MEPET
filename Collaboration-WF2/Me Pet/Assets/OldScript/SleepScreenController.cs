@@ -14,7 +14,6 @@ public class LightToggle : MonoBehaviour
     private bool isLightOn = true;
     public bool isSleeping = true;
 
-    public AudioSource audio;
 
     public bool isWaitingToRegen = false;  // Prevents rapid restart of coroutine
 
@@ -102,8 +101,5 @@ public class LightToggle : MonoBehaviour
         regenEnergyCoroutine = null;
     }
 
-    public void playAudio()
-    {
-        audio.Play();
-    }
+
 }

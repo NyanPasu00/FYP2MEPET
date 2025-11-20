@@ -66,13 +66,12 @@ public class GameUI : MonoBehaviour
     public GameObject foodItemPrefab;
     public GameObject FoodSelection;
     public Image selectedFoodIcon;
-    //public TMP_Text selectedFoodName;
+
 
     private int currentRoomIndex = 2;
     private bool isMoving = false;
 
     //Changing Scene
-    public AudioSource audioClip; //click sound
     public bool isEating;
     public bool isSleeping;
     public bool isDancing;
@@ -91,15 +90,38 @@ public class GameUI : MonoBehaviour
     public GameObject MusicScreenPanel;
     public UnityEngine.UI.Button lightToggleButton; // the lamp / sleep toggle button
 
+    public AudioSource audioClip; //click sound
+    [SerializeField] private AudioClip uiClickClip;
+
+    [Header("Light Switch Sound")]
+    public AudioSource audioLightClip; //click sound
+    [SerializeField] private AudioClip uiLightClip;
+
     void Start()
     {
         if (statusPanel != null)
         {
             statusPanel.SetActive(false);
         }
-
-        MainCameraPosition.position = new Vector3(HallCameraPosition.position.x, HallCameraPosition.position.y, -10);
         currentRoomIndex = 2;
+    }
+
+    public void PlayLightUIClick()
+    {
+        if (audioLightClip != null && uiLightClip != null)
+        {
+            // important: PlayOneShot, NOT .Play on a shared music source
+            audioLightClip.PlayOneShot(uiLightClip);
+        }
+    }
+
+    public void PlayUIClick()
+    {
+        if (audioClip != null && uiClickClip != null)
+        {
+            // important: PlayOneShot, NOT .Play on a shared music source
+            audioClip.PlayOneShot(uiClickClip);
+        }
     }
 
     // Update is called once per frame
@@ -189,6 +211,7 @@ public class GameUI : MonoBehaviour
 
     }
 
+
     public void openFridge()
     {
         foodSprites = new Dictionary<string, Sprite>();
@@ -208,7 +231,8 @@ public class GameUI : MonoBehaviour
 
     public void displayAvailableFood(Dictionary<string, int> ownedItems, Dictionary<string, Sprite> foodSprites)
     {
-        foreach (Transform t in availableFoodParent)
+        Transform realParent = GetRealParent();
+        foreach (Transform t in realParent)
             Destroy(t.gameObject);
 
         foreach (var kvp in ownedItems)
@@ -242,6 +266,20 @@ public class GameUI : MonoBehaviour
         }
     }
 
+    private Transform GetRealParent()
+    {
+        // If this parent has no LayoutGroup, check children for one
+        if (availableFoodParent.GetComponent<LayoutGroup>() == null)
+        {
+            foreach (Transform child in availableFoodParent)
+            {
+                if (child.GetComponent<LayoutGroup>() != null)
+                    return child; // This is the actual grid/content
+            }
+        }
+        return availableFoodParent;
+    }
+
     public void displaySelectedFood(string foodName, Sprite sprite)
     {
         
@@ -257,15 +295,32 @@ public class GameUI : MonoBehaviour
         }
     }
 
+    public void clearSelectedFood()
+    {
+        selectedFoodIcon.sprite = null;
+        selectedFoodIcon.color = new Color(1, 1, 1, 0); // fully transparent
+    }
+
+    public void resetFoodLocation()
+    {
+        UIController ui = UIController.instance;
+
+        // return to original parent
+        ui.draggableFood.SetParent(ui.originalParent);
+
+        // reset anchored position
+        ui.draggableFood.anchoredPosition = ui.originalAnchoredPosition;
+
+        // ensure raycast works again
+        ui.draggableFood.GetComponent<CanvasGroup>().blocksRaycasts = true;
+    }
+
     public void displayPetMessage(string message)
     {
 
     }
 
-    public void resetFoodLocation()
-    {
-
-    }
+    
 
     public void resetMedicineLocation()
     {
@@ -382,6 +437,24 @@ public class GameUI : MonoBehaviour
         PlayAndLoad("PlayBallScene");
     }
 
+    public void gameBackScene()
+    {
+        // Force room index to Hall
+        currentRoomIndex = 1; // 2 = Hall in your switch
+
+        if (GameRoomCameraPosition != null && MainCameraPosition != null)
+        {
+            // Snap the camera to Hall
+            MainCameraPosition.position = new Vector3(
+                GameRoomCameraPosition.position.x,
+                GameRoomCameraPosition.position.y,
+                -10f
+            );
+        }
+
+        // Update title text
+        UpdateRoomTitle();
+    }
     public void displayMusicCategory()
     {
         Debug.Log("Button Clicked! Toggling Song Menu");

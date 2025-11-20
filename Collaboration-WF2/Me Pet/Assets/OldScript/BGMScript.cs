@@ -2,30 +2,33 @@ using UnityEngine;
 
 public class BGMScript : MonoBehaviour
 {
-    public static BGMScript Instance;
+    public static BGMScript Instance { get; private set; }
 
     private AudioSource audioSource;
 
-    void Awake()
+    private void Awake()
     {
-        
-        if (Instance == null)
-        {
-            Instance = this;
-            DontDestroyOnLoad(gameObject);
-            audioSource = GetComponent<AudioSource>();
-            audioSource.Play(); // Auto-play when loaded
-        }
-        else
+        // Singleton pattern
+        if (Instance != null && Instance != this)
         {
             Destroy(gameObject);
+            return;
         }
-        FindFirstObjectByType<BGMScript>().PlayMusic();
+
+        Instance = this;
+        DontDestroyOnLoad(gameObject);
+
+        audioSource = GetComponent<AudioSource>();
+        // Optional: auto-play only in the first scene
+        if (audioSource != null && audioSource.playOnAwake)
+        {
+            audioSource.Play();
+        }
     }
 
     public void PlayMusic()
     {
-        if (!audioSource.isPlaying)
+        if (audioSource != null && !audioSource.isPlaying)
         {
             audioSource.Play();
         }
@@ -33,7 +36,7 @@ public class BGMScript : MonoBehaviour
 
     public void StopMusic()
     {
-        if (audioSource.isPlaying)
+        if (audioSource != null && audioSource.isPlaying)
         {
             audioSource.Stop();
         }
@@ -41,12 +44,16 @@ public class BGMScript : MonoBehaviour
 
     public void ChangeVolume(float volume)
     {
-        audioSource.volume = volume;
+        if (audioSource != null)
+            audioSource.volume = volume;
     }
 
-    public void ChangeClip(AudioSource newClip, bool playImmediately = true)
+    // If you want to switch songs, it's better to use AudioClip instead of AudioSource.
+    public void ChangeClip(AudioClip newClip, bool playImmediately = true)
     {
-        audioSource = newClip;
+        if (audioSource == null || newClip == null) return;
+
+        audioSource.clip = newClip;
         if (playImmediately)
         {
             PlayMusic();
