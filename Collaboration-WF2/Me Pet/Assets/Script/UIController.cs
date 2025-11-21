@@ -310,6 +310,14 @@ public class UIController : MonoBehaviour , IBeginDragHandler, IDragHandler, IEn
     public void addItemToCart(ItemData item)
     {
         cart.addItem(item);
+        gameUI.displayCart(cart); // refresh cart UI if you want
+
+        //  Show message on screen
+        if (gameUI != null)
+        {
+            gameUI.ShowToast("Item added to cart");
+        }
+
         Debug.Log("UIController passed item to Cart");
     }
 

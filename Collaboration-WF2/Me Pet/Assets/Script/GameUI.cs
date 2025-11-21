@@ -97,6 +97,11 @@ public class GameUI : MonoBehaviour
     public AudioSource audioLightClip; //click sound
     [SerializeField] private AudioClip uiLightClip;
 
+    [Header("Toast Message")]
+    public GameObject toastPanel;              // panel background
+    public TextMeshProUGUI toastText;         // text "Item added to cart"
+    private Coroutine toastCoroutine;
+
     void Start()
     {
         if (statusPanel != null)
@@ -734,5 +739,31 @@ public class GameUI : MonoBehaviour
         audioClip.Play();
         yield return new WaitForSeconds(0.4f); // wait short delay (or audioClip.clip.length)
         SceneManager.LoadScene(sceneName);
+    }
+
+    public void ShowToast(string message, float duration = 1.5f)
+    {
+        // If a toast is already running, stop it and restart
+        if (toastCoroutine != null)
+        {
+            StopCoroutine(toastCoroutine);
+        }
+
+        toastCoroutine = StartCoroutine(ShowToastRoutine(message, duration));
+    }
+
+    private IEnumerator ShowToastRoutine(string message, float duration)
+    {
+        if (toastPanel != null && toastText != null)
+        {
+            toastText.text = message;
+            toastPanel.SetActive(true);
+
+            yield return new WaitForSeconds(duration);
+
+            toastPanel.SetActive(false);
+        }
+
+        toastCoroutine = null;
     }
 }
