@@ -37,6 +37,8 @@ public class UIController : MonoBehaviour , IBeginDragHandler, IDragHandler, IEn
     private Coroutine stopEnergyCoroutine = null;
     public bool isWaitingToRegen = false;
 
+    public BathController bathController;
+
     //Kitchen Cart
     public Cart cart;
     public GameUI gameUI;
@@ -70,6 +72,7 @@ public class UIController : MonoBehaviour , IBeginDragHandler, IDragHandler, IEn
     public Transform petPosition;            // pet transform
     public TextMeshProUGUI reactionText;     // text "I love this song" / "I hate this song"
     public List<MusicCategory> musicCategories = new List<MusicCategory>();
+    private Vector3 originalPetPosition;
 
     private HashSet<string> likedCategories = new HashSet<string>();
     private string lastCategoryName = null;
@@ -90,13 +93,21 @@ public class UIController : MonoBehaviour , IBeginDragHandler, IDragHandler, IEn
 
         originalParent = draggableFood.parent;
 
+        originalPetPosition = petPosition.position;
+
         InitMusicPreferences();
+
+        // NEW: initialise hall spawn based on sleep state
+        if (bathController != null)
+        {
+            // default: isSleep = true ⇒ lying spawn
+            bathController.SetHallStanding(false);
+        }
     }
 
-    // Update is called once per frame
     void Update()
     {
-        
+
     }
 
     void Awake()
@@ -118,8 +129,6 @@ public class UIController : MonoBehaviour , IBeginDragHandler, IDragHandler, IEn
         // update selected UI
         gameUI.displaySelectedFood(foodName, sprite);
 
-
-        ////draggableFood.SetActive(true);
         draggableFood.GetComponent<Image>().sprite = sprite;
 
         // reset position
@@ -171,16 +180,11 @@ public class UIController : MonoBehaviour , IBeginDragHandler, IDragHandler, IEn
             return;
         }
 
-        //FindFirstObjectByType<PetStatus>()?.createPetStatus(petName);
-
-        // Load your main game scene
         SceneManager.LoadScene("HallScene");
-    
     }
 
     public void OnBeginDrag(PointerEventData e)
     {
-        //originalAnchoredPosition = draggableFood.anchoredPosition;
         dragCanvasGroup.blocksRaycasts = false;
     }
 
@@ -192,7 +196,6 @@ public class UIController : MonoBehaviour , IBeginDragHandler, IDragHandler, IEn
     public void OnEndDrag(PointerEventData e)
     {
         dragCanvasGroup.blocksRaycasts = true;
-
 
         GameObject hovered = e.pointerCurrentRaycast.gameObject;
 
@@ -209,12 +212,10 @@ public class UIController : MonoBehaviour , IBeginDragHandler, IDragHandler, IEn
                 isEating = true;
                 PlayerPrefs.SetInt("IsEating", isEating ? 1 : 0);
                 PlayerPrefs.Save();
-                // Temporarily set parent to plate
+
                 transform.SetParent(hovered.transform);
                 draggableFood.anchoredPosition = new Vector2(0, 35);
 
-
-                // Start eating process
                 HandleEating();
                 return;
             }
@@ -235,14 +236,11 @@ public class UIController : MonoBehaviour , IBeginDragHandler, IDragHandler, IEn
     public void HandleEating()
     {
         string foodName = UIController.instance.currentFoodName;
-        // Stop dragging while eating
         dragCanvasGroup.blocksRaycasts = false;
 
-        // Play eating animation
         if (petAnimator != null)
             petAnimator.SetBool("Eating", true);
 
-        // Play sound
         if (eatingSound != null)
             eatingSound.Play();
 
@@ -253,7 +251,6 @@ public class UIController : MonoBehaviour , IBeginDragHandler, IDragHandler, IEn
 
         petStatus.updateFoodStatus(foodName);
 
-        // Show success popup
         if (FeedSuccessDialogue != null)
             FeedSuccessDialogue.SetActive(true);
 
@@ -262,20 +259,15 @@ public class UIController : MonoBehaviour , IBeginDragHandler, IDragHandler, IEn
 
     private void FinishEating()
     {
-
-        // Stop eating animation
         if (petAnimator != null)
             petAnimator.SetBool("Eating", false);
 
-        // Stop sound
         if (eatingSound != null)
             eatingSound.Stop();
 
-        // Hide success popup
         if (FeedSuccessDialogue != null)
             FeedSuccessDialogue.SetActive(false);
 
-        // Reset food back to original position
         gameUI.resetFoodLocation();
 
         string foodName = UIController.instance.currentFoodName;
@@ -286,12 +278,8 @@ public class UIController : MonoBehaviour , IBeginDragHandler, IDragHandler, IEn
             UIController.instance.currentFoodName = null;
         }
 
-
-
-        // Re-enable drag
         dragCanvasGroup.blocksRaycasts = true;
 
-        // Update eating flag
         isEating = false;
         PlayerPrefs.SetInt("IsEating", 0);
         PlayerPrefs.Save();
@@ -310,9 +298,8 @@ public class UIController : MonoBehaviour , IBeginDragHandler, IDragHandler, IEn
     public void addItemToCart(ItemData item)
     {
         cart.addItem(item);
-        gameUI.displayCart(cart); // refresh cart UI if you want
+        gameUI.displayCart(cart);
 
-        //  Show message on screen
         if (gameUI != null)
         {
             gameUI.ShowToast("Item added to cart");
@@ -324,7 +311,7 @@ public class UIController : MonoBehaviour , IBeginDragHandler, IDragHandler, IEn
     public void removeItemFromCart(string itemName)
     {
         cart.removeItem(itemName);
-        gameUI.displayCart(cart); // refresh the UI
+        gameUI.displayCart(cart);
     }
 
     public void modifyItemQuantity(string itemName, int change)
@@ -335,9 +322,8 @@ public class UIController : MonoBehaviour , IBeginDragHandler, IDragHandler, IEn
 
     public void requestCheckout()
     {
-
         int moneyValue = petStatus.RetrieveValue("moneyValue");
-        
+
         cart.calculateTotalCost();
         int totalCost = cart.totalCost;
         if (isValidateMoney(moneyValue, totalCost))
@@ -350,7 +336,6 @@ public class UIController : MonoBehaviour , IBeginDragHandler, IDragHandler, IEn
 
     public bool isValidateMoney(int moneyValue, int totalCost)
     {
-
         if (moneyValue >= totalCost)
         {
             return true;
@@ -359,25 +344,19 @@ public class UIController : MonoBehaviour , IBeginDragHandler, IDragHandler, IEn
         {
             return false;
         }
-
     }
 
     public void paymentConfirm()
     {
         int totalCost = cart.totalCost;
 
-
-        // Process payment
         petStatus.updateProductandMoney(cart.items, totalCost);
 
-        // Clear cart after purchase
         cart.items.Clear();
         cart.calculateTotalCost();
 
-        // Update UI again (refresh)
         gameUI.displayCart(cart);
         gameUI.closeCartandShop();
-
 
         Debug.Log("Payment successful.");
     }
@@ -406,11 +385,11 @@ public class UIController : MonoBehaviour , IBeginDragHandler, IDragHandler, IEn
     {
 
     }
+
     public void IsLikeMusic()
     {
 
     }
-
 
     public bool IsSleep()
     {
@@ -419,7 +398,6 @@ public class UIController : MonoBehaviour , IBeginDragHandler, IDragHandler, IEn
 
     public void requestSleepOrAwake()
     {
-        // 1) If pet is currently sleeping wake up
         if (IsSleep())
         {
             WakeUpPet();
@@ -431,12 +409,10 @@ public class UIController : MonoBehaviour , IBeginDragHandler, IDragHandler, IEn
             return;
         }
 
-        // 2) Pet is currently awake check energy
         int energyValue = (petStatus != null)
-            ? petStatus.energy_current   // or petStatus.RetrieveValue("energyValue")
+            ? petStatus.energy_current
             : 0;
 
-        // Energy >= 95 reject sleep
         if (energyValue >= 95)
         {
             if (gameUI != null)
@@ -446,7 +422,6 @@ public class UIController : MonoBehaviour , IBeginDragHandler, IDragHandler, IEn
             return;
         }
 
-        // Energy < 95 allow sleep
         GoToSleep();
 
         if (gameUI != null)
@@ -460,22 +435,18 @@ public class UIController : MonoBehaviour , IBeginDragHandler, IDragHandler, IEn
         isLightOn = true;
         isSleep = false;
 
-        // Turn light ON / dark OFF
         if (HallLightScreen != null) HallLightScreen.SetActive(true);
         if (HallDarkScreen != null) HallDarkScreen.SetActive(false);
 
-        // Animations
         if (petAnimator != null)
         {
             petAnimator.SetBool("Laydown", true);
             petAnimator.SetBool("Sleep", false);
         }
 
-        // Allow music button again
         if (musicToggleButton != null)
             musicToggleButton.gameObject.SetActive(true);
 
-        // Stop regen coroutine if running
         if (regenEnergyCoroutine != null)
         {
             StopCoroutine(regenEnergyCoroutine);
@@ -484,11 +455,9 @@ public class UIController : MonoBehaviour , IBeginDragHandler, IDragHandler, IEn
         isWaitingToRegen = false;
         stopEnergyCoroutine = null;
 
-        // Resume normal energy deduction
         if (petStatus != null)
             petStatus.ResumeEnergyDeduction();
 
-        // Save state
         PlayerPrefs.SetInt("IsSleeping", 0);
         PlayerPrefs.Save();
     }
@@ -498,32 +467,32 @@ public class UIController : MonoBehaviour , IBeginDragHandler, IDragHandler, IEn
         isLightOn = false;
         isSleep = true;
 
-        // Turn light OFF / dark ON
         if (HallLightScreen != null) HallLightScreen.SetActive(false);
         if (HallDarkScreen != null) HallDarkScreen.SetActive(true);
 
-        // Animations
         if (petAnimator != null)
         {
             petAnimator.SetBool("Laydown", false);
             petAnimator.SetBool("Sleep", true);
         }
 
-        // Hide music button while sleeping
+        // NEW: sleeping/lying ⇒ use lying hall spawn
+        if (bathController != null)
+        {
+            bathController.SetHallStanding(false);
+        }
+
         if (musicToggleButton != null)
             musicToggleButton.gameObject.SetActive(false);
 
-        // Start energy regeneration if not already waiting
         if (!isWaitingToRegen && regenEnergyCoroutine == null)
         {
             regenEnergyCoroutine = StartCoroutine(DelayedRegenerateEnergy());
         }
 
-        // Pause normal energy deduction while sleeping
         if (petStatus != null)
             petStatus.PauseEnergyDeduction();
 
-        // Save state
         PlayerPrefs.SetInt("IsSleeping", 1);
         PlayerPrefs.Save();
     }
@@ -531,7 +500,7 @@ public class UIController : MonoBehaviour , IBeginDragHandler, IDragHandler, IEn
     private IEnumerator DelayedRegenerateEnergy()
     {
         isWaitingToRegen = true;
-        yield return new WaitForSeconds(1f); // delay to prevent spam
+        yield return new WaitForSeconds(1f);
 
         regenEnergyCoroutine = StartCoroutine(RegenerateEnergy());
         isWaitingToRegen = false;
@@ -551,7 +520,6 @@ public class UIController : MonoBehaviour , IBeginDragHandler, IDragHandler, IEn
 
     private IEnumerator RegenerateEnergy()
     {
-        // Increase energy slowly while sleeping & light is off
         while (petStatus != null &&
                petStatus.energy_current < petStatus.energy_max &&
                isSleep && !isLightOn)
@@ -560,7 +528,6 @@ public class UIController : MonoBehaviour , IBeginDragHandler, IDragHandler, IEn
             if (petStatus.energy_current > petStatus.energy_max)
                 petStatus.energy_current = petStatus.energy_max;
 
-            // Update sliders
             petStatus.energy_Slider.value =
                 (float)petStatus.energy_current / petStatus.energy_max;
             petStatus.energyDetail_Slider.value =
@@ -609,7 +576,7 @@ public class UIController : MonoBehaviour , IBeginDragHandler, IDragHandler, IEn
 
     private void InitMusicPreferences()
     {
-        boredomThreshold = Random.Range(4, 7);   // 4–6 clicks
+        boredomThreshold = Random.Range(4, 7);
         ShuffleLikedCategories();
     }
 
@@ -620,12 +587,10 @@ public class UIController : MonoBehaviour , IBeginDragHandler, IDragHandler, IEn
         if (musicCategories == null || musicCategories.Count == 0)
             return;
 
-        // indices 0..N-1
         List<int> idx = new List<int>();
         for (int i = 0; i < musicCategories.Count; i++)
             idx.Add(i);
 
-        // Fisher–Yates shuffle
         for (int i = 0; i < idx.Count; i++)
         {
             int j = Random.Range(i, idx.Count);
@@ -634,7 +599,6 @@ public class UIController : MonoBehaviour , IBeginDragHandler, IDragHandler, IEn
             idx[j] = temp;
         }
 
-        // Pick first 3 as liked
         int likeCount = Mathf.Min(3, idx.Count);
         for (int i = 0; i < likeCount; i++)
         {
@@ -646,13 +610,11 @@ public class UIController : MonoBehaviour , IBeginDragHandler, IDragHandler, IEn
 
     private void PlayCategorySong(string categoryName)
     {
-        // Stop background BGM
         if (bgm != null)
         {
             bgm.StopMusic();
         }
 
-        // Find the category
         MusicCategory category = musicCategories.Find(c => c.categoryName == categoryName);
         if (category == null || category.songs == null || category.songs.Count == 0)
         {
@@ -660,28 +622,22 @@ public class UIController : MonoBehaviour , IBeginDragHandler, IDragHandler, IEn
             return;
         }
 
-        // Randomly pick one song from this category
         int songIndex = Random.Range(0, category.songs.Count);
         musicPlayer.clip = category.songs[songIndex];
         musicPlayer.Play();
 
-        // Decide if pet likes this CATEGORY
         bool categoryLiked = likedCategories.Contains(categoryName);
         isLikeCategory = categoryLiked;
 
-        // Decide if this particular song is liked
-        // Roll 1–10
         int roll = Random.Range(1, 11);
         bool songDisliked;
 
         if (categoryLiked)
         {
-            // 10% dislike
             songDisliked = (roll == 1);
         }
         else
         {
-            // 80% dislike
             songDisliked = (roll <= 8);
         }
 
@@ -690,7 +646,6 @@ public class UIController : MonoBehaviour , IBeginDragHandler, IDragHandler, IEn
 
         UpdatePetReaction(songLiked);
 
-        // Boredom logic: same category clicked too many times
         if (lastCategoryName == categoryName)
         {
             sameCategoryCount++;
@@ -703,7 +658,6 @@ public class UIController : MonoBehaviour , IBeginDragHandler, IDragHandler, IEn
 
         if (sameCategoryCount >= boredomThreshold)
         {
-            // Pet is bored; randomise liked categories again
             ShuffleLikedCategories();
             sameCategoryCount = 0;
             boredomThreshold = Random.Range(4, 7);
@@ -714,16 +668,17 @@ public class UIController : MonoBehaviour , IBeginDragHandler, IDragHandler, IEn
             }
         }
     }
+
     private void UpdatePetReaction(bool songLiked)
     {
-        // Stop previous regen if any
+        petPosition.position = originalPetPosition;
+
         if (regenHappinessCoroutine != null)
         {
             StopCoroutine(regenHappinessCoroutine);
             regenHappinessCoroutine = null;
         }
 
-        // Also stop previous music reward if any
         if (musicRewardCoroutine != null)
         {
             StopCoroutine(musicRewardCoroutine);
@@ -732,14 +687,19 @@ public class UIController : MonoBehaviour , IBeginDragHandler, IDragHandler, IEn
 
         if (songLiked)
         {
-            // Happy / dancing
             petAnimator.SetBool("Sad", false);
             petAnimator.SetBool("Laydown", false);
             petAnimator.SetBool("Dance", true);
 
+            // NEW: dancing = standing
+            if (bathController != null)
+            {
+                bathController.SetHallStanding(true);
+            }
+
             if (petPosition != null)
             {
-                petPosition.localPosition = new Vector3(-0.41f, -3.93f, 0f);
+                petPosition.localPosition = new Vector3(-1.21f, -2.332834f, 0f);
             }
 
             if (reactionText != null)
@@ -747,41 +707,44 @@ public class UIController : MonoBehaviour , IBeginDragHandler, IDragHandler, IEn
                 reactionText.text = "I love this song!";
             }
 
-            // Regen happiness over time
             regenHappinessCoroutine = StartCoroutine(RegenerateHappiness());
             petStatus.PauseHappinessDeduction();
 
             PlayerPrefs.SetInt("IsDancing", 1);
             PlayerPrefs.Save();
 
-            // Start reward coroutine: +money, -energy every 10 seconds (max +20 money per play)
             musicRewardCoroutine = StartCoroutine(MusicRewardRoutine());
         }
         else
         {
-            // Sad / dislike
             petAnimator.SetBool("Dance", false);
             petAnimator.SetBool("Laydown", false);
             petAnimator.SetBool("Sad", true);
 
-            if (petPosition != null)
+            // NEW: sad on music screen is also a standing pose
+            if (bathController != null)
             {
-                switch (petStatus.currentStage)
-                {
-                    case Energy_Bar.PetStage.Kid:
-                        petPosition.localPosition = new Vector3(-1.14f, -3.78f, 0f);
-                        break;
-                    case Energy_Bar.PetStage.Teen:
-                        petPosition.localPosition = new Vector3(-1.68f, -3.82f, 0f);
-                        break;
-                    case Energy_Bar.PetStage.Adult:
-                        petPosition.localPosition = new Vector3(-2.08f, -3.91f, 0f);
-                        break;
-                    case Energy_Bar.PetStage.Old:
-                        petPosition.localPosition = new Vector3(-2.08f, -3.91f, 0f);
-                        break;
-                }
+                bathController.SetHallStanding(true);
             }
+
+            //if (petPosition != null)
+            //{
+            //    switch (petStatus.currentStage)
+            //    {
+            //        case Energy_Bar.PetStage.Kid:
+            //            petPosition.localPosition = new Vector3(-1.14f, -3.78f, 0f);
+            //            break;
+            //        case Energy_Bar.PetStage.Teen:
+            //            petPosition.localPosition = new Vector3(-1.68f, -3.82f, 0f);
+            //            break;
+            //        case Energy_Bar.PetStage.Adult:
+            //            petPosition.localPosition = new Vector3(-2.08f, -3.91f, 0f);
+            //            break;
+            //        case Energy_Bar.PetStage.Old:
+            //            petPosition.localPosition = new Vector3(-2.08f, -3.91f, 0f);
+            //            break;
+            //    }
+            //}
 
             if (reactionText != null)
             {
@@ -791,7 +754,6 @@ public class UIController : MonoBehaviour , IBeginDragHandler, IDragHandler, IEn
             PlayerPrefs.SetInt("IsDancing", 0);
             PlayerPrefs.Save();
 
-            // Punish happiness a bit
             petStatus.decreaseHappiness(5);
             petStatus.ResumeHappinessDeduction();
         }
@@ -820,32 +782,26 @@ public class UIController : MonoBehaviour , IBeginDragHandler, IDragHandler, IEn
     {
         moneyEarnedThisPlay = 0;
 
-        // reward only while music is playing AND song is liked
         while (musicPlayer != null && musicPlayer.isPlaying && isLikeMusic)
         {
             if (moneyEarnedThisPlay >= 20)
-                break; // reached max reward for this play
+                break;
 
-            // wait 10 seconds of continuous listening
             yield return new WaitForSeconds(10f);
 
-            // check again in case music stopped during the wait
             if (musicPlayer == null || !musicPlayer.isPlaying || !isLikeMusic)
                 break;
 
             if (moneyEarnedThisPlay >= 20)
                 break;
 
-            // +5 money
-            petStatus.AddMoney(5);          // uses the new method in Energy_Bar
+            petStatus.AddMoney(5);
             moneyEarnedThisPlay += 5;
 
-            // - energy (for example, 3 points per 10s; adjust as you like)
             petStatus.energy_current = Mathf.Max(0, petStatus.energy_current - 3);
 
             petStatus.GetEnergyFill();
 
-            // save data after change
             petStatus.SavePetData();
         }
 
@@ -854,7 +810,10 @@ public class UIController : MonoBehaviour , IBeginDragHandler, IDragHandler, IEn
 
     public void OnExitMusicScreen()
     {
-        // Stop song, resume BGM
+        if (petPosition != null)
+        {
+            petPosition.position = originalPetPosition;
+        }
         if (musicPlayer != null && musicPlayer.isPlaying)
         {
             musicPlayer.Stop();
@@ -872,24 +831,30 @@ public class UIController : MonoBehaviour , IBeginDragHandler, IDragHandler, IEn
         petAnimator.SetBool("Sad", false);
         petAnimator.SetBool("Laydown", true);
 
-        if (petPosition != null)
+        // NEW: back to lying default ⇒ use lying spawn
+        if (bathController != null)
         {
-            switch (petStatus.currentStage)
-            {
-                case Energy_Bar.PetStage.Kid:
-                    petPosition.localPosition = new Vector3(-1.25f, -2.4f, 0f);
-                    break;
-                case Energy_Bar.PetStage.Teen:
-                    petPosition.localPosition = new Vector3(-1.83f, -2.65f, 0f);
-                    break;
-                case Energy_Bar.PetStage.Adult:
-                    petPosition.localPosition = new Vector3(-2.38f, -2.7f, 0f);
-                    break;
-                case Energy_Bar.PetStage.Old:
-                    petPosition.localPosition = new Vector3(-2.42f, -2.75f, 0f);
-                    break;
-            }
+            bathController.SetHallStanding(false);
         }
+
+        //if (petPosition != null)
+        //{
+        //    switch (petStatus.currentStage)
+        //    {
+        //        case Energy_Bar.PetStage.Kid:
+        //            petPosition.localPosition = new Vector3(-1.25f, -2.4f, 0f);
+        //            break;
+        //        case Energy_Bar.PetStage.Teen:
+        //            petPosition.localPosition = new Vector3(-1.83f, -2.65f, 0f);
+        //            break;
+        //        case Energy_Bar.PetStage.Adult:
+        //            petPosition.localPosition = new Vector3(-2.38f, -2.7f, 0f);
+        //            break;
+        //        case Energy_Bar.PetStage.Old:
+        //            petPosition.localPosition = new Vector3(-2.42f, -2.75f, 0f);
+        //            break;
+        //    }
+        //}
 
         if (regenHappinessCoroutine != null)
         {
@@ -908,9 +873,6 @@ public class UIController : MonoBehaviour , IBeginDragHandler, IDragHandler, IEn
 
     public void RequestPlayCategorySong(string categoryName)
     {
-        // Old behaviour: always play (possibly a new random song)
         PlayCategorySong(categoryName);
     }
-
-
 }

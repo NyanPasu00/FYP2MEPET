@@ -1,4 +1,4 @@
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
 using System.Collections.Generic;
 using TMPro;
@@ -40,6 +40,10 @@ public class BathController : MonoBehaviour
     [Header("Bathroom")]
     public BoxCollider2D bathroomSpawnArea;
     private List<GameObject> activeSpots = new List<GameObject>();
+
+    [Header("Hall Pose State")]
+    [Tooltip("True = pet standing/dancing. False = pet lying (default).")]
+    public bool hallStanding = false;
 
     [Header("Shower")]
     public ParticleSystem showerEffect;    // was in ShowerController
@@ -111,11 +115,19 @@ public class BathController : MonoBehaviour
         }
     }
 
+    /* ===================== PUBLIC POSE API ===================== */
+
+    // Call this from UIController / music controller when pose changes
+    public void SetHallStanding(bool isStanding)
+    {
+        hallStanding = isStanding;
+        // Debug.Log("[BathController] Hall pose changed. Standing = " + hallStanding);
+    }
+
     /* ===================== SHOWER CONTROL ===================== */
 
     public void StartShower()
     {
-
         if (isShowering) return;
 
         Debug.Log("[BathController] StartShower");
@@ -123,8 +135,6 @@ public class BathController : MonoBehaviour
         isShowering = true;
         showerTimer = 0f;
 
-        // We do NOT move the shower. You place the shower head + water
-        // at the correct position in the scene manually.
         if (showerHead != null)
         {
             showerHead.SetActive(true);
@@ -161,8 +171,8 @@ public class BathController : MonoBehaviour
         if (showerHead != null)
             showerHead.SetActive(false);
 
-        waterDrop.SetActive(false);
-
+        if (waterDrop != null)
+            waterDrop.SetActive(false);
     }
 
     /* ===================== CLEAN FINISH LOGIC ===================== */
@@ -202,7 +212,7 @@ public class BathController : MonoBehaviour
         PlayerPrefs.Save();
     }
 
-    /* ===================== DIRT GROW / SPAWN (same as before) ===================== */
+    /* ===================== DIRT GROW / SPAWN ===================== */
 
     void CheckMilestoneAndSpawn()
     {
@@ -255,8 +265,25 @@ public class BathController : MonoBehaviour
     void SpawnDirtySpots(int amount)
     {
         List<BoxCollider2D> areas = new List<BoxCollider2D>();
-        if (spawnArea != null) areas.Add(spawnArea);
-        if (spawnAreaLying != null) areas.Add(spawnAreaLying);
+
+        // ----- HALL LOGIC: choose standing OR lying -----
+        if (spawnArea != null || spawnAreaLying != null)
+        {
+            if (hallStanding)
+            {
+                // Dancing / standing use standing collider if possible
+                if (spawnArea != null) areas.Add(spawnArea);
+                else if (spawnAreaLying != null) areas.Add(spawnAreaLying);
+            }
+            else
+            {
+                // Default / lying use lying collider if possible
+                if (spawnAreaLying != null) areas.Add(spawnAreaLying);
+                else if (spawnArea != null) areas.Add(spawnArea);
+            }
+        }
+
+        // ----- Other rooms (same as before) -----
         if (kitchenSpawnArea != null) areas.Add(kitchenSpawnArea);
         if (gameroomSpawnArea != null) areas.Add(gameroomSpawnArea);
         if (bathroomSpawnArea != null) areas.Add(bathroomSpawnArea);
@@ -269,7 +296,8 @@ public class BathController : MonoBehaviour
             Bounds bounds = areaToUse.bounds;
 
             GameObject spot = Instantiate(dirtySpotPrefab);
-            spot.transform.SetParent(cat.transform);
+            if (cat != null)
+                spot.transform.SetParent(cat.transform);
 
             Vector3 randomWorldPos = new Vector3(
                 Random.Range(bounds.min.x, bounds.max.x),
