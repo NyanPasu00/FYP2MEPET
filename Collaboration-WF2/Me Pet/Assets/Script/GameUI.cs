@@ -28,7 +28,7 @@ public class GameUI : MonoBehaviour
     private bool justOpened = false;
     public bool panelOpen = false;
 
-    public Energy_Bar stats;
+    public PetStatus stats;
 
     [SerializeField]
     [Header("Transition")]
@@ -182,7 +182,7 @@ public class GameUI : MonoBehaviour
     string petName = "Pet";
     if (!string.IsNullOrEmpty(json))
     {
-        Energy_Bar.PetData data = JsonUtility.FromJson<Energy_Bar.PetData>(json);
+            PetStatus.PetData data = JsonUtility.FromJson<PetStatus.PetData>(json);
             if (data != null && !string.IsNullOrEmpty(data.petName))
         {
             petName = data.petName;

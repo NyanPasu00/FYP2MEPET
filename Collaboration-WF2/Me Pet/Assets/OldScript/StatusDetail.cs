@@ -11,7 +11,7 @@ public class StatusDetail : MonoBehaviour
     public TextMeshProUGUI stageText;
 
     // These should reference your values from the other script
-    public Energy_Bar stats;
+    public PetStatus stats;
     public SceneLoader loader;
 
     [SerializeField]

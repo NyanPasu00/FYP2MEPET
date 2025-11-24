@@ -804,7 +804,7 @@ RectTransform:
   m_Father: {fileID: 1021599755}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 106860, y: -151783}
   m_SizeDelta: {x: 0, y: 5583.6}
   m_Pivot: {x: 0.5, y: 0}
@@ -1152,11 +1152,8 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 2144841300}
-  - {fileID: 278133963}
-  - {fileID: 1381188117}
   - {fileID: 1035634459}
   - {fileID: 946203368}
-  - {fileID: 885365923}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &157814955
@@ -1984,7 +1981,9 @@ MonoBehaviour:
   isBathing: 0
   isAlbumOpen: 0
   progressStop: 0
-  dirtyManager: {fileID: 1681957402}
+  nameInputField: {fileID: 0}
+  moneyValue: 0
+  bathController: {fileID: 0}
   energy_max: 100
   energy_current: 100
   energy_Slider: {fileID: 1322222151}
@@ -2012,6 +2011,7 @@ MonoBehaviour:
   progress_increase_time: 60
   currentStage: 1
   stageRepresent: {fileID: 1888166904}
+  moneyText: {fileID: 0}
 --- !u!1 &259933053
 GameObject:
   m_ObjectHideFlags: 0
@@ -2459,12 +2459,12 @@ Transform:
   m_GameObject: {fileID: 278133962}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.94109184, y: -1.2321111, z: 3.5116718}
+  m_LocalPosition: {x: -0.5634424, y: -0.841713, z: 3.5428412}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 345938447}
-  m_Father: {fileID: 155708878}
+  m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &290751034
 GameObject:
@@ -3342,7 +3342,7 @@ RectTransform:
   m_Father: {fileID: 1798379590}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 106860, y: -10512}
   m_SizeDelta: {x: 0, y: 5583.6}
   m_Pivot: {x: 0.5, y: 0}
@@ -5762,15 +5762,15 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 885365922}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0.37764943, y: 0.3903981, z: 0.031169526}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 700632623}
   - {fileID: 767959992}
   - {fileID: 1240928667}
-  m_Father: {fileID: 155708878}
+  m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &889132962
 GameObject:
@@ -8506,7 +8506,7 @@ RectTransform:
   m_Father: {fileID: 1536039295}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 106860, y: -57937}
   m_SizeDelta: {x: 0, y: 5583.6}
   m_Pivot: {x: 0.5, y: 0}
@@ -8752,7 +8752,7 @@ RectTransform:
   - {fileID: 1499192767}
   - {fileID: 1615036140}
   - {fileID: 1925945811}
-  m_Father: {fileID: 155708878}
+  m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -9725,7 +9725,7 @@ RectTransform:
   m_Father: {fileID: 2133073181}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 106860, y: -105025}
   m_SizeDelta: {x: 0, y: 5583.6}
   m_Pivot: {x: 0.5, y: 0}
@@ -10571,7 +10571,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1635414630
 RectTransform:
   m_ObjectHideFlags: 0
@@ -11135,7 +11135,6 @@ MonoBehaviour:
   petAnimator: {fileID: 2144841301}
   energyBar: {fileID: 255022664}
   isSleeping: 1
-  audio: {fileID: 1681957404}
   isWaitingToRegen: 0
 --- !u!114 &1681957398
 MonoBehaviour:
@@ -11163,23 +11162,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   categoryName: 
-  bgm: {fileID: 1633575550}
-  lightToggleButton: {fileID: 1736986104}
-  SongMenuPanel: {fileID: 278133962}
-  HallPanel: {fileID: 1035634458}
-  MusicScreenPanel: {fileID: 885365922}
-  petAnimator: {fileID: 2144841301}
-  petPosition: {fileID: 2144841300}
-  musicPlayer: {fileID: 63834873}
-  reactionText: {fileID: 217348069}
-  happinessBar: {fileID: 255022664}
-  rockMusic: {fileID: 8300000, guid: 5f793a8cca5171c4cafee1df6e39f3ff, type: 3}
-  rapMusic: {fileID: 8300000, guid: 41fe5b9352c26dc458a1a939dc84db7c, type: 3}
-  reggaeMusic: {fileID: 8300000, guid: 14457907bf76d63429218a0579809f04, type: 3}
-  countryMusic: {fileID: 8300000, guid: c361abb9f25ceb9408dcdb5f6415d14f, type: 3}
-  jazzMusic: {fileID: 8300000, guid: 37673213464010b429195711b1e09be1, type: 3}
-  metalMusic: {fileID: 8300000, guid: eb537ba88ec477c43b7eb5bb6c292f90, type: 3}
-  isDancing: 0
 --- !u!114 &1681957400
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -13252,7 +13234,7 @@ RectTransform:
   m_Father: {fileID: 965522106}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 15728, y: 64240}
   m_SizeDelta: {x: 0, y: 5583.6}
   m_Pivot: {x: 0.5, y: 0}
@@ -15526,6 +15508,9 @@ SceneRoots:
   - {fileID: 519420032}
   - {fileID: 1752408655}
   - {fileID: 155708878}
+  - {fileID: 885365923}
+  - {fileID: 278133963}
+  - {fileID: 1381188117}
   - {fileID: 1681957396}
   - {fileID: 63834874}
   - {fileID: 2001295005}

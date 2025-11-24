@@ -12,7 +12,7 @@ public class EventStressTrigger : MonoBehaviour
     public GameObject ContinueLearningPanel;
     public GameObject LetDrinkPanel;
     public GameObject PlayGamePanel;
-    public Energy_Bar happiness;
+    public PetStatus happiness;
     
 
     void Start()

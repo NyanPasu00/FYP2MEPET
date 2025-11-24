@@ -8,7 +8,7 @@ public class LightToggle : MonoBehaviour
     public GameObject HallLightScreen;
     public GameObject HallDarkScreen;
     public Animator petAnimator;
-    public Energy_Bar energyBar;
+    public PetStatus energyBar;
     private Coroutine regenEnergyCoroutine;
     private Coroutine stopEnergyCoroutine = null;
     private bool isLightOn = true;

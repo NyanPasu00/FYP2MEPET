@@ -406,7 +406,7 @@ public class MiniGameController : MonoBehaviour
             return;
         }
 
-        Energy_Bar.PetData data = JsonUtility.FromJson<Energy_Bar.PetData>(json);
+        PetStatus.PetData data = JsonUtility.FromJson<PetStatus.PetData>(json);
         if (data == null)
         {
             Debug.LogWarning("Failed to parse PetData JSON when adding money.");

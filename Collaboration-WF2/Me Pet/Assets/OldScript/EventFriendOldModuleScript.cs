@@ -13,7 +13,7 @@ public class EventTrigger : MonoBehaviour
     public GameObject DialogForFriend;
     public Animator petAnimator;
     public Transform petTransform;
-    public Energy_Bar happiness;
+    public PetStatus happiness;
     public GameObject NewFriendButton;
     public GameObject BackHallButton;
 

@@ -12,7 +12,7 @@ public class EventAdultStressTrigger : MonoBehaviour
     public GameObject ResignPanel;
     public GameObject MoviePanel;
     public GameObject TravelPanel;
-    public Energy_Bar happiness;
+    public PetStatus happiness;
     
 
     void Start()

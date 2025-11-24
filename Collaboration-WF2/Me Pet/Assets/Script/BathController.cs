@@ -27,7 +27,7 @@ public class BathController : MonoBehaviour
     public Animator catAnimator;
     public bool isBathing;
 
-    public Energy_Bar energy;
+    public PetStatus energy;
 
     [Header("Dirty Spawn Spot")]
     [Header("Hall")]

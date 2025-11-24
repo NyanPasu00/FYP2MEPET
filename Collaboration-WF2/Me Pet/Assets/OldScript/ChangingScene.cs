@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.Rendering;
 using UnityEngine.SceneManagement;
-using static Energy_Bar;
+using static PetStatus;
 
 public class SceneLoader : MonoBehaviour
 {
@@ -33,7 +33,7 @@ public class SceneLoader : MonoBehaviour
     }
     public static SceneLoader Instance;
     public AudioSource audioClip; // click sound
-    public Energy_Bar energy;
+    public PetStatus energy;
     public bool hall = false;
     public bool kitchen = false;
     public bool bathroom = false;
@@ -132,8 +132,8 @@ public class SceneLoader : MonoBehaviour
 
     public void BackToHallScene()
     {
-
-        FindFirstObjectByType<Energy_Bar>()?.SavePetData();
+            
+        FindFirstObjectByType<PetStatus>()?.SavePetData();
 
         hall = true;
         kitchen = false;
@@ -142,19 +142,19 @@ public class SceneLoader : MonoBehaviour
 
         SaveCurrentRoom();
 
-        if (energy.currentStage == Energy_Bar.PetStage.Kid)
+        if (energy.currentStage == PetStatus.PetStage.Kid)
         {
             PlayAndLoad("HallScene");
         }
-        else if (energy.currentStage == Energy_Bar.PetStage.Teen)
+        else if (energy.currentStage == PetStatus.PetStage.Teen)
         {
             PlayAndLoad("TeenHallScene");
         }
-        else if (energy.currentStage == Energy_Bar.PetStage.Adult)
+        else if (energy.currentStage == PetStatus.PetStage.Adult)
         {
             PlayAndLoad("AdultHallScene");
         }
-        else if (energy.currentStage == Energy_Bar.PetStage.Old)
+        else if (energy.currentStage == PetStatus.PetStage.Old)
         {
             PlayAndLoad("OldHallScene");
         }
@@ -162,7 +162,7 @@ public class SceneLoader : MonoBehaviour
 
     public void BackToKitchenScene()
     {
-        FindFirstObjectByType<Energy_Bar>()?.SavePetData();
+        FindFirstObjectByType<PetStatus>()?.SavePetData();
 
         hall = false;
         kitchen = true;
@@ -171,19 +171,19 @@ public class SceneLoader : MonoBehaviour
 
         SaveCurrentRoom();
 
-        if (energy.currentStage == Energy_Bar.PetStage.Kid)
+        if (energy.currentStage == PetStatus.PetStage.Kid)
         {
             PlayAndLoad("KitchenScene");
         }
-        else if (energy.currentStage == Energy_Bar.PetStage.Teen)
+        else if (energy.currentStage == PetStatus.PetStage.Teen)
         {
             PlayAndLoad("TeenKitchenScene");
         }
-        else if (energy.currentStage == Energy_Bar.PetStage.Adult)
+        else if (energy.currentStage == PetStatus.PetStage.Adult)
         {
             PlayAndLoad("AdultKitchenScene");
         }
-        else if (energy.currentStage == Energy_Bar.PetStage.Old)
+        else if (energy.currentStage == PetStatus.PetStage.Old)
         {
             PlayAndLoad("OldKitchenScene");
         }
@@ -191,13 +191,13 @@ public class SceneLoader : MonoBehaviour
 
     public void BackToMedicationScene()
     {
-        FindFirstObjectByType<Energy_Bar>()?.SavePetData();
+        FindFirstObjectByType<PetStatus>()?.SavePetData();
         PlayAndLoad("MedicationScene");
     }
 
     public void BackToBathRoomScene()
     {
-        FindFirstObjectByType<Energy_Bar>()?.SavePetData();
+        FindFirstObjectByType<PetStatus>()?.SavePetData();
 
         hall = false;
         kitchen = false;
@@ -206,19 +206,19 @@ public class SceneLoader : MonoBehaviour
 
         SaveCurrentRoom();
 
-        if (energy.currentStage == Energy_Bar.PetStage.Kid)
+        if (energy.currentStage == PetStatus.PetStage.Kid)
         {
             PlayAndLoad("BathRoomScene");
         }
-        else if (energy.currentStage == Energy_Bar.PetStage.Teen)
+        else if (energy.currentStage == PetStatus.PetStage.Teen)
         {
             PlayAndLoad("TeenBathRoomScene");
         }
-        else if (energy.currentStage == Energy_Bar.PetStage.Adult)
+        else if (energy.currentStage == PetStatus.PetStage.Adult)
         {
             PlayAndLoad("AdultBathRoomScene");
         }
-        else if (energy.currentStage == Energy_Bar.PetStage.Old)
+        else if (energy.currentStage == PetStatus.PetStage.Old)
         {
             PlayAndLoad("OldBathRoomScene");
         }
@@ -226,7 +226,7 @@ public class SceneLoader : MonoBehaviour
 
     public void BackToGameRoomScene()
     {
-        FindFirstObjectByType<Energy_Bar>()?.SavePetData();
+        FindFirstObjectByType<PetStatus>()?.SavePetData();
 
         hall = false;
         kitchen = false;
@@ -235,19 +235,19 @@ public class SceneLoader : MonoBehaviour
 
         SaveCurrentRoom();
 
-        if (energy.currentStage == Energy_Bar.PetStage.Kid)
+        if (energy.currentStage == PetStatus.PetStage.Kid)
         {
             PlayAndLoad("GameRoomScene");
         }
-        else if (energy.currentStage == Energy_Bar.PetStage.Teen)
+        else if (energy.currentStage == PetStatus.PetStage.Teen)
         {
             PlayAndLoad("TeenGameRoomScene");
         }
-        else if (energy.currentStage == Energy_Bar.PetStage.Adult)
+        else if (energy.currentStage == PetStatus.PetStage.Adult)
         {
             PlayAndLoad("AdultGameRoomScene");
         }
-        else if (energy.currentStage == Energy_Bar.PetStage.Old)
+        else if (energy.currentStage == PetStatus.PetStage.Old)
         {
             PlayAndLoad("OldGameRoomScene");
         }
@@ -327,7 +327,7 @@ public class SceneLoader : MonoBehaviour
     public void stageToHallScene()
     {
 
-        FindFirstObjectByType<Energy_Bar>()?.SavePetData();
+        FindFirstObjectByType<PetStatus>()?.SavePetData();
 
         hall = true;
         kitchen = false;
@@ -356,7 +356,7 @@ public class SceneLoader : MonoBehaviour
 
     public void stageToKitchenScene()
     {
-        FindFirstObjectByType<Energy_Bar>()?.SavePetData();
+        FindFirstObjectByType<PetStatus>()?.SavePetData();
 
         hall = false;
         kitchen = true;
@@ -385,7 +385,7 @@ public class SceneLoader : MonoBehaviour
 
     public void stageToBathRoomScene()
     {
-        FindFirstObjectByType<Energy_Bar>()?.SavePetData();
+        FindFirstObjectByType<PetStatus>()?.SavePetData();
 
         hall = false;
         kitchen = false;
@@ -414,7 +414,7 @@ public class SceneLoader : MonoBehaviour
 
     public void stageToGameRoomScene()
     {
-        FindFirstObjectByType<Energy_Bar>()?.SavePetData();
+        FindFirstObjectByType<PetStatus>()?.SavePetData();
 
         hall = false;
         kitchen = false;

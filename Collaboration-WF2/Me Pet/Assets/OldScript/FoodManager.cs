@@ -8,7 +8,7 @@ public class FoodManager : MonoBehaviour
     public GameObject FoodDialog;
     public GameObject FoodFullDialog;
     public Image selectedFoodImage;
-    public Energy_Bar energyBarScript;
+    public PetStatus energyBarScript;
     public AudioSource audioSource;
     public AudioClip hungerWarningClip;
     private bool hasPlayedHungerSound = false;

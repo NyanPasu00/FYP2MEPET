@@ -18,7 +18,7 @@ public class DragPotion : MonoBehaviour
     public GameObject MedicationDialogue;
     public GameObject HealthFullDialogue;
     public GameObject FeedSuccessDialogue;
-    public Energy_Bar energyBarScript;
+    public PetStatus energyBarScript;
 
     public AudioSource eatingSound;
     public AudioSource audioSource;
@@ -36,7 +36,7 @@ public class DragPotion : MonoBehaviour
 
         if (energyBarScript == null)
         {
-            energyBarScript = GameObject.Find("EnergyBarManager").GetComponent<Energy_Bar>(); // replace with actual GameObject name
+            energyBarScript = GameObject.Find("EnergyBarManager").GetComponent<PetStatus>(); // replace with actual GameObject name
         }
     }
 

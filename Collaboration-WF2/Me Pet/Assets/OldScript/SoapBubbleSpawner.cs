@@ -24,19 +24,19 @@ public class SoapBubbleSpawner : MonoBehaviour
     private void Start()
     {
         water.SetActive(false);
-        if (FindFirstObjectByType<Energy_Bar>().currentStage == Energy_Bar.PetStage.Kid)
+        if (FindFirstObjectByType<PetStatus>().currentStage == PetStatus.PetStage.Kid)
         {
             maxBubbles = 4;
         }
-        else if (FindFirstObjectByType<Energy_Bar>().currentStage == Energy_Bar.PetStage.Teen)
+        else if (FindFirstObjectByType<PetStatus>().currentStage == PetStatus.PetStage.Teen)
         {
             maxBubbles = 6;
         }
-        else if (FindFirstObjectByType<Energy_Bar>().currentStage == Energy_Bar.PetStage.Adult)
+        else if (FindFirstObjectByType<PetStatus>().currentStage == PetStatus.PetStage.Adult)
         {
             maxBubbles = 8;
         }
-        else if (FindFirstObjectByType<Energy_Bar>().currentStage == Energy_Bar.PetStage.Old)
+        else if (FindFirstObjectByType<PetStatus>().currentStage == PetStatus.PetStage.Old)
         {
             maxBubbles = 10;
         }

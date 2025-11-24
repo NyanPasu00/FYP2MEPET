@@ -28,7 +28,7 @@ public class CatDirtyManager : MonoBehaviour
     public Animator catAnimator;
     public bool isBathing;
 
-    public Energy_Bar energy;
+    public PetStatus energy;
     public BoxCollider2D spawnArea;
     public BoxCollider2D spawnAreaLying;
     private List<GameObject> activeSpots = new List<GameObject>();

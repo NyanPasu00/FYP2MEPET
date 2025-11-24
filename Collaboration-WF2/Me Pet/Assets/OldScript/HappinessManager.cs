@@ -3,7 +3,7 @@ using System.Collections;
 
 public class HappinessManager : MonoBehaviour
 {
-    public Energy_Bar happinessBar;
+    public PetStatus happinessBar;
     private Coroutine regenHappinessCoroutine;
 
     public void StartHappinessRegen()

@@ -3,7 +3,7 @@ using UnityEngine.SceneManagement; // very important
 
 public class StartGame : MonoBehaviour
 {
-    public Energy_Bar energyBarCheck;
+    public PetStatus energyBarCheck;
     public GameObject EnergyNotEnough;
 
     void Start()

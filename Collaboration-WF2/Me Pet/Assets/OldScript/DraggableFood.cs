@@ -15,7 +15,7 @@ public class DraggableFood : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
     public GameObject platePosition;
     public GameObject FoodFullDialog;
     public GameObject FeedSuccessDialogue;
-    public Energy_Bar energyBarScript;
+    public PetStatus energyBarScript;
     public AudioSource eatingSound;
     private Transform originalParent;
     private Vector2 originalAnchoredPosition;

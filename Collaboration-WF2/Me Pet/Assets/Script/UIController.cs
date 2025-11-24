@@ -6,9 +6,10 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using static UnityEngine.InputSystem.LowLevel.InputStateHistory;
 public class UIController : MonoBehaviour , IBeginDragHandler, IDragHandler, IEndDragHandler
 {
-    public Energy_Bar petStatus;
+    public PetStatus petStatus;
     public bool isLogin = false;
     public bool isOnPet = false;
     public bool isSleep = true;
@@ -84,6 +85,9 @@ public class UIController : MonoBehaviour , IBeginDragHandler, IDragHandler, IEn
     private Coroutine musicRewardCoroutine;
     private int moneyEarnedThisPlay = 0;
 
+    [Header("Money Popup")]
+    public MoneyPopup moneyPopupPrefab;  // assign prefab in Inspector
+    public RectTransform coinIcon;       // assign your coin icon RectTransform
 
 
     void Start()
@@ -795,8 +799,11 @@ public class UIController : MonoBehaviour , IBeginDragHandler, IDragHandler, IEn
             if (moneyEarnedThisPlay >= 20)
                 break;
 
-            petStatus.AddMoney(5);
-            moneyEarnedThisPlay += 5;
+            int reward = 5;
+            petStatus.AddMoney(reward);
+            moneyEarnedThisPlay += reward;
+
+            ShowMoneyPopup(reward);
 
             petStatus.energy_current = Mathf.Max(0, petStatus.energy_current - 3);
 
@@ -874,5 +881,28 @@ public class UIController : MonoBehaviour , IBeginDragHandler, IDragHandler, IEn
     public void RequestPlayCategorySong(string categoryName)
     {
         PlayCategorySong(categoryName);
+    }
+
+    private void ShowMoneyPopup(int amount)
+    {
+        if (moneyPopupPrefab == null || canvas == null || coinIcon == null)
+        {
+            Debug.LogWarning("Money popup not configured (prefab / canvas / coinIcon).");
+            return;
+        }
+
+        // Spawn under the same Canvas used for other UI
+        MoneyPopup popup = Instantiate(moneyPopupPrefab, canvas.transform);
+
+        RectTransform rt = (RectTransform)popup.transform;
+        // Put it over the coin icon
+        rt.position = coinIcon.position;
+
+        popup.Init(amount);
+    }
+
+    public void TestPopup()
+    {
+        ShowMoneyPopup(99);
     }
 }
