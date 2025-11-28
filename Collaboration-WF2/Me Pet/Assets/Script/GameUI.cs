@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using TMPro;
+using Unity.Mathematics;
 using Unity.VisualScripting;
 using Unity.VisualScripting.Antlr3.Runtime.Misc;
 using UnityEngine;
@@ -8,6 +9,7 @@ using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using static UnityEngine.EventSystems.EventTrigger;
 using static UnityEngine.Rendering.DebugUI;
 
 [System.Serializable]
@@ -101,14 +103,14 @@ public class GameUI : MonoBehaviour
     public GameObject toastPanel;              // panel background
     public TextMeshProUGUI toastText;         // text "Item added to cart"
     private Coroutine toastCoroutine;
-
+   
     void Start()
     {
         if (statusPanel != null)
         {
             statusPanel.SetActive(false);
         }
-        currentRoomIndex = 2;
+        
     }
 
     public void PlayLightUIClick()
@@ -209,6 +211,7 @@ public class GameUI : MonoBehaviour
     //---------------------------------------------------------------STATUS PANEL END--------------------------------------------------------------------------------
     public void displayGameplay()
     {
+
     }
 
     public void displayNewGame()
@@ -267,6 +270,7 @@ public class GameUI : MonoBehaviour
             ui.selectButton.onClick.AddListener(() =>
             {
                 UIController.instance.SelectFood(foodName);
+                PlayUIClick();
             });
         }
     }
@@ -342,37 +346,30 @@ public class GameUI : MonoBehaviour
 
     public void displayCart(Cart cart)
     {
+        if (cart == null)
+        {
+            Debug.LogError("Cart is NULL in displayCart");
+            return;
+        }
 
+        // Recalculate total
         cart.calculateTotalCost();
         coinValueInCart.text = stats.RetrieveValue("moneyValue").ToString();
         totalCostText.text = cart.totalCost.ToString();
 
-        if (cartContentParent == null)
-        {
-            Debug.LogError("cartContentParent is not assigned!");
-            return;
-        }
+        // Clear all existing rows
+        foreach (Transform child in cartContentParent)
+            Destroy(child.gameObject);
+
         if (cartItemPrefab == null)
         {
             Debug.LogError("cartItemPrefab is not assigned!");
             return;
         }
 
-        // Clear previous UI
-        foreach (Transform child in cartContentParent)
-            Destroy(child.gameObject);
-
-        UIController uiController = FindObjectOfType<UIController>();
-        if (uiController == null)
-        {
-            Debug.LogError("UIController not found in scene!");
-            return;
-        }
-
-        // Populate UI
+        // Rebuild rows from cart.items
         foreach (CartItem item in cart.items)
         {
-
             GameObject go = Instantiate(cartItemPrefab, cartContentParent);
             go.transform.localScale = Vector3.one;
 
@@ -383,23 +380,43 @@ public class GameUI : MonoBehaviour
                 continue;
             }
 
-            // Assign values
-
             ui.priceText.text = item.price.ToString();
             ui.quantityText.text = item.quantity.ToString();
             ui.totalProductPrice.text = (item.quantity * item.price).ToString();
             ui.iconImage.sprite = item.icon;
 
-            // Assign button listeners
+            // VERY IMPORTANT: capture local copy for the lambda
+            string thisItemName = item.itemName;
+
+            // + button
             ui.addButton.onClick.RemoveAllListeners();
-            ui.addButton.onClick.AddListener(() => uiController.modifyItemQuantity(item.itemName, +1));
+            ui.addButton.onClick.AddListener(() =>
+            {
+                cart.updateCart(thisItemName, +1);
+                displayCart(cart);           // <-- refresh UI
+                PlayUIClick();
+            });
+            
 
+            // - button
             ui.minusButton.onClick.RemoveAllListeners();
-            ui.minusButton.onClick.AddListener(() => uiController.modifyItemQuantity(item.itemName, -1));
+            ui.minusButton.onClick.AddListener(() =>
+            {
+                cart.updateCart(thisItemName, -1);
+                displayCart(cart);           // <-- refresh UI
+                PlayUIClick();
+            });
 
+
+
+            // Remove button
             ui.removeButton.onClick.RemoveAllListeners();
-            ui.removeButton.onClick.AddListener(() => uiController.removeItemFromCart(item.itemName));
-
+            ui.removeButton.onClick.AddListener(() =>
+            {
+                cart.removeItem(thisItemName);
+                displayCart(cart);           // <-- refresh UI
+                PlayUIClick();
+            });
         }
     }
 
@@ -696,51 +713,43 @@ public class GameUI : MonoBehaviour
 
     public void PlayAndLoad(string sceneName)
     {
-        StartCoroutine(backgroundTransition());
-
-        if (audioClip != null)
-        {
-            StartCoroutine(PlaySoundAndLoad(sceneName));
-        }
-        else
-        {
-            isBathing = false;
-            PlayerPrefs.SetInt("IsBathing", isBathing ? 1 : 0);
-            isDancing = false;
-            PlayerPrefs.SetInt("IsDancing", isDancing ? 1 : 0);
-            isEating = false;
-            PlayerPrefs.SetInt("IsEating", isEating ? 1 : 0);
-            isAlbumOpen = false;
-            PlayerPrefs.SetInt("IsAlbumOpen", isAlbumOpen ? 1 : 0);
-            isSleeping = false;
-            PlayerPrefs.SetInt("IsSleeping", isSleeping ? 1 : 0);
-
-            PlayerPrefs.Save();
-            SceneManager.LoadScene(sceneName); // fallback
-        }
+        StartCoroutine(PlayTransitionAndLoad(sceneName));      
     }
 
-    private System.Collections.IEnumerator PlaySoundAndLoad(string sceneName)
+    private IEnumerator PlayTransitionAndLoad(string sceneName)
     {
-
+        // reset flags
         isBathing = false;
-        PlayerPrefs.SetInt("IsBathing", isBathing ? 1 : 0);
+        PlayerPrefs.SetInt("IsBathing", 0);
         isDancing = false;
-        PlayerPrefs.SetInt("IsDancing", isDancing ? 1 : 0);
+        PlayerPrefs.SetInt("IsDancing", 0);
         isEating = false;
-        PlayerPrefs.SetInt("IsEating", isEating ? 1 : 0);
+        PlayerPrefs.SetInt("IsEating", 0);
         isAlbumOpen = false;
-        PlayerPrefs.SetInt("IsAlbumOpen", isAlbumOpen ? 1 : 0);
+        PlayerPrefs.SetInt("IsAlbumOpen", 0);
         isSleeping = false;
-        PlayerPrefs.SetInt("IsSleeping", isSleeping ? 1 : 0);
-
+        PlayerPrefs.SetInt("IsSleeping", 0);
         PlayerPrefs.Save();
-        StartCoroutine(backgroundTransition());
-        audioClip.Play();
-        yield return new WaitForSeconds(0.4f); // wait short delay (or audioClip.clip.length)
+
+        // play transition if Animator is valid
+        if (transition != null && transition.runtimeAnimatorController != null)
+        {
+            transition.SetBool("Run", true);
+            yield return new WaitForSeconds(0.4f);
+            transition.SetBool("Run", false);
+        }
+
+        // play click sound if available (optional)
+        if (audioClip != null && uiClickClip != null)
+        {
+            audioClip.PlayOneShot(uiClickClip);
+            // small delay if you want to hear more of the sound
+            yield return new WaitForSeconds(0.2f);
+        }
+
+        // now change scene
         SceneManager.LoadScene(sceneName);
     }
-
     public void ShowToast(string message, float duration = 1.5f)
     {
         // If a toast is already running, stop it and restart
@@ -766,4 +775,6 @@ public class GameUI : MonoBehaviour
 
         toastCoroutine = null;
     }
+
 }
+

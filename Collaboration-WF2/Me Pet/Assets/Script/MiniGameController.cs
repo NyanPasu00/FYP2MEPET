@@ -1,3 +1,4 @@
+using JetBrains.Annotations;
 using System.Collections;
 using TMPro;
 using UnityEngine;
@@ -69,6 +70,10 @@ public class MiniGameController : MonoBehaviour
     [SerializeField] private string returnSceneName = "KidScene"; // <--- change to your actual scene name
 
     private BGMScript bgm;
+    public PetStatus PetStatus;  
+    private PetStatus.PetStage currentStage;
+
+
 
     private void Awake()
     {
@@ -91,12 +96,16 @@ public class MiniGameController : MonoBehaviour
     {
         moneyEarnedThisMatch = 0;
 
+        
+
         // Stop global BGM when entering mini game
         bgm = BGMScript.Instance;
         if (bgm != null)
         {
             bgm.StopMusic();
         }
+
+       
 
         // High score
         highScore = PlayerPrefs.GetInt("HighScore", 0);
@@ -230,6 +239,23 @@ public class MiniGameController : MonoBehaviour
 
     private void TriggerGameOver()
     {
+        // Try to find PetStatus automatically if not assigned in Inspector
+        if (PetStatus == null)
+        {
+            PetStatus = FindFirstObjectByType<PetStatus>();
+        }
+
+        if (PetStatus != null)
+        {
+            currentStage = PetStatus.currentStage;
+            Debug.Log("MiniGame current stage = " + currentStage);
+        }
+        else
+        {
+            Debug.LogWarning("MiniGameController: PetStatus reference not found. Defaulting to Kid.");
+            currentStage = PetStatus.PetStage.Kid; // fallback
+        }
+
         Time.timeScale = 0f;
 
         if (gameOverPanel != null)
@@ -273,6 +299,23 @@ public class MiniGameController : MonoBehaviour
     // ==========================
     public void PauseGame()
     {
+        // Try to find PetStatus automatically if not assigned in Inspector
+        if (PetStatus == null)
+        {
+            PetStatus = FindFirstObjectByType<PetStatus>();
+        }
+
+        if (PetStatus != null)
+        {
+            currentStage = PetStatus.currentStage;
+            Debug.Log("MiniGame current stage = " + currentStage);
+        }
+        else
+        {
+            Debug.LogWarning("MiniGameController: PetStatus reference not found. Defaulting to Kid.");
+            currentStage = PetStatus.PetStage.Kid; // fallback
+        }
+
         Time.timeScale = 0f;
         if (pausePanel != null)
             pausePanel.SetActive(true);
@@ -296,6 +339,7 @@ public class MiniGameController : MonoBehaviour
     {
         Time.timeScale = 1f;
         OnDestroy(); // if you want to keep this, otherwise you can remove this line
+        GameUI gameUI = FindFirstObjectByType<GameUI>();
 
         if (bgm == null)
             bgm = BGMScript.Instance;
@@ -308,8 +352,30 @@ public class MiniGameController : MonoBehaviour
             // When the main scene finishes loading, we will jump to Hall
             SceneManager.sceneLoaded += OnMainSceneLoaded;
 
-        // Load the main pet game scene (the one with GameUI)
-        SceneManager.LoadScene(returnSceneName);
+        switch (currentStage)
+        {
+            case PetStatus.PetStage.Kid:
+                gameUI.PlayAndLoad("KidScene");
+                //SceneManager.LoadScene("KidScene");
+                break;
+
+            case PetStatus.PetStage.Teen:
+                SceneManager.LoadScene("TeenScene");
+                break;
+
+            case PetStatus.PetStage.Adult:
+                SceneManager.LoadScene("AdultScene");
+                break;
+
+            case PetStatus.PetStage.Old:
+                SceneManager.LoadScene("OldScene");
+                break;
+
+            default:
+                Debug.LogWarning("Unknown stage, defaulting to KidScene.");
+                SceneManager.LoadScene("KidScene");
+                break;
+        }
     }
 
 

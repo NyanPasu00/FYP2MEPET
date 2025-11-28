@@ -19,7 +19,7 @@ EditorBuildSettings:
     guid: 6739a791fbab9c346adfa8efd7e5ddf5
   - enabled: 1
     path: Assets/Scenes/2 TeenModuleScene/TeenScene.unity
-    guid: ee0a9865a8829444eb4f3929658fb058
+    guid: 10780943c6fbbf04c883dd95352f71aa
   - enabled: 1
     path: Assets/Scenes/3 AdultModuleScene/AdultScene.unity
     guid: 898c8ae98dd58ef4b9936aeaffaf0d7d
@@ -29,6 +29,12 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/PlayBallScene.unity
     guid: 8aefd7373e35bab4b96955c491682db5
+  - enabled: 1
+    path: Assets/Scenes/StageTransaction/KidToTeen.unity
+    guid: 3a95961e62a07fc4a9ca8d71432b8fd0
+  - enabled: 1
+    path: Assets/Scenes/EventScene/TeenStressEvent.unity
+    guid: c2539ca34ece9f74ea55ed8cdec789b6
   m_configObjects:
     com.unity.adaptiveperformance.simulator.provider_settings: {fileID: 11400000, guid: 7ce01ab533dc43d4b93271488de3d6e4, type: 2}
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}

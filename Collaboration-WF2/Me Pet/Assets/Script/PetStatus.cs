@@ -139,11 +139,23 @@ public class PetStatus : MonoBehaviour
     private float lastHealthTime = 0f;
     private float lastProgressTime = 0f;
 
+    public GameUI GameUI;
+
     //public Dictionary<> eventCompleted;
     //public Dictionary<> musicPreferences;
     
     void Start()
     {
+        if (GameUI == null)
+        {
+            GameUI = FindFirstObjectByType<GameUI>();
+        }
+
+        if (GameUI == null)
+        {
+            Debug.LogWarning("PetStatus: GameUI reference is missing. backgroundTransition() will not run.");
+        }
+
         LoadPetData();
         UpdateAllUI();
 
@@ -431,7 +443,7 @@ public class PetStatus : MonoBehaviour
             PlayerPrefs.SetInt("hasReachedTeenHalf", hasReachedTeenHalf ? 1 : 0);
             PlayerPrefs.Save();
             HandleHalfProgressEvent();
-            UnityEngine.SceneManagement.SceneManager.LoadScene("TeenStressEvent");
+            GameUI.PlayAndLoad("TeenStressEvent");
         }
         else if (currentStage == PetStage.Adult && !hasReachedAdultHalf)
         {
@@ -440,7 +452,7 @@ public class PetStatus : MonoBehaviour
             PlayerPrefs.SetInt("hasReachedAdultHalf", hasReachedAdultHalf ? 1 : 0);
             PlayerPrefs.Save();
             HandleHalfProgressEvent();
-            UnityEngine.SceneManagement.SceneManager.LoadScene("AdultStressEvent");
+            GameUI.PlayAndLoad("AdultStressEvent");
         }
         else if (currentStage == PetStage.Old && !hasReachedOldHalf)
         {
@@ -449,7 +461,7 @@ public class PetStatus : MonoBehaviour
             PlayerPrefs.SetInt("hasReachedOldHalf", hasReachedOldHalf ? 1 : 0);
             PlayerPrefs.Save();
             HandleHalfProgressEvent();
-            UnityEngine.SceneManagement.SceneManager.LoadScene("FindFriendSceneTest");
+            GameUI.PlayAndLoad("FindFriendSceneTest");
         }
     }
     void AdvanceStage()
@@ -465,8 +477,8 @@ public class PetStatus : MonoBehaviour
             progress_Image.fillAmount = 0f;
             progressDetail_Slider.value = 0f;
             SavePetData();
+            GameUI.PlayAndLoad("KidToTeen");
 
-            UnityEngine.SceneManagement.SceneManager.LoadScene("KidToTeen");
 
         }
         else if (currentStage == PetStage.Teen)
@@ -479,8 +491,7 @@ public class PetStatus : MonoBehaviour
             progressDetail_Slider.value = 0f;
 
             SavePetData();
-
-            UnityEngine.SceneManagement.SceneManager.LoadScene("TeenToAdult");
+            GameUI.PlayAndLoad("TeenToAdult");
         }
         else if (currentStage == PetStage.Adult)
         {
@@ -492,8 +503,7 @@ public class PetStatus : MonoBehaviour
             progressDetail_Slider.value = 0f;
             StartCoroutine(DeductHealthOverTime());
             SavePetData();
-
-            UnityEngine.SceneManagement.SceneManager.LoadScene("AdultToOld");
+            GameUI.PlayAndLoad("AdultToOld");
         }
         else
         {
@@ -523,6 +533,25 @@ public class PetStatus : MonoBehaviour
         // If already Old, you can decide whether to do nothing or show "Passed Away"
     }
 
+    public void eventBackScene()
+    {
+        if (currentStage == PetStage.Teen)
+        {
+            FindFirstObjectByType<PetStatus>()?.SavePetData();
+            GameUI.PlayAndLoad("TeenScene");
+        }
+        else if (currentStage == PetStage.Adult)
+        {
+            FindFirstObjectByType<PetStatus>()?.SavePetData();
+            GameUI.PlayAndLoad("AdultScene");
+        }
+        else if (currentStage == PetStage.Old)
+        {
+            FindFirstObjectByType<PetStatus>()?.SavePetData();
+            GameUI.PlayAndLoad("OldScene");
+        }
+
+    }
     void OnApplicationQuit()
     {
         SavePetData();
@@ -596,7 +625,7 @@ public class PetStatus : MonoBehaviour
         PlayerPrefs.SetInt("PetDead", petDead ? 1 : 0);
         PlayerPrefs.Save();
 
-        SceneManager.LoadScene("KidScene");
+        GameUI.PlayAndLoad("KidScene");
     }
 
     public void SavePetData()
@@ -699,6 +728,7 @@ public class PetStatus : MonoBehaviour
                 float fullProgressCycles = Mathf.Floor((float)((secondsPassed + data.lastProgressSecond) / progress_increase_time));
                 lastProgressTime = (float)((secondsPassed + data.lastProgressSecond) - fullProgressCycles * progress_increase_time);
                 progress_current = Mathf.Max(0, data.progress + progressIncrease);
+
                 currentStage = data.stage;
 
                 // DIRTY (no leftover logic needed, always starts at 0 per session)
@@ -706,6 +736,8 @@ public class PetStatus : MonoBehaviour
                 if (bathController != null)
                 {
                     bathController.dirty = Mathf.Max(0, data.dirty + dirtyIncrease);
+
+                    bathController.RefreshDirtySpots();
                 }
 
                 // HEALTH (Only if Old stage)
@@ -859,6 +891,12 @@ public class PetStatus : MonoBehaviour
         //Debug.Log("isAlbumOpen" + isAlbumOpen);
         //Debug.Log("isBathing" + isBathing);
         //Debug.Log("progressStop" + progressStop);
+        // dancing = standing; everything else (idle/sleep/etc.) = lying
+        if (bathController != null)
+        {
+            // dancing = standing; everything else (idle/sleep/etc.) = lying
+            bathController.SetHallStanding(isDancing);
+        }
 
         if (progressStop == true)
         {

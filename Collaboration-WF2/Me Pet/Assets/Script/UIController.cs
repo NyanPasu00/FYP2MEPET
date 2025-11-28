@@ -47,6 +47,8 @@ public class UIController : MonoBehaviour , IBeginDragHandler, IDragHandler, IEn
     public TMP_InputField nameInputField;
 
     //Draggable Food
+    [Header("Kitchen")]
+    public Animator kitchenPetAnimator;
     public RectTransform draggableFood;
     public Canvas canvas;
     public GameObject FoodFullDialog;
@@ -87,7 +89,8 @@ public class UIController : MonoBehaviour , IBeginDragHandler, IDragHandler, IEn
 
     [Header("Money Popup")]
     public MoneyPopup moneyPopupPrefab;  // assign prefab in Inspector
-    public RectTransform coinIcon;       // assign your coin icon RectTransform
+    public Transform coinIcon;       // assign your coin icon RectTransform
+    public Canvas Songcanvas;
 
 
     void Start()
@@ -121,6 +124,7 @@ public class UIController : MonoBehaviour , IBeginDragHandler, IDragHandler, IEn
         originalParent = draggableFood.parent;
         dragCanvasGroup = draggableFood.GetComponent<CanvasGroup>();
         originalAnchoredPosition = draggableFood.anchoredPosition;
+
     }
 
     public void SelectFood(string foodName)
@@ -134,6 +138,8 @@ public class UIController : MonoBehaviour , IBeginDragHandler, IDragHandler, IEn
         gameUI.displaySelectedFood(foodName, sprite);
 
         draggableFood.GetComponent<Image>().sprite = sprite;
+
+        gameUI.openFridge();
 
         // reset position
         gameUI.resetFoodLocation();
@@ -242,8 +248,8 @@ public class UIController : MonoBehaviour , IBeginDragHandler, IDragHandler, IEn
         string foodName = UIController.instance.currentFoodName;
         dragCanvasGroup.blocksRaycasts = false;
 
-        if (petAnimator != null)
-            petAnimator.SetBool("Eating", true);
+        if (kitchenPetAnimator != null)
+            kitchenPetAnimator.SetBool("Eating", true);
 
         if (eatingSound != null)
             eatingSound.Play();
@@ -253,7 +259,7 @@ public class UIController : MonoBehaviour , IBeginDragHandler, IDragHandler, IEn
             Debug.Log("Name is Null");
         }
 
-        petStatus.updateFoodStatus(foodName);
+        
 
         if (FeedSuccessDialogue != null)
             FeedSuccessDialogue.SetActive(true);
@@ -264,7 +270,7 @@ public class UIController : MonoBehaviour , IBeginDragHandler, IDragHandler, IEn
     private void FinishEating()
     {
         if (petAnimator != null)
-            petAnimator.SetBool("Eating", false);
+            kitchenPetAnimator.SetBool("Eating", false);
 
         if (eatingSound != null)
             eatingSound.Stop();
@@ -274,7 +280,9 @@ public class UIController : MonoBehaviour , IBeginDragHandler, IDragHandler, IEn
 
         gameUI.resetFoodLocation();
 
+
         string foodName = UIController.instance.currentFoodName;
+        petStatus.updateFoodStatus(foodName);
 
         if (!petStatus.ownedItems.ContainsKey(foodName) || petStatus.ownedItems[foodName] <= 0)
         {
@@ -695,15 +703,28 @@ public class UIController : MonoBehaviour , IBeginDragHandler, IDragHandler, IEn
             petAnimator.SetBool("Laydown", false);
             petAnimator.SetBool("Dance", true);
 
-            // NEW: dancing = standing
-            if (bathController != null)
-            {
-                bathController.SetHallStanding(true);
-            }
-
             if (petPosition != null)
             {
-                petPosition.localPosition = new Vector3(-1.21f, -2.332834f, 0f);
+                switch (petStatus.currentStage)
+                {
+                    case PetStatus.PetStage.Kid:
+                        petPosition.localPosition = new Vector3(-1.21f, -2.332834f, 0f);
+                        break;
+                    case PetStatus.PetStage.Teen:
+                        petPosition.localPosition = new Vector3(-0.75f, -2.332834f, 0f);
+                        break;
+                    case PetStatus.PetStage.Adult:
+                        petPosition.localPosition = new Vector3(-0.75f, -2.332834f, 0f);
+                        break;
+                    case PetStatus.PetStage.Old:
+                        petPosition.localPosition = new Vector3(-0.75f, -2.332834f, 0f);
+                        break;
+                }
+
+                if (bathController != null)
+                {
+                    bathController.SetHallState(BathController.HallState.Dance);
+                }
             }
 
             if (reactionText != null)
@@ -725,30 +746,12 @@ public class UIController : MonoBehaviour , IBeginDragHandler, IDragHandler, IEn
             petAnimator.SetBool("Laydown", false);
             petAnimator.SetBool("Sad", true);
 
-            // NEW: sad on music screen is also a standing pose
             if (bathController != null)
             {
-                bathController.SetHallStanding(true);
+                bathController.SetHallState(BathController.HallState.Sad);
             }
 
-            //if (petPosition != null)
-            //{
-            //    switch (petStatus.currentStage)
-            //    {
-            //        case Energy_Bar.PetStage.Kid:
-            //            petPosition.localPosition = new Vector3(-1.14f, -3.78f, 0f);
-            //            break;
-            //        case Energy_Bar.PetStage.Teen:
-            //            petPosition.localPosition = new Vector3(-1.68f, -3.82f, 0f);
-            //            break;
-            //        case Energy_Bar.PetStage.Adult:
-            //            petPosition.localPosition = new Vector3(-2.08f, -3.91f, 0f);
-            //            break;
-            //        case Energy_Bar.PetStage.Old:
-            //            petPosition.localPosition = new Vector3(-2.08f, -3.91f, 0f);
-            //            break;
-            //    }
-            //}
+
 
             if (reactionText != null)
             {
@@ -761,6 +764,7 @@ public class UIController : MonoBehaviour , IBeginDragHandler, IDragHandler, IEn
             petStatus.decreaseHappiness(5);
             petStatus.ResumeHappinessDeduction();
         }
+
     }
 
     private IEnumerator RegenerateHappiness()
@@ -803,7 +807,10 @@ public class UIController : MonoBehaviour , IBeginDragHandler, IDragHandler, IEn
             petStatus.AddMoney(reward);
             moneyEarnedThisPlay += reward;
 
-            ShowMoneyPopup(reward);
+            //ShowMoneyPopup(reward);
+
+            MoneyPopup.Create(moneyPopupPrefab, Songcanvas.transform, coinIcon.position, reward);
+            Debug.Log("money Created");
 
             petStatus.energy_current = Mathf.Max(0, petStatus.energy_current - 3);
 
@@ -838,30 +845,10 @@ public class UIController : MonoBehaviour , IBeginDragHandler, IDragHandler, IEn
         petAnimator.SetBool("Sad", false);
         petAnimator.SetBool("Laydown", true);
 
-        // NEW: back to lying default ⇒ use lying spawn
         if (bathController != null)
         {
-            bathController.SetHallStanding(false);
+            bathController.SetHallState(BathController.HallState.Lying);
         }
-
-        //if (petPosition != null)
-        //{
-        //    switch (petStatus.currentStage)
-        //    {
-        //        case Energy_Bar.PetStage.Kid:
-        //            petPosition.localPosition = new Vector3(-1.25f, -2.4f, 0f);
-        //            break;
-        //        case Energy_Bar.PetStage.Teen:
-        //            petPosition.localPosition = new Vector3(-1.83f, -2.65f, 0f);
-        //            break;
-        //        case Energy_Bar.PetStage.Adult:
-        //            petPosition.localPosition = new Vector3(-2.38f, -2.7f, 0f);
-        //            break;
-        //        case Energy_Bar.PetStage.Old:
-        //            petPosition.localPosition = new Vector3(-2.42f, -2.75f, 0f);
-        //            break;
-        //    }
-        //}
 
         if (regenHappinessCoroutine != null)
         {
@@ -883,26 +870,5 @@ public class UIController : MonoBehaviour , IBeginDragHandler, IDragHandler, IEn
         PlayCategorySong(categoryName);
     }
 
-    private void ShowMoneyPopup(int amount)
-    {
-        if (moneyPopupPrefab == null || canvas == null || coinIcon == null)
-        {
-            Debug.LogWarning("Money popup not configured (prefab / canvas / coinIcon).");
-            return;
-        }
 
-        // Spawn under the same Canvas used for other UI
-        MoneyPopup popup = Instantiate(moneyPopupPrefab, canvas.transform);
-
-        RectTransform rt = (RectTransform)popup.transform;
-        // Put it over the coin icon
-        rt.position = coinIcon.position;
-
-        popup.Init(amount);
-    }
-
-    public void TestPopup()
-    {
-        ShowMoneyPopup(99);
-    }
 }

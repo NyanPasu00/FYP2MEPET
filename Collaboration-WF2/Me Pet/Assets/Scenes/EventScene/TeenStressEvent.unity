@@ -1926,23 +1926,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   categoryName: Jazz
-  bgm: {fileID: 0}
-  lightToggleButton: {fileID: 1736986104}
-  SongMenuPanel: {fileID: 278133962}
-  HallPanel: {fileID: 1035634458}
-  MusicScreenPanel: {fileID: 885365922}
-  petAnimator: {fileID: 2144841301}
-  petPosition: {fileID: 2144841300}
-  musicPlayer: {fileID: 63834873}
-  reactionText: {fileID: 217348069}
-  happinessBar: {fileID: 255022664}
-  rockMusic: {fileID: 8300000, guid: 5f793a8cca5171c4cafee1df6e39f3ff, type: 3}
-  rapMusic: {fileID: 8300000, guid: 41fe5b9352c26dc458a1a939dc84db7c, type: 3}
-  reggaeMusic: {fileID: 8300000, guid: 14457907bf76d63429218a0579809f04, type: 3}
-  countryMusic: {fileID: 8300000, guid: c361abb9f25ceb9408dcdb5f6415d14f, type: 3}
-  jazzMusic: {fileID: 8300000, guid: 37673213464010b429195711b1e09be1, type: 3}
-  metalMusic: {fileID: 8300000, guid: eb537ba88ec477c43b7eb5bb6c292f90, type: 3}
-  isDancing: 0
 --- !u!4 &174843806
 Transform:
   m_ObjectHideFlags: 0
@@ -2616,7 +2599,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 255022663}
-  - component: {fileID: 255022664}
   m_Layer: 5
   m_Name: ' StatusBar'
   m_TagString: Untagged
@@ -2648,54 +2630,6 @@ RectTransform:
   m_AnchoredPosition: {x: 4.7988987, y: -1001.6}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &255022664
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 255022662}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f3bbea115abb51d44bb8bea3d7a57f1b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  firstTimePlay: 1
-  petDead: 0
-  isEating: 0
-  isDancing: 0
-  isSleeping: 0
-  isBathing: 0
-  isAlbumOpen: 0
-  progressStop: 0
-  dirtyManager: {fileID: 1681957402}
-  energy_max: 100
-  energy_current: 100
-  energy_Slider: {fileID: 1322222151}
-  energyDetail_Slider: {fileID: 1798379591}
-  energy_deduct_time: 60
-  hunger_max: 100
-  hunger_current: 100
-  hunger_Slider: {fileID: 96501346}
-  hungerDetail_Slider: {fileID: 1536039296}
-  hunger_deduct_time: 60
-  happiness_max: 100
-  happiness_current: 100
-  happiness_Slider: {fileID: 1974423869}
-  happinessDetail_Slider: {fileID: 2133073182}
-  happiness_deduct_time: 60
-  health_max: 100
-  health_current: 100
-  health_Slider: {fileID: 403095715}
-  healthDetail_Slider: {fileID: 1021599756}
-  health_deduct_time: 60
-  progress_max: 100
-  progress_current: 0
-  progress_Image: {fileID: 1165590361}
-  progressDetail_Slider: {fileID: 965522107}
-  progress_increase_time: 60
-  currentStage: 0
-  stageRepresent: {fileID: 1888166904}
 --- !u!1 &259933053
 GameObject:
   m_ObjectHideFlags: 0
@@ -4046,9 +3980,21 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1681957401}
-        m_TargetAssemblyTypeName: SceneLoader, Assembly-CSharp
-        m_MethodName: BackToHallScene
+      - m_Target: {fileID: 1684873606}
+        m_TargetAssemblyTypeName: PetStatus, Assembly-CSharp
+        m_MethodName: eventBackScene
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1684873607}
+        m_TargetAssemblyTypeName: GameUI, Assembly-CSharp
+        m_MethodName: PlayUIClick
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -4261,6 +4207,38 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 414001159}
   m_CullTransparentMesh: 1
+--- !u!1 &415819955
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 415819956}
+  m_Layer: 0
+  m_Name: SceneChanger
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &415819956
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 415819955}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -1.3832926, y: -0.6028351, z: 0.03139512}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 1007312899}
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &439220276
 GameObject:
   m_ObjectHideFlags: 0
@@ -4635,23 +4613,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   categoryName: Reggae
-  bgm: {fileID: 0}
-  lightToggleButton: {fileID: 1736986104}
-  SongMenuPanel: {fileID: 278133962}
-  HallPanel: {fileID: 1035634458}
-  MusicScreenPanel: {fileID: 885365922}
-  petAnimator: {fileID: 2144841301}
-  petPosition: {fileID: 2144841300}
-  musicPlayer: {fileID: 63834873}
-  reactionText: {fileID: 217348069}
-  happinessBar: {fileID: 255022664}
-  rockMusic: {fileID: 8300000, guid: 5f793a8cca5171c4cafee1df6e39f3ff, type: 3}
-  rapMusic: {fileID: 8300000, guid: 41fe5b9352c26dc458a1a939dc84db7c, type: 3}
-  reggaeMusic: {fileID: 8300000, guid: 14457907bf76d63429218a0579809f04, type: 3}
-  countryMusic: {fileID: 8300000, guid: c361abb9f25ceb9408dcdb5f6415d14f, type: 3}
-  jazzMusic: {fileID: 8300000, guid: 37673213464010b429195711b1e09be1, type: 3}
-  metalMusic: {fileID: 8300000, guid: eb537ba88ec477c43b7eb5bb6c292f90, type: 3}
-  isDancing: 0
 --- !u!4 &506722391
 Transform:
   m_ObjectHideFlags: 0
@@ -7429,23 +7390,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   categoryName: Metal
-  bgm: {fileID: 0}
-  lightToggleButton: {fileID: 1736986104}
-  SongMenuPanel: {fileID: 278133962}
-  HallPanel: {fileID: 1035634458}
-  MusicScreenPanel: {fileID: 885365922}
-  petAnimator: {fileID: 2144841301}
-  petPosition: {fileID: 2144841300}
-  musicPlayer: {fileID: 63834873}
-  reactionText: {fileID: 217348069}
-  happinessBar: {fileID: 255022664}
-  rockMusic: {fileID: 8300000, guid: 5f793a8cca5171c4cafee1df6e39f3ff, type: 3}
-  rapMusic: {fileID: 8300000, guid: 41fe5b9352c26dc458a1a939dc84db7c, type: 3}
-  reggaeMusic: {fileID: 8300000, guid: 14457907bf76d63429218a0579809f04, type: 3}
-  countryMusic: {fileID: 8300000, guid: c361abb9f25ceb9408dcdb5f6415d14f, type: 3}
-  jazzMusic: {fileID: 8300000, guid: 37673213464010b429195711b1e09be1, type: 3}
-  metalMusic: {fileID: 8300000, guid: eb537ba88ec477c43b7eb5bb6c292f90, type: 3}
-  isDancing: 0
 --- !u!4 &986545893
 Transform:
   m_ObjectHideFlags: 0
@@ -7623,6 +7567,108 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!1 &1007312898
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1007312899}
+  - component: {fileID: 1007312902}
+  - component: {fileID: 1007312901}
+  - component: {fileID: 1007312900}
+  m_Layer: 0
+  m_Name: TransitionCanvas
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &1007312899
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1007312898}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 0, y: 0, z: 0}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 1615275780}
+  m_Father: {fileID: 415819956}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
+  m_Pivot: {x: 0, y: 0}
+--- !u!114 &1007312900
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1007312898}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dc42784cf147c0c48a680349fa168899, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_IgnoreReversedGraphics: 1
+  m_BlockingObjects: 0
+  m_BlockingMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
+--- !u!114 &1007312901
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1007312898}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0cd44c1031e13a943bb63640046fad76, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_UiScaleMode: 0
+  m_ReferencePixelsPerUnit: 100
+  m_ScaleFactor: 1
+  m_ReferenceResolution: {x: 800, y: 600}
+  m_ScreenMatchMode: 0
+  m_MatchWidthOrHeight: 0
+  m_PhysicalUnit: 3
+  m_FallbackScreenDPI: 96
+  m_DefaultSpriteDPI: 96
+  m_DynamicPixelsPerUnit: 1
+  m_PresetInfoIsWorld: 0
+--- !u!223 &1007312902
+Canvas:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1007312898}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_RenderMode: 1
+  m_Camera: {fileID: 0}
+  m_PlaneDistance: 100
+  m_PixelPerfect: 0
+  m_ReceivesEvents: 1
+  m_OverrideSorting: 0
+  m_OverridePixelPerfect: 0
+  m_SortingBucketNormalizedSize: 0
+  m_VertexColorAlwaysGammaSpace: 0
+  m_AdditionalShaderChannelsFlag: 0
+  m_UpdateRectTransformForStandalone: 0
+  m_SortingLayerID: 0
+  m_SortingOrder: 100
+  m_TargetDisplay: 0
 --- !u!4 &1014735084 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 9057847366603887012, guid: 87a3536360790584297cf1fe2b4e4461, type: 3}
@@ -8429,9 +8475,21 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1681957401}
-        m_TargetAssemblyTypeName: SceneLoader, Assembly-CSharp
-        m_MethodName: BackToHallScene
+      - m_Target: {fileID: 1684873606}
+        m_TargetAssemblyTypeName: PetStatus, Assembly-CSharp
+        m_MethodName: eventBackScene
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1684873607}
+        m_TargetAssemblyTypeName: GameUI, Assembly-CSharp
+        m_MethodName: PlayUIClick
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -8996,23 +9054,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   categoryName: Country
-  bgm: {fileID: 0}
-  lightToggleButton: {fileID: 1736986104}
-  SongMenuPanel: {fileID: 278133962}
-  HallPanel: {fileID: 1035634458}
-  MusicScreenPanel: {fileID: 885365922}
-  petAnimator: {fileID: 2144841301}
-  petPosition: {fileID: 2144841300}
-  musicPlayer: {fileID: 63834873}
-  reactionText: {fileID: 217348069}
-  happinessBar: {fileID: 255022664}
-  rockMusic: {fileID: 8300000, guid: 5f793a8cca5171c4cafee1df6e39f3ff, type: 3}
-  rapMusic: {fileID: 8300000, guid: 41fe5b9352c26dc458a1a939dc84db7c, type: 3}
-  reggaeMusic: {fileID: 8300000, guid: 14457907bf76d63429218a0579809f04, type: 3}
-  countryMusic: {fileID: 8300000, guid: c361abb9f25ceb9408dcdb5f6415d14f, type: 3}
-  jazzMusic: {fileID: 8300000, guid: 37673213464010b429195711b1e09be1, type: 3}
-  metalMusic: {fileID: 8300000, guid: eb537ba88ec477c43b7eb5bb6c292f90, type: 3}
-  isDancing: 0
 --- !u!1 &1208604406
 GameObject:
   m_ObjectHideFlags: 0
@@ -10858,9 +10899,21 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1681957401}
-        m_TargetAssemblyTypeName: SceneLoader, Assembly-CSharp
-        m_MethodName: BackToHallScene
+      - m_Target: {fileID: 1684873606}
+        m_TargetAssemblyTypeName: PetStatus, Assembly-CSharp
+        m_MethodName: eventBackScene
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1684873607}
+        m_TargetAssemblyTypeName: GameUI, Assembly-CSharp
+        m_MethodName: PlayUIClick
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -11993,6 +12046,81 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1615036139}
   m_CullTransparentMesh: 1
+--- !u!1001 &1615275778
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 1007312899}
+    m_Modifications:
+    - target: {fileID: 5264684259002066609, guid: 99284a8787261ab48bac342b0a187816, type: 3}
+      propertyPath: m_Name
+      value: BlackScene
+      objectReference: {fileID: 0}
+    - target: {fileID: 6544714798534478607, guid: 99284a8787261ab48bac342b0a187816, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 5605.6
+      objectReference: {fileID: 0}
+    - target: {fileID: 6544714798534478607, guid: 99284a8787261ab48bac342b0a187816, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 3088.8
+      objectReference: {fileID: 0}
+    - target: {fileID: 6544714798534478607, guid: 99284a8787261ab48bac342b0a187816, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -569.9
+      objectReference: {fileID: 0}
+    - target: {fileID: 6544714798534478607, guid: 99284a8787261ab48bac342b0a187816, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 18.3
+      objectReference: {fileID: 0}
+    - target: {fileID: 6544714798534478607, guid: 99284a8787261ab48bac342b0a187816, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6544714798534478607, guid: 99284a8787261ab48bac342b0a187816, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6544714798534478607, guid: 99284a8787261ab48bac342b0a187816, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6544714798534478607, guid: 99284a8787261ab48bac342b0a187816, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6544714798534478607, guid: 99284a8787261ab48bac342b0a187816, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6544714798534478607, guid: 99284a8787261ab48bac342b0a187816, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6544714798534478607, guid: 99284a8787261ab48bac342b0a187816, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6544714798534478607, guid: 99284a8787261ab48bac342b0a187816, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 99284a8787261ab48bac342b0a187816, type: 3}
+--- !u!95 &1615275779 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 8070296449935582676, guid: 99284a8787261ab48bac342b0a187816, type: 3}
+  m_PrefabInstance: {fileID: 1615275778}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &1615275780 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 6544714798534478607, guid: 99284a8787261ab48bac342b0a187816, type: 3}
+  m_PrefabInstance: {fileID: 1615275778}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1616287944
 GameObject:
   m_ObjectHideFlags: 0
@@ -12023,23 +12151,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   categoryName: Rock
-  bgm: {fileID: 0}
-  lightToggleButton: {fileID: 1736986104}
-  SongMenuPanel: {fileID: 278133962}
-  HallPanel: {fileID: 1035634458}
-  MusicScreenPanel: {fileID: 885365922}
-  petAnimator: {fileID: 2144841301}
-  petPosition: {fileID: 2144841300}
-  musicPlayer: {fileID: 63834873}
-  reactionText: {fileID: 217348069}
-  happinessBar: {fileID: 255022664}
-  rockMusic: {fileID: 8300000, guid: 5f793a8cca5171c4cafee1df6e39f3ff, type: 3}
-  rapMusic: {fileID: 8300000, guid: 41fe5b9352c26dc458a1a939dc84db7c, type: 3}
-  reggaeMusic: {fileID: 8300000, guid: 14457907bf76d63429218a0579809f04, type: 3}
-  countryMusic: {fileID: 8300000, guid: c361abb9f25ceb9408dcdb5f6415d14f, type: 3}
-  jazzMusic: {fileID: 8300000, guid: 37673213464010b429195711b1e09be1, type: 3}
-  metalMusic: {fileID: 8300000, guid: eb537ba88ec477c43b7eb5bb6c292f90, type: 3}
-  isDancing: 0
 --- !u!4 &1616287946
 Transform:
   m_ObjectHideFlags: 0
@@ -12106,7 +12217,7 @@ MonoBehaviour:
   ContinueLearningPanel: {fileID: 327466817}
   LetDrinkPanel: {fileID: 683712088}
   PlayGamePanel: {fileID: 965038265}
-  happiness: {fileID: 255022664}
+  happiness: {fileID: 0}
 --- !u!1 &1620118570
 GameObject:
   m_ObjectHideFlags: 0
@@ -12467,7 +12578,7 @@ MonoBehaviour:
   statusText: {fileID: 2004027664}
   statusTitle: {fileID: 439220278}
   stageText: {fileID: 1257753967}
-  stats: {fileID: 255022664}
+  stats: {fileID: 0}
   loader: {fileID: 0}
   panelOpen: 0
 --- !u!114 &1635414632
@@ -12808,7 +12919,6 @@ GameObject:
   - component: {fileID: 1681957399}
   - component: {fileID: 1681957400}
   - component: {fileID: 1681957401}
-  - component: {fileID: 1681957402}
   - component: {fileID: 1681957403}
   m_Layer: 0
   m_Name: UIManager
@@ -12854,9 +12964,9 @@ MonoBehaviour:
   HallLightScreen: {fileID: 1035634458}
   HallDarkScreen: {fileID: 946203367}
   petAnimator: {fileID: 2144841301}
-  energyBar: {fileID: 255022664}
+  energyBar: {fileID: 0}
   isSleeping: 1
-  audio: {fileID: 0}
+  isWaitingToRegen: 0
 --- !u!114 &1681957398
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -12883,23 +12993,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   categoryName: 
-  bgm: {fileID: 0}
-  lightToggleButton: {fileID: 1736986104}
-  SongMenuPanel: {fileID: 278133962}
-  HallPanel: {fileID: 1035634458}
-  MusicScreenPanel: {fileID: 885365922}
-  petAnimator: {fileID: 2144841301}
-  petPosition: {fileID: 2144841300}
-  musicPlayer: {fileID: 63834873}
-  reactionText: {fileID: 217348069}
-  happinessBar: {fileID: 255022664}
-  rockMusic: {fileID: 0}
-  rapMusic: {fileID: 0}
-  reggaeMusic: {fileID: 0}
-  countryMusic: {fileID: 0}
-  jazzMusic: {fileID: 0}
-  metalMusic: {fileID: 0}
-  isDancing: 0
 --- !u!114 &1681957400
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -12926,41 +13019,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   audioClip: {fileID: 1681957403}
-  energy: {fileID: 255022664}
+  energy: {fileID: 0}
   hall: 0
   kitchen: 0
   bathroom: 0
   gameroom: 0
   currentStage: 0
---- !u!114 &1681957402
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1681957395}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4aac2eda6cad8094d9b57297b307aa25, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  dirtySpotPrefab: {fileID: 0}
-  cat: {fileID: 5165732050916562192}
-  cloud: {fileID: 259933053}
-  leftButton: {fileID: 0}
-  rightButton: {fileID: 0}
-  messageText: {fileID: 49846114}
-  maxDirty: 100
-  dirty: 100
-  hasUsedSoap: 0
-  firstTime: 1
-  dirtyInterval: 50
-  currentShower: {fileID: 0}
-  catAnimator: {fileID: 2144841301}
+  isEating: 0
+  isSleeping: 0
+  isDancing: 0
   isBathing: 0
-  energy: {fileID: 0}
-  spawnArea: {fileID: 1386146539}
-  spawnAreaLying: {fileID: 1386146539}
+  isAlbumOpen: 0
 --- !u!82 &1681957403
 AudioSource:
   m_ObjectHideFlags: 0
@@ -12974,6 +13043,248 @@ AudioSource:
   m_audioClip: {fileID: 8300000, guid: 92a3da5457ef43a49a924ede8d66472f, type: 3}
   m_Resource: {fileID: 8300000, guid: 92a3da5457ef43a49a924ede8d66472f, type: 3}
   m_PlayOnAwake: 1
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+--- !u!1 &1684873605
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1684873608}
+  - component: {fileID: 1684873607}
+  - component: {fileID: 1684873606}
+  - component: {fileID: 1684873609}
+  m_Layer: 0
+  m_Name: GameUI
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1684873606
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1684873605}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f3bbea115abb51d44bb8bea3d7a57f1b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  firstTimePlay: 1
+  petDead: 0
+  isEating: 0
+  isDancing: 0
+  isSleeping: 0
+  isBathing: 0
+  isAlbumOpen: 0
+  progressStop: 0
+  nameInputField: {fileID: 0}
+  moneyValue: 0
+  bathController: {fileID: 0}
+  energy_max: 100
+  energy_current: 100
+  energy_Slider: {fileID: 1322222151}
+  energyDetail_Slider: {fileID: 1798379591}
+  energy_deduct_time: 60
+  hunger_max: 100
+  hunger_current: 100
+  hunger_Slider: {fileID: 96501346}
+  hungerDetail_Slider: {fileID: 1536039296}
+  hunger_deduct_time: 60
+  happiness_max: 100
+  happiness_current: 100
+  happiness_Slider: {fileID: 1974423869}
+  happinessDetail_Slider: {fileID: 2133073182}
+  happiness_deduct_time: 60
+  health_max: 100
+  health_current: 100
+  health_Slider: {fileID: 403095715}
+  healthDetail_Slider: {fileID: 1021599756}
+  health_deduct_time: 60
+  progress_max: 100
+  progress_current: 0
+  progress_Image: {fileID: 1165590361}
+  progressDetail_Slider: {fileID: 965522107}
+  progress_increase_time: 60
+  currentStage: 0
+  stageRepresent: {fileID: 1888166904}
+  moneyText: {fileID: 0}
+  GameUI: {fileID: 0}
+--- !u!114 &1684873607
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1684873605}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2bf3493ba44c2de44a77799cd61dc70a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  statusPanel: {fileID: 0}
+  statusText: {fileID: 0}
+  statusTitle: {fileID: 0}
+  stageText: {fileID: 0}
+  panelOpen: 1
+  stats: {fileID: 1684873606}
+  transition: {fileID: 1615275779}
+  HallCameraPosition: {fileID: 0}
+  KitchenCameraPosition: {fileID: 0}
+  GameRoomCameraPosition: {fileID: 0}
+  BathroomCameraPosition: {fileID: 0}
+  MainCameraPosition: {fileID: 0}
+  TransitionSpeed: 4
+  Title: {fileID: 0}
+  isCartOpen: 0
+  ShopPage: {fileID: 0}
+  CartPage: {fileID: 0}
+  PaymentPage: {fileID: 0}
+  cartContentParent: {fileID: 0}
+  cartItemPrefab: {fileID: 0}
+  totalCostText: {fileID: 0}
+  paymentCostText: {fileID: 0}
+  currentMoneyText: {fileID: 0}
+  remainMoneyText: {fileID: 0}
+  coinValueInShop: {fileID: 0}
+  coinValueInCart: {fileID: 0}
+  FridgePage: {fileID: 0}
+  availableFoodParent: {fileID: 0}
+  foodItemPrefab: {fileID: 0}
+  FoodSelection: {fileID: 0}
+  selectedFoodIcon: {fileID: 0}
+  isEating: 0
+  isSleeping: 0
+  isDancing: 0
+  isBathing: 0
+  isAlbumOpen: 0
+  foodSpriteList: []
+  SongMenuPanel: {fileID: 0}
+  HallPanel: {fileID: 0}
+  MusicScreenPanel: {fileID: 0}
+  lightToggleButton: {fileID: 0}
+  audioClip: {fileID: 1684873609}
+  uiClickClip: {fileID: 8300000, guid: 7ad208749aa41884b95e0758cd79a818, type: 3}
+  audioLightClip: {fileID: 0}
+  uiLightClip: {fileID: 0}
+  toastPanel: {fileID: 0}
+  toastText: {fileID: 0}
+--- !u!4 &1684873608
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1684873605}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0.00043696072, y: 0.53367525, z: -0.047805563}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!82 &1684873609
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1684873605}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 8300000, guid: 7ad208749aa41884b95e0758cd79a818, type: 3}
+  m_Resource: {fileID: 8300000, guid: 7ad208749aa41884b95e0758cd79a818, type: 3}
+  m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
   Loop: 0
@@ -13238,23 +13549,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   categoryName: Rap
-  bgm: {fileID: 0}
-  lightToggleButton: {fileID: 1736986104}
-  SongMenuPanel: {fileID: 278133962}
-  HallPanel: {fileID: 1035634458}
-  MusicScreenPanel: {fileID: 885365922}
-  petAnimator: {fileID: 2144841301}
-  petPosition: {fileID: 2144841300}
-  musicPlayer: {fileID: 63834873}
-  reactionText: {fileID: 217348069}
-  happinessBar: {fileID: 255022664}
-  rockMusic: {fileID: 8300000, guid: 5f793a8cca5171c4cafee1df6e39f3ff, type: 3}
-  rapMusic: {fileID: 8300000, guid: 41fe5b9352c26dc458a1a939dc84db7c, type: 3}
-  reggaeMusic: {fileID: 8300000, guid: 14457907bf76d63429218a0579809f04, type: 3}
-  countryMusic: {fileID: 8300000, guid: c361abb9f25ceb9408dcdb5f6415d14f, type: 3}
-  jazzMusic: {fileID: 8300000, guid: 37673213464010b429195711b1e09be1, type: 3}
-  metalMusic: {fileID: 8300000, guid: eb537ba88ec477c43b7eb5bb6c292f90, type: 3}
-  isDancing: 0
 --- !u!4 &1732747460
 Transform:
   m_ObjectHideFlags: 0
@@ -17039,15 +17333,11 @@ PrefabInstance:
       addedObject: {fileID: 1386146538}
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: dde047afb0b15bc43b41531e603af947, type: 3}
---- !u!1 &5165732050916562192 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 5644627037037102582, guid: dde047afb0b15bc43b41531e603af947, type: 3}
-  m_PrefabInstance: {fileID: 5165732050916562191}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
+  - {fileID: 415819956}
   - {fileID: 519420032}
   - {fileID: 1752408655}
   - {fileID: 155708878}
@@ -17062,3 +17352,4 @@ SceneRoots:
   - {fileID: 327466821}
   - {fileID: 683712092}
   - {fileID: 81841490}
+  - {fileID: 1684873608}
