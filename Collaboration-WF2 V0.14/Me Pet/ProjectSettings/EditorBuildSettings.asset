@@ -1,0 +1,41 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1045 &1
+EditorBuildSettings:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Scenes:
+  - enabled: 1
+    path: Assets/Scenes/Loading Scene.unity
+    guid: 2e054f1ca08509c41ba4a94a7f5777d5
+  - enabled: 1
+    path: Assets/Scenes/StartScene.unity
+    guid: 874e47d5317f0d14f8c414d83fa26e1d
+  - enabled: 1
+    path: Assets/Scenes/PetNameScene.unity
+    guid: 81f50ff95149248418f4277807f78586
+  - enabled: 1
+    path: Assets/Scenes/1 KidModuleScene/KidScene.unity
+    guid: 6739a791fbab9c346adfa8efd7e5ddf5
+  - enabled: 1
+    path: Assets/Scenes/2 TeenModuleScene/TeenScene.unity
+    guid: 10780943c6fbbf04c883dd95352f71aa
+  - enabled: 1
+    path: Assets/Scenes/3 AdultModuleScene/AdultScene.unity
+    guid: 898c8ae98dd58ef4b9936aeaffaf0d7d
+  - enabled: 1
+    path: Assets/Scenes/4 OldModuleScene/OldScene.unity
+    guid: ed0eb5ee3e5943f4c81983cfd44d4d2a
+  - enabled: 1
+    path: Assets/Scenes/PlayBallScene.unity
+    guid: 8aefd7373e35bab4b96955c491682db5
+  - enabled: 1
+    path: Assets/Scenes/StageTransaction/KidToTeen.unity
+    guid: 3a95961e62a07fc4a9ca8d71432b8fd0
+  - enabled: 1
+    path: Assets/Scenes/EventScene/TeenStressEvent.unity
+    guid: c2539ca34ece9f74ea55ed8cdec789b6
+  m_configObjects:
+    com.unity.adaptiveperformance.simulator.provider_settings: {fileID: 11400000, guid: 7ce01ab533dc43d4b93271488de3d6e4, type: 2}
+    com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
+  m_UseUCBPForAssetBundles: 0
