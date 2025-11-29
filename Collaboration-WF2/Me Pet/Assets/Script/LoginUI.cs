@@ -1,26 +1,26 @@
-using UnityEngine;
+﻿using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class LoginUI : MonoBehaviour
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    private void OnEnable()
     {
-        
+        //LoginManager.OnLoginSuccess += LoadGameUI;
     }
 
-    // Update is called once per frame
-    void Update()
+    private void OnDisable()
     {
-        
+        //LoginManager.OnLoginSuccess -= LoadGameUI;
     }
 
-    public void displayLoginPage()
+    private void LoadGameUI()
     {
-
+        Debug.Log("Login success → Returning to StartScene");
+        SceneManager.LoadScene("StartScene");
     }
 
-    public void displayLoginMessage(string message)
+    public void OnLoginDone()
     {
-
+        SceneManager.LoadScene("KidScene");
     }
 }

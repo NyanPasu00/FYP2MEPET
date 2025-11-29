@@ -1,21 +1,21 @@
-using UnityEngine;
+//using UnityEngine;
 
-public class Facebook : MonoBehaviour
-{
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
-    {
+//public class Facebook : MonoBehaviour
+//{
+//    // Start is called once before the first execution of Update after the MonoBehaviour is created
+//    void Start()
+//    {
         
-    }
+//    }
 
-    // Update is called once per frame
-    void Update()
-    {
+//    // Update is called once per frame
+//    void Update()
+//    {
         
-    }
+//    }
 
-    public void requestFacebookLogin()
-    {
+//    public void requestFacebookLogin()
+//    {
 
-    }
-}
+//    }
+//}

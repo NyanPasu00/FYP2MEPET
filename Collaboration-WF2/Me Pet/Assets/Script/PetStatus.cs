@@ -589,7 +589,7 @@ public class PetStatus : MonoBehaviour
         }
     }
 
-    public void createPetData()
+    public async void createPetData()
     {
         string petNewName = nameInputField.text.Trim();
 
@@ -619,6 +619,7 @@ public class PetStatus : MonoBehaviour
 
         string json = JsonUtility.ToJson(data);
         PlayerPrefs.SetString("PetData", json);
+        await CloudSaveManager.SavePetDataToCloud(json);
         PlayerPrefs.Save();
 
         petDead = false;
@@ -628,7 +629,7 @@ public class PetStatus : MonoBehaviour
         GameUI.PlayAndLoad("KidScene");
     }
 
-    public void SavePetData()
+    public async void SavePetData()
     {
         PetData data;
 
@@ -671,12 +672,13 @@ public class PetStatus : MonoBehaviour
 
         string json = JsonUtility.ToJson(data);
         PlayerPrefs.SetString("PetData", json);
+        await CloudSaveManager.SavePetDataToCloud(json);
         PlayerPrefs.Save();
         Debug.Log("Save folder: " + Application.persistentDataPath);
         Debug.Log("dirty : " + data.dirty);
     }
 
-    void LoadPetData()
+    async void LoadPetData()
     {
         if (PlayerPrefs.HasKey("PetData"))
         {

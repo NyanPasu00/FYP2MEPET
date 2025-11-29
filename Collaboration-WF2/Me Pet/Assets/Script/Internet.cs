@@ -1,26 +1,18 @@
 using UnityEngine;
-
+using UnityEngine.Networking;
 public class Internet : MonoBehaviour
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+
+    public bool isConnect()
     {
-        
+        return Application.internetReachability != NetworkReachability.NotReachable;
     }
 
-    // Update is called once per frame
-    void Update()
+    public bool isValidateConnectionStatus()
     {
-        
+        // Here we just return true. You can add ping test later if needed.
+        return isConnect();
     }
 
-    public void isConnect()
-    {
 
-    }
-
-    public void isValidateConnectionStatus()
-    {
-
-    }
 }

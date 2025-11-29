@@ -6,9 +6,6 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Scenes/Loading Scene.unity
-    guid: 2e054f1ca08509c41ba4a94a7f5777d5
-  - enabled: 1
     path: Assets/Scenes/StartScene.unity
     guid: 874e47d5317f0d14f8c414d83fa26e1d
   - enabled: 1
@@ -35,6 +32,9 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/EventScene/TeenStressEvent.unity
     guid: c2539ca34ece9f74ea55ed8cdec789b6
+  - enabled: 1
+    path: Assets/Scenes/LoginScene.unity
+    guid: 1d5d3103f92f57649b9527682f1de370
   m_configObjects:
     com.unity.adaptiveperformance.simulator.provider_settings: {fileID: 11400000, guid: 7ce01ab533dc43d4b93271488de3d6e4, type: 2}
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}

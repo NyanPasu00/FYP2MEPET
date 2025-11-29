@@ -9,6 +9,8 @@ using UnityEngine.UI;
 using static UnityEngine.InputSystem.LowLevel.InputStateHistory;
 public class UIController : MonoBehaviour , IBeginDragHandler, IDragHandler, IEndDragHandler
 {
+    public LoginManager loginManager;
+    public Internet internetChecker;
     public PetStatus petStatus;
     public bool isLogin = false;
     public bool isOnPet = false;
@@ -147,17 +149,36 @@ public class UIController : MonoBehaviour , IBeginDragHandler, IDragHandler, IEn
 
     public void connect()
     {
-
+        if (!internetChecker.isConnect())
+        {
+            Debug.Log("No internet");
+            return;
+        }
+        Debug.Log("Validating");
+        isValidateConnectionStatus();
     }
 
     public void isValidateConnectionStatus()
     {
-
+        if (!internetChecker.isValidateConnectionStatus())
+        {
+            Debug.Log("Connection unstable");
+            return;
+        }
+        Debug.Log("Check is Login?");
+        IsLogin();
     }
 
-    public void IsLogin()
+    public async void IsLogin()
     {
-
+        if (loginManager != null)
+        {
+            await loginManager.CheckLoginAsync();
+        }
+        else
+        {
+            Debug.LogError("LoginManager reference not set!");
+        }
     }
 
     public void isValidateNewUser()
