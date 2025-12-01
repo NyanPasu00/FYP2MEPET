@@ -394,9 +394,9 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 1620118571}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -7.4, y: 267.6}
+  m_AnchorMin: {x: 0.5, y: 0.64162844}
+  m_AnchorMax: {x: 0.5, y: 0.64162844}
+  m_AnchoredPosition: {x: -7.3999996, y: 75.600006}
   m_SizeDelta: {x: 555.2, y: 201.4}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &38678960
@@ -1230,7 +1230,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 323, y: -772.1}
+  m_AnchoredPosition: {x: 285.65, y: -75}
   m_SizeDelta: {x: 508.7, y: 593.7}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &96145190
@@ -1396,9 +1396,9 @@ RectTransform:
   - {fileID: 846295166}
   m_Father: {fileID: 329358514}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -670}
+  m_AnchorMin: {x: 0.5, y: 0.14651692}
+  m_AnchorMax: {x: 0.5, y: 0.14651692}
+  m_AnchoredPosition: {x: 0, y: 37}
   m_SizeDelta: {x: 1047.3, y: 299}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &96888869
@@ -1842,23 +1842,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   categoryName: Jazz
-  bgm: {fileID: 0}
-  lightToggleButton: {fileID: 1736986104}
-  SongMenuPanel: {fileID: 278133962}
-  HallPanel: {fileID: 1035634458}
-  MusicScreenPanel: {fileID: 885365922}
-  petAnimator: {fileID: 2144841301}
-  petPosition: {fileID: 2144841300}
-  musicPlayer: {fileID: 63834873}
-  reactionText: {fileID: 217348069}
-  happinessBar: {fileID: 255022664}
-  rockMusic: {fileID: 8300000, guid: 5f793a8cca5171c4cafee1df6e39f3ff, type: 3}
-  rapMusic: {fileID: 8300000, guid: 41fe5b9352c26dc458a1a939dc84db7c, type: 3}
-  reggaeMusic: {fileID: 8300000, guid: 14457907bf76d63429218a0579809f04, type: 3}
-  countryMusic: {fileID: 8300000, guid: c361abb9f25ceb9408dcdb5f6415d14f, type: 3}
-  jazzMusic: {fileID: 8300000, guid: 37673213464010b429195711b1e09be1, type: 3}
-  metalMusic: {fileID: 8300000, guid: eb537ba88ec477c43b7eb5bb6c292f90, type: 3}
-  isDancing: 0
 --- !u!4 &174843806
 Transform:
   m_ObjectHideFlags: 0
@@ -2255,10 +2238,10 @@ RectTransform:
   - {fileID: 255022663}
   m_Father: {fileID: 170476552}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -4.7989, y: 1001.6}
-  m_SizeDelta: {x: 1081, y: 276.93}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: 0, y: -138.46497}
+  m_SizeDelta: {x: 0, y: 276.92993}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &236009680
 MonoBehaviour:
@@ -2382,7 +2365,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 255022663}
-  - component: {fileID: 255022664}
   m_Layer: 5
   m_Name: ' StatusBar'
   m_TagString: Untagged
@@ -2409,59 +2391,11 @@ RectTransform:
   - {fileID: 265233409}
   m_Father: {fileID: 236009679}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 4.7988987, y: -1001.6}
+  m_AnchorMin: {x: 0.5, y: 1}
+  m_AnchorMax: {x: 0.5, y: 1}
+  m_AnchoredPosition: {x: 4.7988987, y: -1139.6}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &255022664
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 255022662}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f3bbea115abb51d44bb8bea3d7a57f1b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  firstTimePlay: 1
-  petDead: 0
-  isEating: 0
-  isDancing: 0
-  isSleeping: 0
-  isBathing: 0
-  isAlbumOpen: 0
-  progressStop: 0
-  dirtyManager: {fileID: 1681957402}
-  energy_max: 100
-  energy_current: 100
-  energy_Slider: {fileID: 1322222151}
-  energyDetail_Slider: {fileID: 1798379591}
-  energy_deduct_time: 60
-  hunger_max: 100
-  hunger_current: 100
-  hunger_Slider: {fileID: 96501346}
-  hungerDetail_Slider: {fileID: 1536039296}
-  hunger_deduct_time: 60
-  happiness_max: 100
-  happiness_current: 100
-  happiness_Slider: {fileID: 1974423869}
-  happinessDetail_Slider: {fileID: 2133073182}
-  happiness_deduct_time: 60
-  health_max: 100
-  health_current: 100
-  health_Slider: {fileID: 403095715}
-  healthDetail_Slider: {fileID: 1021599756}
-  health_deduct_time: 60
-  progress_max: 100
-  progress_current: 0
-  progress_Image: {fileID: 1165590361}
-  progressDetail_Slider: {fileID: 965522107}
-  progress_increase_time: 60
-  currentStage: 0
-  stageRepresent: {fileID: 1888166904}
 --- !u!1 &259933053
 GameObject:
   m_ObjectHideFlags: 0
@@ -3195,9 +3129,9 @@ RectTransform:
   m_Father: {fileID: 1500043586}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: -265.52002}
-  m_SizeDelta: {x: 0, y: -531.04}
+  m_AnchorMax: {x: 1, y: 0.881386}
+  m_AnchoredPosition: {x: 0, y: -3.6999512}
+  m_SizeDelta: {x: 0, y: -7.299988}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &329358515
 MonoBehaviour:
@@ -3682,7 +3616,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -3.6, y: 0}
+  m_AnchoredPosition: {x: -3.6, y: 325}
   m_SizeDelta: {x: 1080, y: 1108.2}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &380608207
@@ -4337,23 +4271,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   categoryName: Reggae
-  bgm: {fileID: 0}
-  lightToggleButton: {fileID: 1736986104}
-  SongMenuPanel: {fileID: 278133962}
-  HallPanel: {fileID: 1035634458}
-  MusicScreenPanel: {fileID: 885365922}
-  petAnimator: {fileID: 2144841301}
-  petPosition: {fileID: 2144841300}
-  musicPlayer: {fileID: 63834873}
-  reactionText: {fileID: 217348069}
-  happinessBar: {fileID: 255022664}
-  rockMusic: {fileID: 8300000, guid: 5f793a8cca5171c4cafee1df6e39f3ff, type: 3}
-  rapMusic: {fileID: 8300000, guid: 41fe5b9352c26dc458a1a939dc84db7c, type: 3}
-  reggaeMusic: {fileID: 8300000, guid: 14457907bf76d63429218a0579809f04, type: 3}
-  countryMusic: {fileID: 8300000, guid: c361abb9f25ceb9408dcdb5f6415d14f, type: 3}
-  jazzMusic: {fileID: 8300000, guid: 37673213464010b429195711b1e09be1, type: 3}
-  metalMusic: {fileID: 8300000, guid: eb537ba88ec477c43b7eb5bb6c292f90, type: 3}
-  isDancing: 0
 --- !u!4 &506722391
 Transform:
   m_ObjectHideFlags: 0
@@ -4403,8 +4320,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -270.42}
-  m_SizeDelta: {x: 1080, y: 1739.2}
+  m_AnchoredPosition: {x: -20.7, y: -1.9}
+  m_SizeDelta: {x: 3410.3, y: 2739.1}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &507272453
 MonoBehaviour:
@@ -5705,7 +5622,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -3.6, y: -974}
+  m_AnchoredPosition: {x: -3.6, y: -649}
   m_SizeDelta: {x: 493.6, y: 277.1}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &654460625
@@ -6056,11 +5973,11 @@ RectTransform:
   m_Children:
   - {fileID: 1606919165}
   - {fileID: 1111923289}
-  - {fileID: 96145189}
   - {fileID: 380608206}
   - {fileID: 654460624}
   - {fileID: 1686389816}
   - {fileID: 1452059721}
+  - {fileID: 96145189}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -6936,11 +6853,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9057847366603887012, guid: dde047afb0b15bc43b41531e603af947, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 271
+      value: 53
       objectReference: {fileID: 0}
     - target: {fileID: 9057847366603887012, guid: dde047afb0b15bc43b41531e603af947, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -667
+      value: -717
       objectReference: {fileID: 0}
     - target: {fileID: 9057847366603887012, guid: dde047afb0b15bc43b41531e603af947, type: 3}
       propertyPath: m_LocalPosition.z
@@ -7434,9 +7351,9 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 965038269}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -999.39996}
+  m_AnchorMin: {x: 0.5, y: 0.06475439}
+  m_AnchorMax: {x: 0.5, y: 0.06475439}
+  m_AnchoredPosition: {x: 0, y: -7.4001465}
   m_SizeDelta: {x: 375.5, y: 125}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &963050987
@@ -7584,9 +7501,9 @@ MonoBehaviour:
   m_UiScaleMode: 0
   m_ReferencePixelsPerUnit: 100
   m_ScaleFactor: 1
-  m_ReferenceResolution: {x: 800, y: 600}
+  m_ReferenceResolution: {x: 1080, y: 2280}
   m_ScreenMatchMode: 0
-  m_MatchWidthOrHeight: 0
+  m_MatchWidthOrHeight: 0.6
   m_PhysicalUnit: 3
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
@@ -7834,23 +7751,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   categoryName: Metal
-  bgm: {fileID: 0}
-  lightToggleButton: {fileID: 1736986104}
-  SongMenuPanel: {fileID: 278133962}
-  HallPanel: {fileID: 1035634458}
-  MusicScreenPanel: {fileID: 885365922}
-  petAnimator: {fileID: 2144841301}
-  petPosition: {fileID: 2144841300}
-  musicPlayer: {fileID: 63834873}
-  reactionText: {fileID: 217348069}
-  happinessBar: {fileID: 255022664}
-  rockMusic: {fileID: 8300000, guid: 5f793a8cca5171c4cafee1df6e39f3ff, type: 3}
-  rapMusic: {fileID: 8300000, guid: 41fe5b9352c26dc458a1a939dc84db7c, type: 3}
-  reggaeMusic: {fileID: 8300000, guid: 14457907bf76d63429218a0579809f04, type: 3}
-  countryMusic: {fileID: 8300000, guid: c361abb9f25ceb9408dcdb5f6415d14f, type: 3}
-  jazzMusic: {fileID: 8300000, guid: 37673213464010b429195711b1e09be1, type: 3}
-  metalMusic: {fileID: 8300000, guid: eb537ba88ec477c43b7eb5bb6c292f90, type: 3}
-  isDancing: 0
 --- !u!4 &986545893
 Transform:
   m_ObjectHideFlags: 0
@@ -8293,10 +8193,10 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 236009679}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 444.79892, y: -47.599915}
-  m_SizeDelta: {x: 0.8, y: 0.64}
+  m_AnchorMin: {x: 0.9127778, y: 0.32661104}
+  m_AnchorMax: {x: 0.9127778, y: 0.32661104}
+  m_AnchoredPosition: {x: -1.2010498, y: 0.40008545}
+  m_SizeDelta: {x: 0.7999878, y: 0.6399994}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!212 &1023297728
 SpriteRenderer:
@@ -8481,7 +8381,7 @@ RectTransform:
   m_Father: {fileID: 1322222150}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: -272, y: 951}
   m_SizeDelta: {x: -7.52, y: 1.1}
   m_Pivot: {x: 0, y: 0}
@@ -8731,7 +8631,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: -2.1133, y: 1.9661, z: 0.039379455}
-  m_LocalScale: {x: 0.65949, y: 0.62447, z: 1}
+  m_LocalScale: {x: 2.1, y: 0.75, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 871612300}
@@ -8934,8 +8834,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 241.1, y: -135.5}
-  m_SizeDelta: {x: 1562.2, y: 2009}
+  m_AnchoredPosition: {x: 116.5, y: 0.6}
+  m_SizeDelta: {x: 2503.1, y: 2733.2}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1065249989
 MonoBehaviour:
@@ -9072,7 +8972,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2262169225891608259, guid: dde047afb0b15bc43b41531e603af947, type: 3}
       propertyPath: m_SortingLayer
-      value: 3
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 2262169225891608259, guid: dde047afb0b15bc43b41531e603af947, type: 3}
       propertyPath: m_SortingOrder
@@ -9112,7 +9012,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9057847366603887012, guid: dde047afb0b15bc43b41531e603af947, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -996
+      value: -671
       objectReference: {fileID: 0}
     - target: {fileID: 9057847366603887012, guid: dde047afb0b15bc43b41531e603af947, type: 3}
       propertyPath: m_LocalPosition.z
@@ -9343,10 +9243,10 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 1620118571}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 293, y: 561}
-  m_SizeDelta: {x: 1382, y: 144.9}
+  m_AnchorMin: {x: 0.5, y: 0.91780555}
+  m_AnchorMax: {x: 0.5, y: 0.91780555}
+  m_AnchoredPosition: {x: 293, y: -16}
+  m_SizeDelta: {x: 1382, y: 144.90002}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1167038946
 MonoBehaviour:
@@ -9492,23 +9392,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   categoryName: Country
-  bgm: {fileID: 0}
-  lightToggleButton: {fileID: 1736986104}
-  SongMenuPanel: {fileID: 278133962}
-  HallPanel: {fileID: 1035634458}
-  MusicScreenPanel: {fileID: 885365922}
-  petAnimator: {fileID: 2144841301}
-  petPosition: {fileID: 2144841300}
-  musicPlayer: {fileID: 63834873}
-  reactionText: {fileID: 217348069}
-  happinessBar: {fileID: 255022664}
-  rockMusic: {fileID: 8300000, guid: 5f793a8cca5171c4cafee1df6e39f3ff, type: 3}
-  rapMusic: {fileID: 8300000, guid: 41fe5b9352c26dc458a1a939dc84db7c, type: 3}
-  reggaeMusic: {fileID: 8300000, guid: 14457907bf76d63429218a0579809f04, type: 3}
-  countryMusic: {fileID: 8300000, guid: c361abb9f25ceb9408dcdb5f6415d14f, type: 3}
-  jazzMusic: {fileID: 8300000, guid: 37673213464010b429195711b1e09be1, type: 3}
-  metalMusic: {fileID: 8300000, guid: eb537ba88ec477c43b7eb5bb6c292f90, type: 3}
-  isDancing: 0
 --- !u!1 &1208604406
 GameObject:
   m_ObjectHideFlags: 0
@@ -9856,7 +9739,7 @@ RectTransform:
   m_Father: {fileID: 1974423868}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 80.9, y: 950.04596}
   m_SizeDelta: {x: 2.03, y: 0}
   m_Pivot: {x: 0, y: 0}
@@ -11196,10 +11079,10 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 965038269}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 142, y: -811}
-  m_SizeDelta: {x: 148.3, y: 251.8}
+  m_AnchorMin: {x: 0.43411115, y: 0.1658772}
+  m_AnchorMax: {x: 0.43411115, y: 0.1658772}
+  m_AnchoredPosition: {x: -5, y: 0}
+  m_SizeDelta: {x: 148.3, y: 250.79999}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1439727470
 MonoBehaviour:
@@ -11272,9 +11155,9 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 683712092}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -85}
+  m_AnchorMin: {x: 0.5, y: 0.07375439}
+  m_AnchorMax: {x: 0.5, y: 0.07375439}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 329.3, y: 105}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1452059722
@@ -11843,12 +11726,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0cd44c1031e13a943bb63640046fad76, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_UiScaleMode: 0
+  m_UiScaleMode: 1
   m_ReferencePixelsPerUnit: 100
   m_ScaleFactor: 1
-  m_ReferenceResolution: {x: 800, y: 600}
+  m_ReferenceResolution: {x: 1080, y: 2280}
   m_ScreenMatchMode: 0
-  m_MatchWidthOrHeight: 0
+  m_MatchWidthOrHeight: 0.6
   m_PhysicalUnit: 3
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
@@ -12445,8 +12328,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -270.42}
-  m_SizeDelta: {x: 1080, y: 1739.2}
+  m_AnchoredPosition: {x: 2.1, y: 4.3}
+  m_SizeDelta: {x: 3447.5, y: 2751.5}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1606919166
 MonoBehaviour:
@@ -12798,23 +12681,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   categoryName: Rock
-  bgm: {fileID: 0}
-  lightToggleButton: {fileID: 1736986104}
-  SongMenuPanel: {fileID: 278133962}
-  HallPanel: {fileID: 1035634458}
-  MusicScreenPanel: {fileID: 885365922}
-  petAnimator: {fileID: 2144841301}
-  petPosition: {fileID: 2144841300}
-  musicPlayer: {fileID: 63834873}
-  reactionText: {fileID: 217348069}
-  happinessBar: {fileID: 255022664}
-  rockMusic: {fileID: 8300000, guid: 5f793a8cca5171c4cafee1df6e39f3ff, type: 3}
-  rapMusic: {fileID: 8300000, guid: 41fe5b9352c26dc458a1a939dc84db7c, type: 3}
-  reggaeMusic: {fileID: 8300000, guid: 14457907bf76d63429218a0579809f04, type: 3}
-  countryMusic: {fileID: 8300000, guid: c361abb9f25ceb9408dcdb5f6415d14f, type: 3}
-  jazzMusic: {fileID: 8300000, guid: 37673213464010b429195711b1e09be1, type: 3}
-  metalMusic: {fileID: 8300000, guid: eb537ba88ec477c43b7eb5bb6c292f90, type: 3}
-  isDancing: 0
 --- !u!4 &1616287946
 Transform:
   m_ObjectHideFlags: 0
@@ -12956,7 +12822,7 @@ MonoBehaviour:
   ResignPanel: {fileID: 327466817}
   MoviePanel: {fileID: 683712088}
   TravelPanel: {fileID: 965038265}
-  happiness: {fileID: 255022664}
+  happiness: {fileID: 0}
 --- !u!1 &1620118570
 GameObject:
   m_ObjectHideFlags: 0
@@ -13137,7 +13003,7 @@ RectTransform:
   m_Father: {fileID: 403095714}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 266.02, y: 952.44}
   m_SizeDelta: {x: -6.76, y: 0}
   m_Pivot: {x: 0, y: 0}
@@ -13317,7 +13183,7 @@ MonoBehaviour:
   statusText: {fileID: 2004027664}
   statusTitle: {fileID: 439220278}
   stageText: {fileID: 1257753967}
-  stats: {fileID: 255022664}
+  stats: {fileID: 0}
   loader: {fileID: 0}
   panelOpen: 0
 --- !u!114 &1635414632
@@ -13391,7 +13257,7 @@ RectTransform:
   m_Father: {fileID: 96501345}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: -93.72, y: 950.1001}
   m_SizeDelta: {x: -7.31, y: 2.8}
   m_Pivot: {x: 0, y: 0}
@@ -13660,6 +13526,7 @@ GameObject:
   - component: {fileID: 1681957401}
   - component: {fileID: 1681957402}
   - component: {fileID: 1681957403}
+  - component: {fileID: 1681957404}
   m_Layer: 0
   m_Name: UIManager
   m_TagString: Untagged
@@ -13704,9 +13571,9 @@ MonoBehaviour:
   HallLightScreen: {fileID: 1035634458}
   HallDarkScreen: {fileID: 946203367}
   petAnimator: {fileID: 2144841301}
-  energyBar: {fileID: 255022664}
+  energyBar: {fileID: 0}
   isSleeping: 1
-  audio: {fileID: 0}
+  isWaitingToRegen: 0
 --- !u!114 &1681957398
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -13733,23 +13600,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   categoryName: 
-  bgm: {fileID: 0}
-  lightToggleButton: {fileID: 1736986104}
-  SongMenuPanel: {fileID: 278133962}
-  HallPanel: {fileID: 1035634458}
-  MusicScreenPanel: {fileID: 885365922}
-  petAnimator: {fileID: 2144841301}
-  petPosition: {fileID: 2144841300}
-  musicPlayer: {fileID: 63834873}
-  reactionText: {fileID: 217348069}
-  happinessBar: {fileID: 255022664}
-  rockMusic: {fileID: 0}
-  rapMusic: {fileID: 0}
-  reggaeMusic: {fileID: 0}
-  countryMusic: {fileID: 0}
-  jazzMusic: {fileID: 0}
-  metalMusic: {fileID: 0}
-  isDancing: 0
 --- !u!114 &1681957400
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -13776,12 +13626,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   audioClip: {fileID: 1681957403}
-  energy: {fileID: 255022664}
+  energy: {fileID: 0}
   hall: 0
   kitchen: 0
   bathroom: 0
   gameroom: 0
   currentStage: 0
+  isEating: 0
+  isSleeping: 0
+  isDancing: 0
+  isBathing: 0
+  isAlbumOpen: 0
 --- !u!114 &1681957402
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -13908,6 +13763,58 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &1681957404
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1681957395}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f3bbea115abb51d44bb8bea3d7a57f1b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  firstTimePlay: 1
+  petDead: 0
+  isEating: 0
+  isDancing: 0
+  isSleeping: 0
+  isBathing: 0
+  isAlbumOpen: 0
+  progressStop: 0
+  nameInputField: {fileID: 0}
+  moneyValue: 0
+  bathController: {fileID: 0}
+  energy_max: 100
+  energy_current: 100
+  energy_Slider: {fileID: 1322222151}
+  energyDetail_Slider: {fileID: 1798379591}
+  energy_deduct_time: 60
+  hunger_max: 100
+  hunger_current: 100
+  hunger_Slider: {fileID: 96501346}
+  hungerDetail_Slider: {fileID: 1536039296}
+  hunger_deduct_time: 60
+  happiness_max: 100
+  happiness_current: 100
+  happiness_Slider: {fileID: 1974423869}
+  happinessDetail_Slider: {fileID: 2133073182}
+  happiness_deduct_time: 60
+  health_max: 100
+  health_current: 100
+  health_Slider: {fileID: 403095715}
+  healthDetail_Slider: {fileID: 1021599756}
+  health_deduct_time: 60
+  progress_max: 100
+  progress_current: 0
+  progress_Image: {fileID: 1165590361}
+  progressDetail_Slider: {fileID: 965522107}
+  progress_increase_time: 60
+  currentStage: 0
+  stageRepresent: {fileID: 1888166904}
+  moneyText: {fileID: 0}
+  GameUI: {fileID: 0}
 --- !u!1 &1686389815
 GameObject:
   m_ObjectHideFlags: 0
@@ -13942,7 +13849,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -315.1, y: -856}
+  m_AnchoredPosition: {x: -315.1, y: -531}
   m_SizeDelta: {x: 92.2, y: 194.5}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1686389817
@@ -14163,23 +14070,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   categoryName: Rap
-  bgm: {fileID: 0}
-  lightToggleButton: {fileID: 1736986104}
-  SongMenuPanel: {fileID: 278133962}
-  HallPanel: {fileID: 1035634458}
-  MusicScreenPanel: {fileID: 885365922}
-  petAnimator: {fileID: 2144841301}
-  petPosition: {fileID: 2144841300}
-  musicPlayer: {fileID: 63834873}
-  reactionText: {fileID: 217348069}
-  happinessBar: {fileID: 255022664}
-  rockMusic: {fileID: 8300000, guid: 5f793a8cca5171c4cafee1df6e39f3ff, type: 3}
-  rapMusic: {fileID: 8300000, guid: 41fe5b9352c26dc458a1a939dc84db7c, type: 3}
-  reggaeMusic: {fileID: 8300000, guid: 14457907bf76d63429218a0579809f04, type: 3}
-  countryMusic: {fileID: 8300000, guid: c361abb9f25ceb9408dcdb5f6415d14f, type: 3}
-  jazzMusic: {fileID: 8300000, guid: 37673213464010b429195711b1e09be1, type: 3}
-  metalMusic: {fileID: 8300000, guid: eb537ba88ec477c43b7eb5bb6c292f90, type: 3}
-  isDancing: 0
 --- !u!4 &1732747460
 Transform:
   m_ObjectHideFlags: 0
@@ -14870,10 +14760,10 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 329358514}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 293, y: 776}
-  m_SizeDelta: {x: 1382, y: 144.9}
+  m_AnchorMin: {x: 0.5, y: 0.88500005}
+  m_AnchorMax: {x: 0.5, y: 0.88500005}
+  m_AnchoredPosition: {x: 293, y: 5}
+  m_SizeDelta: {x: 1382, y: 144.90002}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1844105125
 MonoBehaviour:
@@ -15081,9 +14971,9 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 1620118571}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 28, y: -594}
+  m_AnchorMin: {x: 0.5, y: 0.049822934}
+  m_AnchorMax: {x: 0.5, y: 0.049822934}
+  m_AnchoredPosition: {x: 28, y: 26}
   m_SizeDelta: {x: 750.7, y: 44.5}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1866487295
@@ -16525,7 +16415,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &2001295005
 Transform:
   m_ObjectHideFlags: 0
@@ -16989,10 +16879,10 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 170476552}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -4.79, y: 869.05}
-  m_SizeDelta: {x: 1081.03, y: 11.88}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: -4.790039, y: -270.95}
+  m_SizeDelta: {x: 1.0300293, y: 11.880005}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2051413849
 MonoBehaviour:
@@ -17151,9 +17041,9 @@ RectTransform:
   - {fileID: 1932367858}
   m_Father: {fileID: 329358514}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -335}
+  m_AnchorMin: {x: 0.5, y: 0.3185088}
+  m_AnchorMax: {x: 0.5, y: 0.3185088}
+  m_AnchoredPosition: {x: 0, y: 28}
   m_SizeDelta: {x: 1047.3, y: 299}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2072925247

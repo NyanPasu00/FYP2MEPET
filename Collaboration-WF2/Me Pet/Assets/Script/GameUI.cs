@@ -731,14 +731,6 @@ public class GameUI : MonoBehaviour
         PlayerPrefs.SetInt("IsSleeping", 0);
         PlayerPrefs.Save();
 
-        // play transition if Animator is valid
-        if (transition != null && transition.runtimeAnimatorController != null)
-        {
-            transition.SetBool("Run", true);
-            yield return new WaitForSeconds(0.4f);
-            transition.SetBool("Run", false);
-        }
-
         // play click sound if available (optional)
         if (audioClip != null && uiClickClip != null)
         {
@@ -746,6 +738,13 @@ public class GameUI : MonoBehaviour
             // small delay if you want to hear more of the sound
             yield return new WaitForSeconds(0.2f);
         }
+
+        // play transition if Animator is valid
+        if (transition != null && transition.runtimeAnimatorController != null)
+        {
+            transition.SetBool("Run", true);
+            yield return new WaitForSeconds(0.4f);
+        }   
 
         // now change scene
         SceneManager.LoadScene(sceneName);

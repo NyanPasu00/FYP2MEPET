@@ -24,22 +24,7 @@ public class SoapBubbleSpawner : MonoBehaviour
     private void Start()
     {
         water.SetActive(false);
-        if (FindFirstObjectByType<PetStatus>().currentStage == PetStatus.PetStage.Kid)
-        {
-            maxBubbles = 4;
-        }
-        else if (FindFirstObjectByType<PetStatus>().currentStage == PetStatus.PetStage.Teen)
-        {
-            maxBubbles = 6;
-        }
-        else if (FindFirstObjectByType<PetStatus>().currentStage == PetStatus.PetStage.Adult)
-        {
-            maxBubbles = 8;
-        }
-        else if (FindFirstObjectByType<PetStatus>().currentStage == PetStatus.PetStage.Old)
-        {
-            maxBubbles = 10;
-        }
+        
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -56,6 +41,26 @@ public class SoapBubbleSpawner : MonoBehaviour
         if (bathController.dirty >= 20f && audio != null)
         {
             audio.Play();
+        }
+        if (FindFirstObjectByType<PetStatus>().currentStage == PetStatus.PetStage.Kid)
+        {
+            Debug.Log("Bubble = maxbubble");
+            maxBubbles = 4;
+        }
+        else if (FindFirstObjectByType<PetStatus>().currentStage == PetStatus.PetStage.Teen)
+        {
+            Debug.Log("Bubble = maxbubble");
+            maxBubbles = 6;
+        }
+        else if (FindFirstObjectByType<PetStatus>().currentStage == PetStatus.PetStage.Adult)
+        {
+            Debug.Log("Bubble = maxbubble");
+            maxBubbles = 8;
+        }
+        else if (FindFirstObjectByType<PetStatus>().currentStage == PetStatus.PetStage.Old)
+        {
+            Debug.Log("Bubble = maxbubble");
+            maxBubbles = 10;
         }
     }
 
