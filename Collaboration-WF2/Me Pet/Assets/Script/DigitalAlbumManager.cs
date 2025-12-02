@@ -81,41 +81,108 @@ public class DigitalAlbumManager : MonoBehaviour
         PopulatePetList();
     }
 
+    //void PopulatePetList()
+    //{
+
+    //    foreach (Transform child in petListContent)
+    //        Destroy(child.gameObject);
+
+    //    foreach (var pet in allPetList)
+    //    {
+
+    //        //custom UI layout showing a pet's image and name
+    //        GameObject petGO = Instantiate(petItemPrefab, petListContent);
+
+    //        //Sets the displayed text to the pet's name
+    //        petGO.transform.Find("PetNameText").GetComponent<TextMeshProUGUI>().text = pet.name;
+
+    //        //pre-chosen image names for Kid/Teen/Adult/Old stages
+    //        PetAlbumData albumData = petAlbumDataDict[pet.id];
+
+    //        //Chooses the most appropriate available stage image for preview
+    //        string stageFolder = GetPreviewStage(albumData, out string imageName);
+
+    //        //Loads the image
+    //        Sprite sprite = Resources.Load<Sprite>($"DigitalAlbum/{stageFolder}/{imageName}");
+
+    //        //If the sprite was loaded, sets it to the Image UI component named PetImage inside the prefab
+    //        if (sprite != null)
+    //            petGO.transform.Find("PetImage").GetComponent<Image>().sprite = sprite;
+
+    //        //switches to the album panel and shows that pet's stage images
+
+    //        string capturedId = pet.id;
+    //        string capturedName = pet.name;
+    //        petGO.GetComponent<Button>().onClick.AddListener(() => ShowPetAlbum(capturedId, capturedName));
+    //    }
+    //}
+
     void PopulatePetList()
     {
-
+        // Clear old UI
         foreach (Transform child in petListContent)
             Destroy(child.gameObject);
 
+        // No dead pets
+        if (allPetList == null || allPetList.Count == 0)
+        {
+            Debug.Log("No dead pets — show empty album.");
+            EmptyDigitalAlbum.SetActive(true);
+            return;
+        }
+
+        EmptyDigitalAlbum.SetActive(false);
+
         foreach (var pet in allPetList)
         {
-           
-            //custom UI layout showing a pet's image and name
             GameObject petGO = Instantiate(petItemPrefab, petListContent);
 
-            //Sets the displayed text to the pet's name
-            petGO.transform.Find("PetNameText").GetComponent<TextMeshProUGUI>().text = pet.name;
+            // 1. Display Pet Name
+            petGO.transform.Find("PetNameText")
+                           .GetComponent<TextMeshProUGUI>()
+                           .text = pet.name;
 
-            //pre-chosen image names for Kid/Teen/Adult/Old stages
-            PetAlbumData albumData = petAlbumDataDict[pet.id];
+            // 2. Get album data (safer)
+            if (!petAlbumDataDict.TryGetValue(pet.id, out PetAlbumData albumData))
+            {
+                Debug.LogWarning($"No album data for petId={pet.id}, generating...");
+                CacheRandomImagesForPet(pet.id, pet.name, pet.stagePassed);
+                albumData = petAlbumDataDict[pet.id];
+            }
 
-            //Chooses the most appropriate available stage image for preview
+            // 3. Pick a preview image (Kid/Teen/Adult/Old)
             string stageFolder = GetPreviewStage(albumData, out string imageName);
 
-            //Loads the image
-            Sprite sprite = Resources.Load<Sprite>($"DigitalAlbum/{stageFolder}/{imageName}");
+            Sprite preview = null;
+            if (!string.IsNullOrEmpty(imageName))
+                preview = Resources.Load<Sprite>($"DigitalAlbum/{stageFolder}/{imageName}");
 
-            //If the sprite was loaded, sets it to the Image UI component named PetImage inside the prefab
-            if (sprite != null)
-                petGO.transform.Find("PetImage").GetComponent<Image>().sprite = sprite;
+            // 4. Apply sprite or fallback
+            Image img = petGO.transform.Find("PetImage").GetComponent<Image>();
 
-            //switches to the album panel and shows that pet's stage images
+            if (preview != null)
+            {
+                img.sprite = preview;
+            }
+            else
+            {
+                Debug.LogWarning($"Missing preview image for {pet.name}. Using placeholder.");
+                img.sprite = Resources.Load<Sprite>("DigitalAlbum/Placeholder/defaultPet");
+            }
 
+            // 5. Add click to open album
             string capturedId = pet.id;
             string capturedName = pet.name;
-            petGO.GetComponent<Button>().onClick.AddListener(() => ShowPetAlbum(capturedId, capturedName));
+
+            petGO.GetComponent<Button>().onClick.AddListener(() =>
+            {
+                ShowPetAlbum(capturedId, capturedName);
+            });
         }
     }
+
+
+
 
     public void ShowPetAlbum(string petId,string petName)
     {

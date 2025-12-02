@@ -39,6 +39,7 @@ public class GameUI : MonoBehaviour
     public Transform KitchenCameraPosition;
     public Transform GameRoomCameraPosition;
     public Transform BathroomCameraPosition;
+    public Transform MedicationCameraPosition;
     public Transform MainCameraPosition;
     public float TransitionSpeed = 4f;
     public TextMeshProUGUI Title;
@@ -242,6 +243,7 @@ public class GameUI : MonoBehaviour
         Transform realParent = GetRealParent();
         foreach (Transform t in realParent)
             Destroy(t.gameObject);
+            Debug.Log("Destroy");
 
         foreach (var kvp in ownedItems)
         {
@@ -331,10 +333,10 @@ public class GameUI : MonoBehaviour
 
     
 
-    public void resetMedicineLocation()
-    {
+    //public void resetMedicineLocation()
+    //{
 
-    }
+    //}
 
     //Display Kitchen Shop Product
     public void displayProduct()
@@ -449,10 +451,6 @@ public class GameUI : MonoBehaviour
         CartPage.SetActive(false);
     }
 
-    public void displayGameSelection()
-    {
-
-    }
 
     public void displaySelectedGame()
     {
@@ -535,28 +533,6 @@ public class GameUI : MonoBehaviour
         }
     }
 
-    public void spawnBubbleOnPet()
-    {
-
-    }
-
-    public void displayShower()
-    {
-
-    }
-
-    public void displayCleanPet()
-    {
-
-    }
-
-    public void resetShowerLocation()
-    {
-
-    }
-
-    
-
     public void transitionToRight()
     {
         // If already moving, ignore extra clicks
@@ -581,9 +557,15 @@ public class GameUI : MonoBehaviour
             currentRoomIndex = 3;
             target = KitchenCameraPosition;
         }
+        else if(stats.currentStage == PetStatus.PetStage.Old && currentRoomIndex == 3)
+        {
+            currentRoomIndex = 4;
+            target = MedicationCameraPosition;
+            Debug.Log(target);
+        }
         else
         {
-          
+
             StartCoroutine(EdgeShake());
             return;
         }
@@ -618,6 +600,11 @@ public class GameUI : MonoBehaviour
         {
             currentRoomIndex = 0;
             target = BathroomCameraPosition;
+        }
+        else if (stats.currentStage == PetStatus.PetStage.Old && currentRoomIndex == 4)
+        {
+            currentRoomIndex = 3;
+            target = KitchenCameraPosition;
         }
         else
         {
@@ -708,6 +695,9 @@ public class GameUI : MonoBehaviour
             case 3:
                 Title.text = $"Kitchen";
                 break;
+            case 4:
+                Title.text = $"Medic";
+                break;
         }
     }
 
@@ -773,6 +763,31 @@ public class GameUI : MonoBehaviour
         }
 
         toastCoroutine = null;
+    }
+
+    public void spawnBubbleOnPet()
+    {
+
+    }
+
+    public void displayShower()
+    {
+
+    }
+
+    public void displayCleanPet()
+    {
+
+    }
+
+    public void resetShowerLocation()
+    {
+
+    }
+
+    public void displayGameSelection()
+    {
+
     }
 
 }

@@ -4090,7 +4090,6 @@ GameObject:
   - component: {fileID: 248323928}
   - component: {fileID: 248323931}
   - component: {fileID: 248323930}
-  - component: {fileID: 248323929}
   m_Layer: 0
   m_Name: fridge02b_0
   m_TagString: Untagged
@@ -4113,19 +4112,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 889872778}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &248323929
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 248323927}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5b6d013c3288c2041a9d2f1bf1c26779, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  gameUI: {fileID: 1424680416}
 --- !u!61 &248323930
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -7479,6 +7465,7 @@ MonoBehaviour:
   KitchenCameraPosition: {fileID: 756739431}
   GameRoomCameraPosition: {fileID: 1532950807}
   BathroomCameraPosition: {fileID: 1980036596}
+  MedicationCameraPosition: {fileID: 0}
   MainCameraPosition: {fileID: 519420032}
   TransitionSpeed: 4
   Title: {fileID: 1036534297}
@@ -15677,6 +15664,7 @@ MonoBehaviour:
   stageItemPrefab: {fileID: 732001218}
   petAlbumTitle: {fileID: 1924099586}
   gratitudeText: {fileID: 1335287784}
+  allPetList: []
 --- !u!4 &1115633399
 Transform:
   m_ObjectHideFlags: 0
@@ -19726,6 +19714,7 @@ MonoBehaviour:
   KitchenCameraPosition: {fileID: 756739431}
   GameRoomCameraPosition: {fileID: 1532950807}
   BathroomCameraPosition: {fileID: 1980036596}
+  MedicationCameraPosition: {fileID: 0}
   MainCameraPosition: {fileID: 519420032}
   TransitionSpeed: 4
   Title: {fileID: 0}
@@ -23452,6 +23441,7 @@ MonoBehaviour:
   kitchenSpawnArea: {fileID: 771576141}
   gameroomSpawnArea: {fileID: 980850434}
   bathroomSpawnArea: {fileID: 1318311802}
+  medicSpawnArea: {fileID: 0}
   hallState: 0
   hallStanding: 0
   showerEffect: {fileID: 1080185211}
