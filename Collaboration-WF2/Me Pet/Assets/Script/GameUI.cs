@@ -39,6 +39,7 @@ public class GameUI : MonoBehaviour
     public Transform KitchenCameraPosition;
     public Transform GameRoomCameraPosition;
     public Transform BathroomCameraPosition;
+    public Transform MedicationCameraPosition;
     public Transform MainCameraPosition;
     public float TransitionSpeed = 4f;
     public TextMeshProUGUI Title;
@@ -581,9 +582,15 @@ public class GameUI : MonoBehaviour
             currentRoomIndex = 3;
             target = KitchenCameraPosition;
         }
+        else if(stats.currentStage == PetStatus.PetStage.Old && currentRoomIndex == 3)
+        {
+            currentRoomIndex = 4;
+            target = MedicationCameraPosition;
+            Debug.Log(target);
+        }
         else
         {
-          
+
             StartCoroutine(EdgeShake());
             return;
         }
@@ -618,6 +625,11 @@ public class GameUI : MonoBehaviour
         {
             currentRoomIndex = 0;
             target = BathroomCameraPosition;
+        }
+        else if (stats.currentStage == PetStatus.PetStage.Old && currentRoomIndex == 4)
+        {
+            currentRoomIndex = 3;
+            target = KitchenCameraPosition;
         }
         else
         {
@@ -707,6 +719,9 @@ public class GameUI : MonoBehaviour
                 break;
             case 3:
                 Title.text = $"Kitchen";
+                break;
+            case 4:
+                Title.text = $"Medic";
                 break;
         }
     }

@@ -41,6 +41,8 @@ public class BathController : MonoBehaviour
     public BoxCollider2D gameroomSpawnArea;
     [Header("Bathroom")]
     public BoxCollider2D bathroomSpawnArea;
+    [Header("Medication")]
+    public BoxCollider2D medicSpawnArea;
     private List<GameObject> activeSpots = new List<GameObject>();
 
     public enum HallState
@@ -347,6 +349,7 @@ public class BathController : MonoBehaviour
         if (kitchenSpawnArea != null) areas.Add(kitchenSpawnArea);
         if (gameroomSpawnArea != null) areas.Add(gameroomSpawnArea);
         if (bathroomSpawnArea != null) areas.Add(bathroomSpawnArea);
+        if (medicSpawnArea != null) areas.Add(medicSpawnArea);
 
         if (areas.Count == 0)
         {

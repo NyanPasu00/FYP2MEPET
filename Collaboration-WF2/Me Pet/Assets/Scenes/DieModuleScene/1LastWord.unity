@@ -887,7 +887,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -1566040433
-  m_SortingLayer: 6
+  m_SortingLayer: 7
   m_SortingOrder: 0
   m_Sprite: {fileID: -692680249235833449, guid: 0bac8688a22e2fa49a6454f4da46ddd1, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -944,7 +944,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 555475764}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: OpenDigitalAlbum, Assembly-CSharp
         m_MethodName: ToggleAlbum
         m_Mode: 1
@@ -1165,8 +1165,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 435626387}
-  - component: {fileID: 435626386}
   - component: {fileID: 435626388}
+  - component: {fileID: 435626389}
   m_Layer: 0
   m_Name: Scene1Controller
   m_TagString: Untagged
@@ -1174,18 +1174,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &435626386
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 435626385}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5ad94344bfb3bd84a8e833990e260fc1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!4 &435626387
 Transform:
   m_ObjectHideFlags: 0
@@ -1298,6 +1286,29 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &435626389
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 435626385}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e85b3c9c7ae92c545aa8f7beef385a4b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isScene1: 1
+  hungerHeartfelt: {fileID: 0}
+  lowHappinessHeartfelt: {fileID: 0}
+  stressHeartfelt: {fileID: 0}
+  lackMedicalHeartfelt: {fileID: 0}
+  oldAgeHeartfelt: {fileID: 0}
+  hungerCause: {fileID: 0}
+  lowHappinessCause: {fileID: 0}
+  stressCause: {fileID: 0}
+  lackMedicationCause: {fileID: 0}
+  oldAgeCause: {fileID: 0}
 --- !u!1 &480054758
 GameObject:
   m_ObjectHideFlags: 0
@@ -1372,7 +1383,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -1566040433
-  m_SortingLayer: 6
+  m_SortingLayer: 7
   m_SortingOrder: 0
   m_Sprite: {fileID: 4959150648537483080, guid: 84742df66bfac1d4890c6cb05b2d0854, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -1714,51 +1725,6 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &555475763
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 555475765}
-  - component: {fileID: 555475764}
-  m_Layer: 0
-  m_Name: UIManager
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &555475764
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 555475763}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1f720006fc09d854d83fc71066feac67, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  digitalAlbumPanel: {fileID: 0}
---- !u!4 &555475765
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 555475763}
-  serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 90}
-  m_LocalScale: {x: 0, y: 0, z: 0}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -2140,7 +2106,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   firstTimePlay: 1
-  dirtyManager: {fileID: 0}
+  petDead: 0
+  isEating: 0
+  isDancing: 0
+  isSleeping: 0
+  isBathing: 0
+  isAlbumOpen: 0
+  progressStop: 0
+  nameInputField: {fileID: 0}
+  moneyValue: 0
+  bathController: {fileID: 0}
   energy_max: 100
   energy_current: 0
   energy_Slider: {fileID: 2078395269}
@@ -2168,6 +2143,8 @@ MonoBehaviour:
   progress_increase_time: 1
   currentStage: 0
   stageRepresent: {fileID: 0}
+  moneyText: {fileID: 0}
+  GameUI: {fileID: 0}
 --- !u!1 &767881763
 GameObject:
   m_ObjectHideFlags: 0
@@ -3167,7 +3144,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -1566040433
-  m_SortingLayer: 6
+  m_SortingLayer: 7
   m_SortingOrder: 0
   m_Sprite: {fileID: -1438510544462665488, guid: b1bceaeada907ca46a65b34c1ca0ee16, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -3927,7 +3904,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -1566040433
-  m_SortingLayer: 6
+  m_SortingLayer: 7
   m_SortingOrder: 0
   m_Sprite: {fileID: 8981333840325473314, guid: ce3df88584a44f544af60e7de216c7c2, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -4241,6 +4218,7 @@ MonoBehaviour:
   stageItemPrefab: {fileID: 1536183446}
   petAlbumTitle: {fileID: 795675094}
   gratitudeText: {fileID: 255966561}
+  allPetList: []
 --- !u!4 &1308143614
 Transform:
   m_ObjectHideFlags: 0
@@ -4500,7 +4478,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -1566040433
-  m_SortingLayer: 6
+  m_SortingLayer: 7
   m_SortingOrder: 0
   m_Sprite: {fileID: -8187443777088593718, guid: 49ab66f87c49cf840b66e1e2b44b11b3, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -6245,7 +6223,6 @@ SceneRoots:
   - {fileID: 871612300}
   - {fileID: 2110001405}
   - {fileID: 1752408655}
-  - {fileID: 555475765}
   - {fileID: 971548220}
   - {fileID: 435626387}
   - {fileID: 990664320}

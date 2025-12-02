@@ -1,4 +1,4 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
@@ -34,6 +34,26 @@ public class PetStatus : MonoBehaviour
     public TMP_InputField nameInputField;
 
     [System.Serializable]
+    public class DeadPetRecord
+    {
+        public string id;
+        public string name;
+        public string stagePassed;
+    }
+
+    [System.Serializable]
+    public class PetAlbumRecord
+    {
+        public string petId;
+        public string petName;
+        public string kidImageName;
+        public string teenImageName;
+        public string adultImageName;
+        public string oldImageName;
+        public int gratitudeIndex;
+    }
+
+    [System.Serializable]
     public class FoodEntry
     {
         public string foodName;
@@ -67,7 +87,11 @@ public class PetStatus : MonoBehaviour
         public float lastHungerSecond;
         public int moneyValue;
         public List<FoodEntry> ownedItems = new List<FoodEntry>();
+        public List<DeadPetRecord> deadPets = new List<DeadPetRecord>();
+        public List<PetAlbumRecord> albumDataList = new List<PetAlbumRecord>();
     }
+
+   
 
     public int moneyValue;
     public Dictionary<string, int> ownedItems = new Dictionary<string, int>();
@@ -141,8 +165,7 @@ public class PetStatus : MonoBehaviour
 
     public GameUI GameUI;
 
-    //public Dictionary<> eventCompleted;
-    //public Dictionary<> musicPreferences;
+   
     
     void Start()
     {
@@ -526,6 +549,7 @@ public class PetStatus : MonoBehaviour
             PlayerPrefs.SetInt("PetDead", petDead ? 1 : 0);
             PlayerPrefs.Save();
             FindFirstObjectByType<BGMScript>().StopMusic();
+
             SceneManager.LoadScene("1LastWord");
 
         }
@@ -644,6 +668,42 @@ public class PetStatus : MonoBehaviour
             data = new PetData();
         }
 
+        // ------------------------------------
+        // 2. NOW it is safe to use data.xxx
+        // ------------------------------------
+
+        // Save album + dead pets
+        DigitalAlbumManager albumManager = FindFirstObjectByType<DigitalAlbumManager>();
+        if (albumManager != null)
+        {
+            // Save Dead Pets
+            data.deadPets = new List<DeadPetRecord>();
+            foreach (var p in albumManager.LoadDeadPets())
+            {
+                data.deadPets.Add(new DeadPetRecord
+                {
+                    id = p.id,
+                    name = p.name,
+                    stagePassed = p.stagePassed
+                });
+            }
+
+            // Save Album Data
+            data.albumDataList = new List<PetAlbumRecord>();
+            foreach (var entry in albumManager.petAlbumDataDict.Values)
+            {
+                data.albumDataList.Add(new PetAlbumRecord
+                {
+                    petId = entry.petId,
+                    petName = entry.petName,
+                    kidImageName = entry.kidImageName,
+                    teenImageName = entry.teenImageName,
+                    adultImageName = entry.adultImageName,
+                    oldImageName = entry.oldImageName,
+                    gratitudeIndex = entry.gratitudeIndex
+                });
+            }
+        }
 
         if (bathController == null)
             bathController = FindAnyObjectByType<BathController>();
@@ -687,6 +747,8 @@ public class PetStatus : MonoBehaviour
             string json = PlayerPrefs.GetString("PetData");
             PetData data = JsonUtility.FromJson<PetData>(json);
 
+            
+
             hasReachedTeenHalf = PlayerPrefs.GetInt("hasReachedTeenHalf", 0) == 1;
             hasReachedAdultHalf = PlayerPrefs.GetInt("hasReachedAdultHalf", 0) == 1;
             hasReachedOldHalf = PlayerPrefs.GetInt("hasReachedOldHalf", 0) == 1;
@@ -694,6 +756,42 @@ public class PetStatus : MonoBehaviour
 
             if (firstTimePlay == false)
             {
+                DigitalAlbumManager albumManager = FindFirstObjectByType<DigitalAlbumManager>();
+                if (albumManager != null)
+                {
+                    // ---------------------------
+                    // RESTORE DEAD PET LIST
+                    // ---------------------------
+                    albumManager.allPetList = new List<PetDataID>();
+                    foreach (var dead in data.deadPets)
+                    {
+                        albumManager.allPetList.Add(new PetDataID
+                        {
+                            id = dead.id,
+                            name = dead.name,
+                            stagePassed = dead.stagePassed
+                        });
+                    }
+
+                    // ---------------------------
+                    // RESTORE ALBUM DATA
+                    // ---------------------------
+                    albumManager.petAlbumDataDict = new Dictionary<string, PetAlbumData>();
+                    foreach (var album in data.albumDataList)
+                    {
+                        albumManager.petAlbumDataDict[album.petId] = new PetAlbumData(album.petId)
+                        {
+                            petId = album.petId,
+                            petName = album.petName,
+                            kidImageName = album.kidImageName,
+                            teenImageName = album.teenImageName,
+                            adultImageName = album.adultImageName,
+                            oldImageName = album.oldImageName,
+                            gratitudeIndex = album.gratitudeIndex
+                        };
+                    }
+                }
+
                 //Money
                 moneyValue = data.moneyValue;
                 ownedItems = new Dictionary<string, int>();
@@ -819,6 +917,7 @@ public class PetStatus : MonoBehaviour
         }
     }
 
+
     void UpdateAllUI()
     {
         GetProgressFill();
@@ -939,6 +1038,7 @@ public class PetStatus : MonoBehaviour
             PlayerPrefs.Save();
             PlayerPrefs.SetInt("PetDead", petDead ? 1 : 0);
             PlayerPrefs.Save();
+            Destroy(this.gameObject);
             SceneManager.LoadScene("1LastWord");
         }
 
@@ -962,6 +1062,7 @@ public class PetStatus : MonoBehaviour
             PlayerPrefs.Save();
             PlayerPrefs.SetInt("PetDead", petDead ? 1 : 0);
             PlayerPrefs.Save();
+            Destroy(this.gameObject);
             SceneManager.LoadScene("1LastWord");
         }
 
@@ -985,6 +1086,7 @@ public class PetStatus : MonoBehaviour
             PlayerPrefs.Save();
             PlayerPrefs.SetInt("PetDead", petDead ? 1 : 0);
             PlayerPrefs.Save();
+            Destroy(this.gameObject);
             SceneManager.LoadScene("1LastWord");
         }
 
@@ -1008,6 +1110,7 @@ public class PetStatus : MonoBehaviour
             PlayerPrefs.Save();
             PlayerPrefs.SetInt("PetDead", petDead ? 1 : 0);
             PlayerPrefs.Save();
+            Destroy(this.gameObject);
             SceneManager.LoadScene("1LastWord");
         }
     }

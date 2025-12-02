@@ -3,15 +3,6 @@ using UnityEngine.SceneManagement;
 
 public class LoginUI : MonoBehaviour
 {
-    private void OnEnable()
-    {
-        //LoginManager.OnLoginSuccess += LoadGameUI;
-    }
-
-    private void OnDisable()
-    {
-        //LoginManager.OnLoginSuccess -= LoadGameUI;
-    }
 
     private void LoadGameUI()
     {
@@ -22,5 +13,10 @@ public class LoginUI : MonoBehaviour
     public void OnLoginDone()
     {
         SceneManager.LoadScene("KidScene");
+    }
+
+    public void displayLoginMessage(string message)
+    {
+        
     }
 }

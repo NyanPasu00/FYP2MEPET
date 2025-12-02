@@ -91,11 +91,27 @@ public class LoginManager : MonoBehaviour
         Debug.Log("Logged in → checking cloud save...");
 
         string json = await CloudSaveManager.LoadPetDataFromCloud();
-
         Debug.Log(json);
+
+        PetStatus.PetData data = JsonUtility.FromJson<PetStatus.PetData>(json);
+        
+
+        DigitalAlbumManager album = FindFirstObjectByType<DigitalAlbumManager>();
+
+        if (album != null && data != null)
+        {
+            album.LoadAlbumFromCloud(data);
+        }
+
         if (string.IsNullOrEmpty(json))
         {
             Debug.Log("New User → Go to PetNameScene");
+            SceneManager.LoadScene("PetNameScene");
+        }
+        else if (data.firstTime)
+        {
+            // Pet died → must create a new pet
+            Debug.Log("Create New Pie → Go to PetNameScene");
             SceneManager.LoadScene("PetNameScene");
         }
         else
