@@ -401,6 +401,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   loginUI: {fileID: 1501483791}
+  gameUI: {fileID: 530525809}
 --- !u!1 &205462470
 GameObject:
   m_ObjectHideFlags: 0
@@ -1155,6 +1156,98 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!1 &530525807
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 530525808}
+  - component: {fileID: 530525809}
+  m_Layer: 0
+  m_Name: GameUIScript
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &530525808
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 530525807}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 622874943}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &530525809
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 530525807}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2bf3493ba44c2de44a77799cd61dc70a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  statusPanel: {fileID: 0}
+  statusText: {fileID: 0}
+  statusTitle: {fileID: 0}
+  stageText: {fileID: 0}
+  panelOpen: 0
+  stats: {fileID: 0}
+  transition: {fileID: 0}
+  HallCameraPosition: {fileID: 0}
+  KitchenCameraPosition: {fileID: 0}
+  GameRoomCameraPosition: {fileID: 0}
+  BathroomCameraPosition: {fileID: 0}
+  MedicationCameraPosition: {fileID: 0}
+  MainCameraPosition: {fileID: 0}
+  TransitionSpeed: 4
+  Title: {fileID: 0}
+  isCartOpen: 0
+  ShopPage: {fileID: 0}
+  CartPage: {fileID: 0}
+  PaymentPage: {fileID: 0}
+  cartContentParent: {fileID: 0}
+  cartItemPrefab: {fileID: 0}
+  totalCostText: {fileID: 0}
+  paymentCostText: {fileID: 0}
+  currentMoneyText: {fileID: 0}
+  remainMoneyText: {fileID: 0}
+  coinValueInShop: {fileID: 0}
+  coinValueInCart: {fileID: 0}
+  FridgePage: {fileID: 0}
+  availableFoodParent: {fileID: 0}
+  foodItemPrefab: {fileID: 0}
+  FoodSelection: {fileID: 0}
+  selectedFoodIcon: {fileID: 0}
+  isEating: 0
+  isSleeping: 0
+  isDancing: 0
+  isBathing: 0
+  isAlbumOpen: 0
+  foodSpriteList: []
+  SongMenuPanel: {fileID: 0}
+  HallPanel: {fileID: 0}
+  MusicScreenPanel: {fileID: 0}
+  lightToggleButton: {fileID: 0}
+  audioClip: {fileID: 0}
+  uiClickClip: {fileID: 0}
+  audioLightClip: {fileID: 0}
+  uiLightClip: {fileID: 0}
+  toastPanel: {fileID: 0}
+  toastText: {fileID: 0}
 --- !u!1 &555178680
 GameObject:
   m_ObjectHideFlags: 0
@@ -1529,6 +1622,7 @@ Transform:
   - {fileID: 190195978}
   - {fileID: 1501483790}
   - {fileID: 639928783}
+  - {fileID: 530525808}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &637281737
@@ -3931,6 +4025,7 @@ MonoBehaviour:
   stageItemPrefab: {fileID: 1057692557}
   petAlbumTitle: {fileID: 1737324070}
   gratitudeText: {fileID: 1029763582}
+  allPetList: []
 --- !u!4 &1826157137
 Transform:
   m_ObjectHideFlags: 0

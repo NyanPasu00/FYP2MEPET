@@ -628,7 +628,7 @@ public class PetStatus : MonoBehaviour
         // ============================
         PetData data = new PetData();
 
-        string cloudJson = await CloudSaveManager.LoadPetDataFromCloud();
+        string cloudJson = await DataManager.LoadPetDataFromCloud();
         if (!string.IsNullOrEmpty(cloudJson))
         {
             try
@@ -672,10 +672,9 @@ public class PetStatus : MonoBehaviour
         // 3. Save to PlayerPrefs + Cloud
         // =====================================
         string json = JsonUtility.ToJson(data);
-        PlayerPrefs.SetString("PetData", json);
-        PlayerPrefs.Save();
+        DataManager.savePetDataToLocal(json);
 
-        await CloudSaveManager.SavePetDataToCloud(json);
+        await DataManager.SavePetDataToCloud(json);
 
         // Pet is alive again
         petDead = false;
@@ -762,9 +761,8 @@ public class PetStatus : MonoBehaviour
         data.lastHungerSecond = lastHungerTime;
 
         string json = JsonUtility.ToJson(data);
-        PlayerPrefs.SetString("PetData", json);
-        await CloudSaveManager.SavePetDataToCloud(json);
-        PlayerPrefs.Save();
+        DataManager.savePetDataToLocal(json);
+        await DataManager.SavePetDataToCloud(json);
         Debug.Log("Save folder: " + Application.persistentDataPath);
         Debug.Log("dirty : " + data.dirty);
     }
@@ -1017,12 +1015,6 @@ public class PetStatus : MonoBehaviour
         isAlbumOpen = PlayerPrefs.GetInt("IsAlbumOpen", 0) == 1;
         isSleeping = PlayerPrefs.GetInt("IsSleeping", 0) == 1;
 
-        //Debug.Log("isSleeping" + isSleeping);
-        //Debug.Log("isDancing" + isDancing);
-        //Debug.Log("isEating" + isEating);
-        //Debug.Log("isAlbumOpen" + isAlbumOpen);
-        //Debug.Log("isBathing" + isBathing);
-        //Debug.Log("progressStop" + progressStop);
         // dancing = standing; everything else (idle/sleep/etc.) = lying
         if (bathController != null)
         {

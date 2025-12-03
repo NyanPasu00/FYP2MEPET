@@ -1,36 +1,70 @@
+﻿using Facebook.MiniJSON;
+using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
+using Unity.Services.CloudSave;
 using UnityEngine;
 
 public class DataManager : MonoBehaviour
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    private const string PET_DATA_KEY = "PET_DATA";
+
+    // -------------------------------------------------------
+    // SAVE JSON to cloud
+    // -------------------------------------------------------
+    public static async Task SavePetDataToCloud(string json)
     {
-        
+        if (string.IsNullOrEmpty(json))
+        {
+            Debug.LogWarning("SavePetDataToCloud → json empty, skipping.");
+            return;
+        }
+
+        try
+        {
+            var data = new Dictionary<string, object>
+            {
+                { PET_DATA_KEY, json }
+            };
+
+            await CloudSaveService.Instance.Data.ForceSaveAsync(data);
+            Debug.Log("Cloud Save Success.");
+        }
+        catch (Exception ex)
+        {
+            Debug.LogError("Cloud Save Error: " + ex.Message);
+        }
     }
 
-    // Update is called once per frame
-    void Update()
+    // -------------------------------------------------------
+    // LOAD JSON from cloud
+    // -------------------------------------------------------
+    public static async Task<string> LoadPetDataFromCloud()
     {
-        
+        try
+        {
+            var result = await CloudSaveService.Instance.Data.LoadAsync(new HashSet<string> { "PET_DATA" });
+
+            if (result.ContainsKey("PET_DATA"))
+            {
+                string json = result["PET_DATA"].ToString();
+                Debug.Log("Cloud Load Success: " + json);
+                return json;
+            }
+
+            return null;
+        }
+        catch (Exception ex)
+        {
+            Debug.LogError("Cloud Load Error: " + ex.Message);
+            return null;
+        }
     }
 
-    public void requestUserData()
+
+    public static void savePetDataToLocal(string json)
     {
-
-    }
-
-    public void savePetDataToCloud()
-    {
-
-    }
-
-    public void savePetDataFromLocalToCloud()
-    {
-
-    }
-
-    public void savePetDataToLocal()
-    {
-
+        PlayerPrefs.SetString("PetData", json);
+        PlayerPrefs.Save();
     }
 }

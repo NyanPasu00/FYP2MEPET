@@ -181,20 +181,6 @@ public class UIController : MonoBehaviour , IBeginDragHandler, IDragHandler, IEn
         }
     }
 
-    public void isValidateNewUser()
-    {
-
-    }
-
-    public void onClick()
-    {
-
-    }
-
-    public void isValidateLoginType()
-    {
-
-    }
 
     public void isValidateLoginStatus(string status)
     {

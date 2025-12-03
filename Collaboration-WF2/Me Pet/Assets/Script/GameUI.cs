@@ -212,12 +212,12 @@ public class GameUI : MonoBehaviour
     //---------------------------------------------------------------STATUS PANEL END--------------------------------------------------------------------------------
     public void displayGameplay()
     {
-
+        SceneManager.LoadScene("KidScene");
     }
 
     public void displayNewGame()
     {
-
+        SceneManager.LoadScene("PetNameScene");
     }
 
 

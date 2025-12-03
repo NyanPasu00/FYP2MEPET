@@ -428,9 +428,8 @@ public class DigitalAlbumManager : MonoBehaviour
 
         // Save to PlayerPrefs & Cloud
         string json = JsonUtility.ToJson(data);
-        PlayerPrefs.SetString("PetData", json);
-        await CloudSaveManager.SavePetDataToCloud(json);
-        PlayerPrefs.Save();
+        DataManager.savePetDataToLocal(json);
+        await DataManager.SavePetDataToCloud(json);
 
         Debug.Log("Pet data reset after death. Dead pets and album saved.");
     }

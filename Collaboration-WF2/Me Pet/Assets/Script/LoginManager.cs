@@ -11,7 +11,7 @@ using UnityEngine.SceneManagement;
 public class LoginManager : MonoBehaviour
 {
     public LoginUI loginUI;
-
+    public GameUI gameUI;
     private bool _ugsInitialized = false;
     private bool _isSigningIn = false;
 
@@ -20,8 +20,6 @@ public class LoginManager : MonoBehaviour
         await InitializeUnityServices();
         InitializeFacebook();
 
-        // After initialization, check login
-        //await CheckLoginAsync();
     }
 
     #region Unity Services Initialization
@@ -83,14 +81,15 @@ public class LoginManager : MonoBehaviour
         if (!AuthenticationService.Instance.IsSignedIn)
         {
             Debug.Log("Not logged in → go to LoginScene");
-            SceneManager.LoadScene("LoginScene");
+            loginUI.displayLoginPage();
             return;
         }
 
         // Already logged in → Check cloud data
         Debug.Log("Logged in → checking cloud save...");
 
-        string json = await CloudSaveManager.LoadPetDataFromCloud();
+        string json = await DataManager.LoadPetDataFromCloud();
+
         Debug.Log(json);
 
         PetStatus.PetData data = JsonUtility.FromJson<PetStatus.PetData>(json);
@@ -106,21 +105,20 @@ public class LoginManager : MonoBehaviour
         if (string.IsNullOrEmpty(json))
         {
             Debug.Log("New User → Go to PetNameScene");
-            SceneManager.LoadScene("PetNameScene");
+            gameUI.displayNewGame();
         }
         else if (data.firstTime)
         {
             // Pet died → must create a new pet
             Debug.Log("Create New Pie → Go to PetNameScene");
-            SceneManager.LoadScene("PetNameScene");
+            gameUI.displayNewGame();
         }
         else
         {
             Debug.Log("Existing User → Loading local data");
-            PlayerPrefs.SetString("PetData", json);
-            PlayerPrefs.Save();
+            DataManager.savePetDataToLocal(json);
 
-            loginUI?.OnLoginDone();
+            gameUI.displayGameplay();
         }
     }
     #endregion
@@ -186,11 +184,13 @@ public class LoginManager : MonoBehaviour
         try
         {
             await AuthenticationService.Instance.SignInWithFacebookAsync(accessToken);
+            loginUI.displayLoginMessage("Success Sign In with Facebook" , true);
             Debug.Log("Signed in with Facebook");
             await FinishLoginAndReload();
         }
         catch (Exception ex)
         {
+            loginUI.displayLoginMessage("Unsuccess to Login , Please Re-Login" , false);
             Debug.LogError("Facebook Sign In Failed: " + ex.Message);
         }
     }
@@ -217,7 +217,7 @@ public class LoginManager : MonoBehaviour
     private async Task FinishLoginAndReload()
     {
         Debug.Log("Login complete → Returning to StartScene for cloud check");
-        await Task.Delay(300); // small delay
+        await Task.Delay(1000); // small delay
         SceneManager.LoadScene("StartScene");
     }
     #endregion
