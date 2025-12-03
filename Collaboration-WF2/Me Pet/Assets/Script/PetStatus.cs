@@ -613,17 +613,44 @@ public class PetStatus : MonoBehaviour
         }
     }
 
+
     public async void createPetData()
     {
         string petNewName = nameInputField.text.Trim();
-
         if (string.IsNullOrEmpty(petNewName))
         {
             Debug.LogWarning("Pet name is empty!");
             return;
         }
 
+        // ============================
+        // 1. Load existing cloud data
+        // ============================
         PetData data = new PetData();
+
+        string cloudJson = await DataManager.LoadPetDataFromCloud();
+        if (!string.IsNullOrEmpty(cloudJson))
+        {
+            try
+            {
+                data = JsonUtility.FromJson<PetData>(cloudJson);
+            }
+            catch
+            {
+                data = new PetData();
+            }
+        }
+
+        // If no lists exist, create them
+        if (data.deadPets == null)
+            data.deadPets = new List<DeadPetRecord>();
+
+        if (data.albumDataList == null)
+            data.albumDataList = new List<PetAlbumRecord>();
+
+        // ==========================================================
+        // 2. Now overwrite ONLY the alive-pet stats (fresh new pet)
+        // ==========================================================
         data.petName = petNewName;
         data.dirty = 0;
         data.energy = 100;
@@ -633,25 +660,32 @@ public class PetStatus : MonoBehaviour
         data.progress = 0;
         data.stage = PetStage.Kid;
         data.lastSavedTime = System.DateTime.Now.ToString();
-        data.firstTime = true;
-        data.lastEnergySecond = 0f;
-        data.lastHappinessSecond = 0f;
-        data.lastHealthSecond = 0f;
-        data.lastProgressSecond = 0f;
-        data.lastHungerSecond = 0f;
-        data.moneyValue = 0;
+        data.firstTime = false;   // NEW pet created → not first time
+        data.lastEnergySecond = 0;
+        data.lastHappinessSecond = 0;
+        data.lastHealthSecond = 0;
+        data.lastProgressSecond = 0;
+        data.lastHungerSecond = 0;
+        data.moneyValue = 150;
 
+        // =====================================
+        // 3. Save to PlayerPrefs + Cloud
+        // =====================================
         string json = JsonUtility.ToJson(data);
-        PlayerPrefs.SetString("PetData", json);
-        await CloudSaveManager.SavePetDataToCloud(json);
+        DataManager.savePetDataToLocal(json);
+
+        await DataManager.SavePetDataToCloud(json);
+
+        // Pet is alive again
+        petDead = false;
+        PlayerPrefs.SetInt("PetDead", 0);
         PlayerPrefs.Save();
 
-        petDead = false;
-        PlayerPrefs.SetInt("PetDead", petDead ? 1 : 0);
-        PlayerPrefs.Save();
+        Debug.Log("New pet created, old album preserved.");
 
         GameUI.PlayAndLoad("KidScene");
     }
+
 
     public async void SavePetData()
     {
@@ -667,10 +701,6 @@ public class PetStatus : MonoBehaviour
         {
             data = new PetData();
         }
-
-        // ------------------------------------
-        // 2. NOW it is safe to use data.xxx
-        // ------------------------------------
 
         // Save album + dead pets
         DigitalAlbumManager albumManager = FindFirstObjectByType<DigitalAlbumManager>();
@@ -731,9 +761,8 @@ public class PetStatus : MonoBehaviour
         data.lastHungerSecond = lastHungerTime;
 
         string json = JsonUtility.ToJson(data);
-        PlayerPrefs.SetString("PetData", json);
-        await CloudSaveManager.SavePetDataToCloud(json);
-        PlayerPrefs.Save();
+        DataManager.savePetDataToLocal(json);
+        await DataManager.SavePetDataToCloud(json);
         Debug.Log("Save folder: " + Application.persistentDataPath);
         Debug.Log("dirty : " + data.dirty);
     }
@@ -986,12 +1015,6 @@ public class PetStatus : MonoBehaviour
         isAlbumOpen = PlayerPrefs.GetInt("IsAlbumOpen", 0) == 1;
         isSleeping = PlayerPrefs.GetInt("IsSleeping", 0) == 1;
 
-        //Debug.Log("isSleeping" + isSleeping);
-        //Debug.Log("isDancing" + isDancing);
-        //Debug.Log("isEating" + isEating);
-        //Debug.Log("isAlbumOpen" + isAlbumOpen);
-        //Debug.Log("isBathing" + isBathing);
-        //Debug.Log("progressStop" + progressStop);
         // dancing = standing; everything else (idle/sleep/etc.) = lying
         if (bathController != null)
         {
@@ -1173,9 +1196,33 @@ public class PetStatus : MonoBehaviour
         Debug.Log("Products updated & saved.");
     }
 
-    public void updateMedicineStatus()
+    public void updateMedicineStatus(string currentPotionName)
     {
+        Debug.Log(currentPotionName);
 
+        if (ownedItems.ContainsKey(currentPotionName))
+        {
+            // decrease quantity
+            ownedItems[currentPotionName]--;
+
+            // remove if zero
+            if (ownedItems[currentPotionName] <= 0)
+            {
+                ownedItems.Remove(currentPotionName);
+                // optional: clear UI if last item
+                if (UIController.instance != null)
+                {
+                    UIController.instance.gameUI.clearSelectedFood();
+                }
+            }
+        }
+
+        // apply food effect (increase hunger)
+        IncreaseHealth();
+
+        // save pet data
+        SavePetData();  // internally converts dictionary to List<FoodEntry> before saving
+        Debug.Log("Products updated & saved.");
     }
 
     public void updateProductandMoney(List<CartItem> purchasedItems, int totalCost)
@@ -1228,16 +1275,16 @@ public class PetStatus : MonoBehaviour
 
     }
 
-    public void onConnectionReload()
-    {
+    //public void onConnectionReload()
+    //{
 
 
 
-    }
+    //}
 
-    public void connectionLost()
-    {
+    //public void connectionLost()
+    //{
 
-    }
+    //}
 
 }

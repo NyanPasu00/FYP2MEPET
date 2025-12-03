@@ -2965,6 +2965,108 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!1 &394245492
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 394245493}
+  - component: {fileID: 394245496}
+  - component: {fileID: 394245495}
+  - component: {fileID: 394245494}
+  m_Layer: 0
+  m_Name: TransitionCanvas
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &394245493
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 394245492}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 0, y: 0, z: 0}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 770697127}
+  m_Father: {fileID: 586954202}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
+  m_Pivot: {x: 0, y: 0}
+--- !u!114 &394245494
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 394245492}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dc42784cf147c0c48a680349fa168899, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_IgnoreReversedGraphics: 1
+  m_BlockingObjects: 0
+  m_BlockingMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
+--- !u!114 &394245495
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 394245492}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0cd44c1031e13a943bb63640046fad76, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_UiScaleMode: 0
+  m_ReferencePixelsPerUnit: 100
+  m_ScaleFactor: 1
+  m_ReferenceResolution: {x: 800, y: 600}
+  m_ScreenMatchMode: 0
+  m_MatchWidthOrHeight: 0
+  m_PhysicalUnit: 3
+  m_FallbackScreenDPI: 96
+  m_DefaultSpriteDPI: 96
+  m_DynamicPixelsPerUnit: 1
+  m_PresetInfoIsWorld: 0
+--- !u!223 &394245496
+Canvas:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 394245492}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_RenderMode: 1
+  m_Camera: {fileID: 0}
+  m_PlaneDistance: 100
+  m_PixelPerfect: 0
+  m_ReceivesEvents: 1
+  m_OverrideSorting: 0
+  m_OverridePixelPerfect: 0
+  m_SortingBucketNormalizedSize: 0
+  m_VertexColorAlwaysGammaSpace: 0
+  m_AdditionalShaderChannelsFlag: 0
+  m_UpdateRectTransformForStandalone: 0
+  m_SortingLayerID: 0
+  m_SortingOrder: 100
+  m_TargetDisplay: 0
 --- !u!1 &403095713
 GameObject:
   m_ObjectHideFlags: 0
@@ -3224,9 +3326,9 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 1681957401}
-        m_TargetAssemblyTypeName: SceneLoader, Assembly-CSharp
-        m_MethodName: playAudio
+      - m_Target: {fileID: 1681957405}
+        m_TargetAssemblyTypeName: GameUI, Assembly-CSharp
+        m_MethodName: PlayUIClick
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -3882,7 +3984,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1681957399}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: SongCategoryButton, Assembly-CSharp
         m_MethodName: ChangeBackToHall
         m_Mode: 1
@@ -4034,6 +4136,38 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
+--- !u!1 &586954201
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 586954202}
+  m_Layer: 0
+  m_Name: SceneChanger
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &586954202
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 586954201}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -1.3832926, y: -0.6028351, z: 0.03139512}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 394245493}
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &603545505
 GameObject:
   m_ObjectHideFlags: 0
@@ -4325,7 +4459,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1681957400}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: OpenDigitalAlbum, Assembly-CSharp
         m_MethodName: CloseAlbum
         m_Mode: 1
@@ -4611,9 +4745,9 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 1681957401}
-        m_TargetAssemblyTypeName: SceneLoader, Assembly-CSharp
-        m_MethodName: playAudio
+      - m_Target: {fileID: 1681957405}
+        m_TargetAssemblyTypeName: GameUI, Assembly-CSharp
+        m_MethodName: PlayUIClick
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -5068,6 +5202,81 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!1001 &770697125
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 394245493}
+    m_Modifications:
+    - target: {fileID: 5264684259002066609, guid: 99284a8787261ab48bac342b0a187816, type: 3}
+      propertyPath: m_Name
+      value: BlackScene
+      objectReference: {fileID: 0}
+    - target: {fileID: 6544714798534478607, guid: 99284a8787261ab48bac342b0a187816, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 14428.814
+      objectReference: {fileID: 0}
+    - target: {fileID: 6544714798534478607, guid: 99284a8787261ab48bac342b0a187816, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 5742.079
+      objectReference: {fileID: 0}
+    - target: {fileID: 6544714798534478607, guid: 99284a8787261ab48bac342b0a187816, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -1361.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6544714798534478607, guid: 99284a8787261ab48bac342b0a187816, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -174.9
+      objectReference: {fileID: 0}
+    - target: {fileID: 6544714798534478607, guid: 99284a8787261ab48bac342b0a187816, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6544714798534478607, guid: 99284a8787261ab48bac342b0a187816, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6544714798534478607, guid: 99284a8787261ab48bac342b0a187816, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6544714798534478607, guid: 99284a8787261ab48bac342b0a187816, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6544714798534478607, guid: 99284a8787261ab48bac342b0a187816, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6544714798534478607, guid: 99284a8787261ab48bac342b0a187816, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6544714798534478607, guid: 99284a8787261ab48bac342b0a187816, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6544714798534478607, guid: 99284a8787261ab48bac342b0a187816, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 99284a8787261ab48bac342b0a187816, type: 3}
+--- !u!95 &770697126 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 8070296449935582676, guid: 99284a8787261ab48bac342b0a187816, type: 3}
+  m_PrefabInstance: {fileID: 770697125}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &770697127 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 6544714798534478607, guid: 99284a8787261ab48bac342b0a187816, type: 3}
+  m_PrefabInstance: {fileID: 770697125}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &776777685
 GameObject:
   m_ObjectHideFlags: 0
@@ -6158,9 +6367,9 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 1681957401}
-        m_TargetAssemblyTypeName: SceneLoader, Assembly-CSharp
-        m_MethodName: playAudio
+      - m_Target: {fileID: 1681957405}
+        m_TargetAssemblyTypeName: GameUI, Assembly-CSharp
+        m_MethodName: PlayUIClick
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -6610,7 +6819,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1681957400}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: OpenDigitalAlbum, Assembly-CSharp
         m_MethodName: ToggleAlbum
         m_Mode: 1
@@ -8322,9 +8531,9 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 1681957401}
-        m_TargetAssemblyTypeName: SceneLoader, Assembly-CSharp
-        m_MethodName: playAudio
+      - m_Target: {fileID: 1681957405}
+        m_TargetAssemblyTypeName: GameUI, Assembly-CSharp
+        m_MethodName: PlayUIClick
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -9180,9 +9389,21 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1681957401}
-        m_TargetAssemblyTypeName: SceneLoader, Assembly-CSharp
-        m_MethodName: BackToHallScene
+      - m_Target: {fileID: 1681957404}
+        m_TargetAssemblyTypeName: PetStatus, Assembly-CSharp
+        m_MethodName: eventBackScene
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1681957405}
+        m_TargetAssemblyTypeName: GameUI, Assembly-CSharp
+        m_MethodName: PlayUIClick
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -9350,7 +9571,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1681957398}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: RadioMenuController, Assembly-CSharp
         m_MethodName: ToggleSongMenu
         m_Mode: 1
@@ -9737,9 +9958,9 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 1681957401}
-        m_TargetAssemblyTypeName: SceneLoader, Assembly-CSharp
-        m_MethodName: playAudio
+      - m_Target: {fileID: 1681957405}
+        m_TargetAssemblyTypeName: GameUI, Assembly-CSharp
+        m_MethodName: PlayUIClick
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -10400,7 +10621,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1681957401}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: SceneLoader, Assembly-CSharp
         m_MethodName: BackToGameRoomScene
         m_Mode: 1
@@ -10653,7 +10874,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 1681957401}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: SceneLoader, Assembly-CSharp
         m_MethodName: playAudio
         m_Mode: 1
@@ -11252,14 +11473,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1681957396}
-  - component: {fileID: 1681957397}
-  - component: {fileID: 1681957398}
-  - component: {fileID: 1681957399}
-  - component: {fileID: 1681957400}
-  - component: {fileID: 1681957401}
-  - component: {fileID: 1681957402}
   - component: {fileID: 1681957403}
   - component: {fileID: 1681957404}
+  - component: {fileID: 1681957405}
   m_Layer: 0
   m_Name: UIManager
   m_TagString: Untagged
@@ -11288,117 +11504,6 @@ Transform:
   - {fileID: 1732747460}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1681957397
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1681957395}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 28dcd6985269e0447acc0faeb72500f2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  musicToggleButton: {fileID: 1499192770}
-  HallLightScreen: {fileID: 1035634458}
-  HallDarkScreen: {fileID: 946203367}
-  petAnimator: {fileID: 2144841301}
-  energyBar: {fileID: 0}
-  isSleeping: 1
-  isWaitingToRegen: 0
---- !u!114 &1681957398
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1681957395}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: abe3d700e7eb1df408323cde7876d448, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  SongMenuPanel: {fileID: 278133962}
---- !u!114 &1681957399
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1681957395}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cd33fe6e19f401d468b16ce30788cd01, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  categoryName: 
---- !u!114 &1681957400
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1681957395}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1f720006fc09d854d83fc71066feac67, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  digitalAlbumPanel: {fileID: 924305471}
---- !u!114 &1681957401
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1681957395}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3435e9f082ff2f44ba2cbefda3f64032, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  audioClip: {fileID: 1681957403}
-  energy: {fileID: 0}
-  hall: 0
-  kitchen: 0
-  bathroom: 0
-  gameroom: 0
-  currentStage: 0
-  isEating: 0
-  isSleeping: 0
-  isDancing: 0
-  isBathing: 0
-  isAlbumOpen: 0
---- !u!114 &1681957402
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1681957395}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4aac2eda6cad8094d9b57297b307aa25, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  dirtySpotPrefab: {fileID: 0}
-  cat: {fileID: 5165732050916562192}
-  cloud: {fileID: 259933053}
-  leftButton: {fileID: 0}
-  rightButton: {fileID: 0}
-  messageText: {fileID: 49846114}
-  maxDirty: 100
-  dirty: 100
-  hasUsedSoap: 0
-  firstTime: 1
-  dirtyInterval: 50
-  currentShower: {fileID: 0}
-  catAnimator: {fileID: 2144841301}
-  isBathing: 0
-  energy: {fileID: 0}
-  spawnArea: {fileID: 1386146539}
-  spawnAreaLying: {fileID: 1386146539}
 --- !u!82 &1681957403
 AudioSource:
   m_ObjectHideFlags: 0
@@ -11547,7 +11652,67 @@ MonoBehaviour:
   currentStage: 0
   stageRepresent: {fileID: 1888166904}
   moneyText: {fileID: 0}
-  GameUI: {fileID: 0}
+  GameUI: {fileID: 1681957405}
+--- !u!114 &1681957405
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1681957395}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2bf3493ba44c2de44a77799cd61dc70a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  statusPanel: {fileID: 0}
+  statusText: {fileID: 0}
+  statusTitle: {fileID: 0}
+  stageText: {fileID: 0}
+  panelOpen: 0
+  stats: {fileID: 0}
+  transition: {fileID: 770697126}
+  HallCameraPosition: {fileID: 0}
+  KitchenCameraPosition: {fileID: 0}
+  GameRoomCameraPosition: {fileID: 0}
+  BathroomCameraPosition: {fileID: 0}
+  MedicationCameraPosition: {fileID: 0}
+  MainCameraPosition: {fileID: 0}
+  TransitionSpeed: 4
+  Title: {fileID: 0}
+  isCartOpen: 0
+  ShopPage: {fileID: 0}
+  CartPage: {fileID: 0}
+  PaymentPage: {fileID: 0}
+  cartContentParent: {fileID: 0}
+  cartItemPrefab: {fileID: 0}
+  totalCostText: {fileID: 0}
+  paymentCostText: {fileID: 0}
+  currentMoneyText: {fileID: 0}
+  remainMoneyText: {fileID: 0}
+  coinValueInShop: {fileID: 0}
+  coinValueInCart: {fileID: 0}
+  FridgePage: {fileID: 0}
+  availableFoodParent: {fileID: 0}
+  foodItemPrefab: {fileID: 0}
+  FoodSelection: {fileID: 0}
+  selectedFoodIcon: {fileID: 0}
+  isEating: 0
+  isSleeping: 0
+  isDancing: 0
+  isBathing: 0
+  isAlbumOpen: 0
+  foodSpriteList: []
+  SongMenuPanel: {fileID: 0}
+  HallPanel: {fileID: 0}
+  MusicScreenPanel: {fileID: 0}
+  lightToggleButton: {fileID: 0}
+  audioClip: {fileID: 1681957403}
+  uiClickClip: {fileID: 8300000, guid: 7ad208749aa41884b95e0758cd79a818, type: 3}
+  audioLightClip: {fileID: 0}
+  uiLightClip: {fileID: 0}
+  toastPanel: {fileID: 0}
+  toastText: {fileID: 0}
 --- !u!1 &1703804564
 GameObject:
   m_ObjectHideFlags: 0
@@ -11642,9 +11807,9 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 1681957401}
-        m_TargetAssemblyTypeName: SceneLoader, Assembly-CSharp
-        m_MethodName: playAudio
+      - m_Target: {fileID: 1681957405}
+        m_TargetAssemblyTypeName: GameUI, Assembly-CSharp
+        m_MethodName: PlayUIClick
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -12007,7 +12172,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1681957397}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: LightToggle, Assembly-CSharp
         m_MethodName: ToggleLight
         m_Mode: 1
@@ -13185,7 +13350,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1681957401}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: SceneLoader, Assembly-CSharp
         m_MethodName: BackToKitchenScene
         m_Mode: 1
@@ -14363,9 +14528,9 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 1681957401}
-        m_TargetAssemblyTypeName: SceneLoader, Assembly-CSharp
-        m_MethodName: playAudio
+      - m_Target: {fileID: 1681957405}
+        m_TargetAssemblyTypeName: GameUI, Assembly-CSharp
+        m_MethodName: PlayUIClick
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -15264,15 +15429,11 @@ PrefabInstance:
       addedObject: {fileID: 1386146538}
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: dde047afb0b15bc43b41531e603af947, type: 3}
---- !u!1 &5165732050916562192 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 5644627037037102582, guid: dde047afb0b15bc43b41531e603af947, type: 3}
-  m_PrefabInstance: {fileID: 5165732050916562191}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
+  - {fileID: 586954202}
   - {fileID: 519420032}
   - {fileID: 1752408655}
   - {fileID: 155708878}

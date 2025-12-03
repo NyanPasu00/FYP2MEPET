@@ -212,12 +212,12 @@ public class GameUI : MonoBehaviour
     //---------------------------------------------------------------STATUS PANEL END--------------------------------------------------------------------------------
     public void displayGameplay()
     {
-
+        PlayAndLoad("KidScene");
     }
 
     public void displayNewGame()
     {
-
+        PlayAndLoad("PetNameScene");
     }
 
 
@@ -243,6 +243,7 @@ public class GameUI : MonoBehaviour
         Transform realParent = GetRealParent();
         foreach (Transform t in realParent)
             Destroy(t.gameObject);
+            Debug.Log("Destroy");
 
         foreach (var kvp in ownedItems)
         {
@@ -332,10 +333,10 @@ public class GameUI : MonoBehaviour
 
     
 
-    public void resetMedicineLocation()
-    {
+    //public void resetMedicineLocation()
+    //{
 
-    }
+    //}
 
     //Display Kitchen Shop Product
     public void displayProduct()
@@ -450,10 +451,6 @@ public class GameUI : MonoBehaviour
         CartPage.SetActive(false);
     }
 
-    public void displayGameSelection()
-    {
-
-    }
 
     public void displaySelectedGame()
     {
@@ -535,28 +532,6 @@ public class GameUI : MonoBehaviour
             Debug.LogWarning("UIController.instance not found in scene!");
         }
     }
-
-    public void spawnBubbleOnPet()
-    {
-
-    }
-
-    public void displayShower()
-    {
-
-    }
-
-    public void displayCleanPet()
-    {
-
-    }
-
-    public void resetShowerLocation()
-    {
-
-    }
-
-    
 
     public void transitionToRight()
     {
@@ -788,6 +763,31 @@ public class GameUI : MonoBehaviour
         }
 
         toastCoroutine = null;
+    }
+
+    public void spawnBubbleOnPet()
+    {
+
+    }
+
+    public void displayShower()
+    {
+
+    }
+
+    public void displayCleanPet()
+    {
+
+    }
+
+    public void resetShowerLocation()
+    {
+
+    }
+
+    public void displayGameSelection()
+    {
+
     }
 
 }

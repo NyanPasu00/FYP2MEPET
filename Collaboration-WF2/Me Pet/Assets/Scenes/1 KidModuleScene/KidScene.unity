@@ -153,7 +153,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: -98}
+  m_AnchoredPosition: {x: 0, y: -136}
   m_SizeDelta: {x: 0, y: -103.64}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &4669360
@@ -576,7 +576,7 @@ Transform:
   m_GameObject: {fileID: 13620999}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -55, y: -97, z: -20501.14}
+  m_LocalPosition: {x: -58, y: -137, z: -20501.14}
   m_LocalScale: {x: 14.436374, y: 15.216372, z: 227.79045}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1222,7 +1222,7 @@ Transform:
   m_GameObject: {fileID: 43151746}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -55, y: -97, z: -20501.14}
+  m_LocalPosition: {x: -53, y: -132, z: -20501.14}
   m_LocalScale: {x: 14.436374, y: 15.216372, z: 227.79045}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1919,8 +1919,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 40, y: 289}
-  m_SizeDelta: {x: 137, y: 137}
+  m_AnchoredPosition: {x: 301, y: 221}
+  m_SizeDelta: {x: 200, y: 200}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &82778622
 MonoBehaviour:
@@ -4090,7 +4090,6 @@ GameObject:
   - component: {fileID: 248323928}
   - component: {fileID: 248323931}
   - component: {fileID: 248323930}
-  - component: {fileID: 248323929}
   m_Layer: 0
   m_Name: fridge02b_0
   m_TagString: Untagged
@@ -4113,19 +4112,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 889872778}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &248323929
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 248323927}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5b6d013c3288c2041a9d2f1bf1c26779, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  gameUI: {fileID: 1424680416}
 --- !u!61 &248323930
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -7479,6 +7465,7 @@ MonoBehaviour:
   KitchenCameraPosition: {fileID: 756739431}
   GameRoomCameraPosition: {fileID: 1532950807}
   BathroomCameraPosition: {fileID: 1980036596}
+  MedicationCameraPosition: {fileID: 0}
   MainCameraPosition: {fileID: 519420032}
   TransitionSpeed: 4
   Title: {fileID: 1036534297}
@@ -12529,7 +12516,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &886982681
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -14096,7 +14083,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: -98}
+  m_AnchoredPosition: {x: 0, y: -133}
   m_SizeDelta: {x: 0, y: -103.64}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1010630450
@@ -15677,6 +15664,7 @@ MonoBehaviour:
   stageItemPrefab: {fileID: 732001218}
   petAlbumTitle: {fileID: 1924099586}
   gratitudeText: {fileID: 1335287784}
+  allPetList: []
 --- !u!4 &1115633399
 Transform:
   m_ObjectHideFlags: 0
@@ -16519,8 +16507,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -405, y: 289}
-  m_SizeDelta: {x: 137, y: 137}
+  m_AnchoredPosition: {x: -297, y: 221}
+  m_SizeDelta: {x: 200, y: 200}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1247207779
 MonoBehaviour:
@@ -18727,7 +18715,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: -98}
+  m_AnchoredPosition: {x: 0, y: -138}
   m_SizeDelta: {x: 0, y: -103.64}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1373501870
@@ -19726,6 +19714,7 @@ MonoBehaviour:
   KitchenCameraPosition: {fileID: 756739431}
   GameRoomCameraPosition: {fileID: 1532950807}
   BathroomCameraPosition: {fileID: 1980036596}
+  MedicationCameraPosition: {fileID: 0}
   MainCameraPosition: {fileID: 519420032}
   TransitionSpeed: 4
   Title: {fileID: 0}
@@ -20600,7 +20589,7 @@ Transform:
   m_GameObject: {fileID: 1532593641}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -55, y: -97, z: -20501.14}
+  m_LocalPosition: {x: -53, y: -135, z: -20501.14}
   m_LocalScale: {x: 14.436374, y: 15.216372, z: 227.79045}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -23452,6 +23441,7 @@ MonoBehaviour:
   kitchenSpawnArea: {fileID: 771576141}
   gameroomSpawnArea: {fileID: 980850434}
   bathroomSpawnArea: {fileID: 1318311802}
+  medicSpawnArea: {fileID: 0}
   hallState: 0
   hallStanding: 0
   showerEffect: {fileID: 1080185211}
@@ -29399,8 +29389,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -179, y: 289}
-  m_SizeDelta: {x: 137, y: 137}
+  m_AnchoredPosition: {x: 0.000019073, y: 221}
+  m_SizeDelta: {x: 200, y: 200}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2090596666
 MonoBehaviour:

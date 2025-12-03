@@ -33,6 +33,12 @@ EditorBuildSettings:
     path: Assets/Scenes/StageTransaction/KidToTeen.unity
     guid: 3a95961e62a07fc4a9ca8d71432b8fd0
   - enabled: 1
+    path: Assets/Scenes/StageTransaction/TeenToAdult.unity
+    guid: 26caf16110db08f49a9e57790b0f321f
+  - enabled: 1
+    path: Assets/Scenes/StageTransaction/AdultToOld.unity
+    guid: dd66a97df45bdd744a40ae908563a21c
+  - enabled: 1
     path: Assets/Scenes/EventScene/TeenStressEvent.unity
     guid: c2539ca34ece9f74ea55ed8cdec789b6
   - enabled: 1
