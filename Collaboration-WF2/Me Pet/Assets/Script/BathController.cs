@@ -238,7 +238,16 @@ public class BathController : MonoBehaviour
                 cat.transform.position = originalCatPosition;
 
             catAnimator.SetBool("isClean", true);
-            energy.increaseHappiness(10);
+            if (energy != null)
+            {
+                energy.updateBathStatus();
+            }
+
+            if (energy != null)
+            {
+                energy.updateWhenDirty();   // dirty now 0, will stop penalty coroutine
+            }
+
             ShowCloudMessage("All clean! Great job!", 2.5f);
 
             Invoke(nameof(ResetToIdle), 2f);
@@ -318,6 +327,11 @@ public class BathController : MonoBehaviour
         if (dirty >= 60)
         {
             ShowCloudMessage("I need to bath !!! :(", 2.5f);
+        }
+
+        if (energy != null)
+        {
+            energy.updateWhenDirty();
         }
     }
 
@@ -416,6 +430,11 @@ public class BathController : MonoBehaviour
 
         if (dirty <= 0 && isShowering)
             HandleFullyCleaned();
+
+        if (energy != null)
+        {
+            energy.updateWhenDirty();
+        }
     }
 
     public void OnSoapUsed()

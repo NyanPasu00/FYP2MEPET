@@ -36,8 +36,6 @@ public class UIController : MonoBehaviour , IBeginDragHandler, IDragHandler, IEn
     public GameObject HallLightScreen;
     public GameObject HallDarkScreen;
     public Animator petAnimator;
-    private Coroutine regenEnergyCoroutine;
-    private Coroutine stopEnergyCoroutine = null;
     public bool isWaitingToRegen = false;
 
     public BathController bathController;
@@ -45,6 +43,7 @@ public class UIController : MonoBehaviour , IBeginDragHandler, IDragHandler, IEn
     //Kitchen Cart
     public Cart cart;
     public GameUI gameUI;
+  
 
     public TMP_InputField nameInputField;
 
@@ -63,6 +62,7 @@ public class UIController : MonoBehaviour , IBeginDragHandler, IDragHandler, IEn
     private CanvasGroup dragCanvasGroup;
     private Vector3 originalPosition;
     public string currentFoodName;
+    
 
     [System.Serializable]
     public class MusicCategory
@@ -84,7 +84,7 @@ public class UIController : MonoBehaviour , IBeginDragHandler, IDragHandler, IEn
     private string currentCategoryPlaying = null;
     private int sameCategoryCount = 0;
     private int boredomThreshold = 4;
-    private Coroutine regenHappinessCoroutine;
+ 
 
     private Coroutine musicRewardCoroutine;
     private int moneyEarnedThisPlay = 0;
@@ -93,6 +93,8 @@ public class UIController : MonoBehaviour , IBeginDragHandler, IDragHandler, IEn
     public MoneyPopup moneyPopupPrefab;  // assign prefab in Inspector
     public Transform coinIcon;       // assign your coin icon RectTransform
     public Canvas Songcanvas;
+
+    public GameObject Cloud;
 
 
     void Start()
@@ -117,6 +119,8 @@ public class UIController : MonoBehaviour , IBeginDragHandler, IDragHandler, IEn
     void Update()
     {
 
+        isHunger();
+        isHealth();
     }
 
     void Awake()
@@ -181,11 +185,6 @@ public class UIController : MonoBehaviour , IBeginDragHandler, IDragHandler, IEn
         }
     }
 
-
-    public void isValidateLoginStatus(string status)
-    {
-
-    }
 
     public void createPet()
     {
@@ -310,12 +309,34 @@ public class UIController : MonoBehaviour , IBeginDragHandler, IDragHandler, IEn
 
     public void isHunger()
     {
+        if (petStatus.hunger_current <= 50)
+        {
+            Cloud.SetActive(true);
+            gameUI.displayPetMessage("I am Hungry , Feed Me Please");
+        }
+        else
+        {
+            HideMessage();
+        }
+    }
 
+    public void HideMessage()
+    {
+        if (Cloud != null) Cloud.SetActive(false);
+        
     }
 
     public void isHealth()
     {
-
+        if (petStatus.health_current <= 60 && petStatus.currentStage == PetStatus.PetStage.Old) 
+        {
+            Cloud.SetActive(true);
+            gameUI.displayPetMessage("Not Feeling Good , Feed Me Medicine");
+        }
+        else
+        {
+            HideMessage();
+        }
     }
 
     public void addItemToCart(ItemData item)
@@ -470,16 +491,12 @@ public class UIController : MonoBehaviour , IBeginDragHandler, IDragHandler, IEn
         if (musicToggleButton != null)
             musicToggleButton.gameObject.SetActive(true);
 
-        if (regenEnergyCoroutine != null)
-        {
-            StopCoroutine(regenEnergyCoroutine);
-            regenEnergyCoroutine = null;
-        }
-        isWaitingToRegen = false;
-        stopEnergyCoroutine = null;
-
+        // NEW: stop sleep stat effects
         if (petStatus != null)
+        {
+            petStatus.stopSleepStatus();
             petStatus.ResumeEnergyDeduction();
+        }
 
         PlayerPrefs.SetInt("IsSleeping", 0);
         PlayerPrefs.Save();
@@ -508,59 +525,21 @@ public class UIController : MonoBehaviour , IBeginDragHandler, IDragHandler, IEn
         if (musicToggleButton != null)
             musicToggleButton.gameObject.SetActive(false);
 
-        if (!isWaitingToRegen && regenEnergyCoroutine == null)
-        {
-            regenEnergyCoroutine = StartCoroutine(DelayedRegenerateEnergy());
-        }
-
         if (petStatus != null)
+        {
+            petStatus.isSleeping = true;
+            // Stop normal energy deduction while sleeping…
             petStatus.PauseEnergyDeduction();
+
+            // …and let PetStatus handle sleep energy/hunger logic
+            petStatus.updateSleepStatus();
+        }
 
         PlayerPrefs.SetInt("IsSleeping", 1);
         PlayerPrefs.Save();
     }
 
-    private IEnumerator DelayedRegenerateEnergy()
-    {
-        isWaitingToRegen = true;
-        yield return new WaitForSeconds(1f);
 
-        regenEnergyCoroutine = StartCoroutine(RegenerateEnergy());
-        isWaitingToRegen = false;
-        stopEnergyCoroutine = null;
-    }
-
-    private IEnumerator DelayedStopEnergy()
-    {
-        yield return new WaitForSeconds(1f);
-        if (regenEnergyCoroutine != null)
-        {
-            StopCoroutine(regenEnergyCoroutine);
-            regenEnergyCoroutine = null;
-        }
-        isWaitingToRegen = false;
-    }
-
-    private IEnumerator RegenerateEnergy()
-    {
-        while (petStatus != null &&
-               petStatus.energy_current < petStatus.energy_max &&
-               isSleep && !isLightOn)
-        {
-            petStatus.energy_current += 1;
-            if (petStatus.energy_current > petStatus.energy_max)
-                petStatus.energy_current = petStatus.energy_max;
-
-            petStatus.energy_Slider.value =
-                (float)petStatus.energy_current / petStatus.energy_max;
-            petStatus.energyDetail_Slider.value =
-                (float)petStatus.energy_current / petStatus.energy_max;
-
-            yield return new WaitForSeconds(2f);
-        }
-
-        regenEnergyCoroutine = null;
-    }
 
     public void isEnergyLow()
     {
@@ -694,27 +673,32 @@ public class UIController : MonoBehaviour , IBeginDragHandler, IDragHandler, IEn
 
     private void UpdatePetReaction(bool songLiked)
     {
+        // Reset pet world position when entering music
         petPosition.position = originalPetPosition;
 
-        if (regenHappinessCoroutine != null)
-        {
-            StopCoroutine(regenHappinessCoroutine);
-            regenHappinessCoroutine = null;
-        }
-
+        // Stop money reward coroutine (still handled in UIController)
         if (musicRewardCoroutine != null)
         {
             StopCoroutine(musicRewardCoroutine);
             musicRewardCoroutine = null;
         }
 
+        // Make sure PetStatus clears any previous music effect first
+        if (petStatus != null)
+        {
+            petStatus.resetStatusRate();
+        }
+
         if (songLiked)
         {
+            // ------------------
+            // Animations / visuals
+            // ------------------
             petAnimator.SetBool("Sad", false);
             petAnimator.SetBool("Laydown", false);
             petAnimator.SetBool("Dance", true);
 
-            if (petPosition != null)
+            if (petPosition != null && petStatus != null)
             {
                 switch (petStatus.currentStage)
                 {
@@ -743,16 +727,25 @@ public class UIController : MonoBehaviour , IBeginDragHandler, IDragHandler, IEn
                 reactionText.text = "I love this song!";
             }
 
-            regenHappinessCoroutine = StartCoroutine(RegenerateHappiness());
-            petStatus.PauseHappinessDeduction();
+            // ------------------
+            // STAT changes → PetStatus
+            // ------------------
+            if (petStatus != null)
+            {
+                petStatus.updateLikeMusicStatus();
+            }
 
             PlayerPrefs.SetInt("IsDancing", 1);
             PlayerPrefs.Save();
 
+            // Money reward still managed here
             musicRewardCoroutine = StartCoroutine(MusicRewardRoutine());
         }
         else
         {
+            // ------------------
+            // Animations / visuals
+            // ------------------
             petAnimator.SetBool("Dance", false);
             petAnimator.SetBool("Laydown", false);
             petAnimator.SetBool("Sad", true);
@@ -762,8 +755,6 @@ public class UIController : MonoBehaviour , IBeginDragHandler, IDragHandler, IEn
                 bathController.SetHallState(BathController.HallState.Sad);
             }
 
-
-
             if (reactionText != null)
             {
                 reactionText.text = "I hate this song...";
@@ -772,30 +763,16 @@ public class UIController : MonoBehaviour , IBeginDragHandler, IDragHandler, IEn
             PlayerPrefs.SetInt("IsDancing", 0);
             PlayerPrefs.Save();
 
-            petStatus.decreaseHappiness(5);
-            petStatus.ResumeHappinessDeduction();
+            // ------------------
+            // STAT changes → PetStatus
+            // ------------------
+            if (petStatus != null)
+            {
+                petStatus.updateUnlikeMusicStatus();
+            }
         }
-
     }
 
-    private IEnumerator RegenerateHappiness()
-    {
-        while (petStatus.happiness_current < petStatus.happiness_max)
-        {
-            petStatus.happiness_current += 1;
-            if (petStatus.happiness_current > petStatus.happiness_max)
-                petStatus.happiness_current = petStatus.happiness_max;
-
-            petStatus.happiness_Slider.value =
-                (float)petStatus.happiness_current / petStatus.happiness_max;
-            petStatus.happinessDetail_Slider.value =
-                (float)petStatus.happiness_current / petStatus.happiness_max;
-
-            yield return new WaitForSeconds(1f);
-        }
-
-        regenHappinessCoroutine = null;
-    }
 
     private IEnumerator MusicRewardRoutine()
     {
@@ -861,19 +838,16 @@ public class UIController : MonoBehaviour , IBeginDragHandler, IDragHandler, IEn
             bathController.SetHallState(BathController.HallState.Lying);
         }
 
-        if (regenHappinessCoroutine != null)
-        {
-            StopCoroutine(regenHappinessCoroutine);
-            regenHappinessCoroutine = null;
-        }
-
         if (musicRewardCoroutine != null)
         {
             StopCoroutine(musicRewardCoroutine);
             musicRewardCoroutine = null;
         }
 
-        petStatus.ResumeHappinessDeduction();
+        if (petStatus != null)
+        {
+            petStatus.resetStatusRate();
+        }
     }
 
     public void RequestPlayCategorySong(string categoryName)

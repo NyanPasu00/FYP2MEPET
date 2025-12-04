@@ -1579,7 +1579,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 1681957401}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: SceneLoader, Assembly-CSharp
         m_MethodName: playAudio
         m_Mode: 1
@@ -5058,7 +5058,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1681957399}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: SongCategoryButton, Assembly-CSharp
         m_MethodName: ChangeBackToHall
         m_Mode: 1
@@ -7940,7 +7940,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1681957400}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: OpenDigitalAlbum, Assembly-CSharp
         m_MethodName: ToggleAlbum
         m_Mode: 1
@@ -9849,7 +9849,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 1681957401}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: SceneLoader, Assembly-CSharp
         m_MethodName: playAudio
         m_Mode: 1
@@ -11190,7 +11190,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1681957398}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: RadioMenuController, Assembly-CSharp
         m_MethodName: ToggleSongMenu
         m_Mode: 1
@@ -11996,7 +11996,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1681957401}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: SceneLoader, Assembly-CSharp
         m_MethodName: BackToGameRoomScene
         m_Mode: 1
@@ -12315,7 +12315,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 1681957401}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: SceneLoader, Assembly-CSharp
         m_MethodName: playAudio
         m_Mode: 1
@@ -12914,11 +12914,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1681957396}
-  - component: {fileID: 1681957397}
-  - component: {fileID: 1681957398}
-  - component: {fileID: 1681957399}
-  - component: {fileID: 1681957400}
-  - component: {fileID: 1681957401}
   - component: {fileID: 1681957403}
   m_Layer: 0
   m_Name: UIManager
@@ -12948,88 +12943,6 @@ Transform:
   - {fileID: 1732747460}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1681957397
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1681957395}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 28dcd6985269e0447acc0faeb72500f2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  musicToggleButton: {fileID: 1499192770}
-  HallLightScreen: {fileID: 1035634458}
-  HallDarkScreen: {fileID: 946203367}
-  petAnimator: {fileID: 2144841301}
-  energyBar: {fileID: 0}
-  isSleeping: 1
-  isWaitingToRegen: 0
---- !u!114 &1681957398
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1681957395}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: abe3d700e7eb1df408323cde7876d448, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  SongMenuPanel: {fileID: 278133962}
---- !u!114 &1681957399
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1681957395}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cd33fe6e19f401d468b16ce30788cd01, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  categoryName: 
---- !u!114 &1681957400
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1681957395}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1f720006fc09d854d83fc71066feac67, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  digitalAlbumPanel: {fileID: 0}
---- !u!114 &1681957401
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1681957395}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3435e9f082ff2f44ba2cbefda3f64032, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  audioClip: {fileID: 1681957403}
-  energy: {fileID: 0}
-  hall: 0
-  kitchen: 0
-  bathroom: 0
-  gameroom: 0
-  currentStage: 0
-  isEating: 0
-  isSleeping: 0
-  isDancing: 0
-  isBathing: 0
-  isAlbumOpen: 0
 --- !u!82 &1681957403
 AudioSource:
   m_ObjectHideFlags: 0
@@ -13221,6 +13134,7 @@ MonoBehaviour:
   KitchenCameraPosition: {fileID: 0}
   GameRoomCameraPosition: {fileID: 0}
   BathroomCameraPosition: {fileID: 0}
+  MedicationCameraPosition: {fileID: 0}
   MainCameraPosition: {fileID: 0}
   TransitionSpeed: 4
   Title: {fileID: 0}
@@ -13684,7 +13598,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1681957397}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: LightToggle, Assembly-CSharp
         m_MethodName: ToggleLight
         m_Mode: 1
@@ -15353,7 +15267,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1681957401}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: SceneLoader, Assembly-CSharp
         m_MethodName: BackToKitchenScene
         m_Mode: 1
@@ -16648,7 +16562,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 1681957401}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: SceneLoader, Assembly-CSharp
         m_MethodName: playAudio
         m_Mode: 1
@@ -17101,11 +17015,6 @@ Transform:
 --- !u!4 &2144841300 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 9057847366603887012, guid: dde047afb0b15bc43b41531e603af947, type: 3}
-  m_PrefabInstance: {fileID: 5165732050916562191}
-  m_PrefabAsset: {fileID: 0}
---- !u!95 &2144841301 stripped
-Animator:
-  m_CorrespondingSourceObject: {fileID: 668408382764934556, guid: dde047afb0b15bc43b41531e603af947, type: 3}
   m_PrefabInstance: {fileID: 5165732050916562191}
   m_PrefabAsset: {fileID: 0}
 --- !u!1 &2146525019

@@ -137,6 +137,8 @@ public class PetStatus : MonoBehaviour
 
     private Coroutine energyDeductCoroutine;
     private Coroutine happinessDeductCoroutine;
+    private Coroutine sleepEnergyCoroutine;
+    private Coroutine sleepHungerCoroutine;
     public enum PetStage
     {
         Kid,
@@ -165,8 +167,10 @@ public class PetStatus : MonoBehaviour
 
     public GameUI GameUI;
 
-   
-    
+    private Coroutine musicHappinessCoroutine;
+    private Coroutine dirtyHappinessCoroutine;
+
+
     void Start()
     {
         if (GameUI == null)
@@ -284,9 +288,9 @@ public class PetStatus : MonoBehaviour
         GetHealthFill();
     }
 
-    public void IncreaseFood()
+    public void IncreaseFood(int num)
     {
-        hunger_current = hunger_current + 10;
+        hunger_current = hunger_current + num;
         if (hunger_current >= 100)
         {
             hunger_current = 100;
@@ -666,7 +670,7 @@ public class PetStatus : MonoBehaviour
         data.lastHealthSecond = 0;
         data.lastProgressSecond = 0;
         data.lastHungerSecond = 0;
-        data.moneyValue = 0;
+        data.moneyValue = 150;
 
         // =====================================
         // 3. Save to PlayerPrefs + Cloud
@@ -1189,8 +1193,22 @@ public class PetStatus : MonoBehaviour
         }
 
         // apply food effect (increase hunger)
-        IncreaseFood();
+        if (currentFoodName == "milk" || currentFoodName == "water" || currentFoodName == "apple" || currentFoodName == "orange")
+        {
+            IncreaseFood(5);
 
+        } else if (currentFoodName == "porridge" || currentFoodName == "fried chicken" || currentFoodName == "noodle" || currentFoodName == "rice")
+        {
+            IncreaseFood(15);
+
+        } else if (currentFoodName == "fried egg" || currentFoodName == "avacado" || currentFoodName == "cola")
+        {
+            IncreaseFood(8);
+
+        } else
+        {
+            IncreaseFood(30);
+        }
         // save pet data
         SavePetData();  // internally converts dictionary to List<FoodEntry> before saving
         Debug.Log("Products updated & saved.");
@@ -1247,29 +1265,216 @@ public class PetStatus : MonoBehaviour
 
     public void updateLikeMusicStatus()
     {
+        // Stop any previous music regen coroutine
+        if (musicHappinessCoroutine != null)
+        {
+            StopCoroutine(musicHappinessCoroutine);
+            musicHappinessCoroutine = null;
+        }
 
+        // While pet is enjoying music, normal happiness deduction should pause
+        PauseHappinessDeduction();
+
+        // Start a gentle happiness regen while music is liked
+        musicHappinessCoroutine = StartCoroutine(RegenerateHappinessFromMusic());
     }
 
     public void updateUnlikeMusicStatus()
     {
+        // If there was a special music regen running, stop it
+        if (musicHappinessCoroutine != null)
+        {
+            StopCoroutine(musicHappinessCoroutine);
+            musicHappinessCoroutine = null;
+        }
 
+        // Small penalty when pet dislikes music
+        decreaseHappiness(5);
+
+        // Resume normal deduction behaviour
+        ResumeHappinessDeduction();
     }
 
     public void resetStatusRate()
     {
+        if (musicHappinessCoroutine != null)
+        {
+            StopCoroutine(musicHappinessCoroutine);
+            musicHappinessCoroutine = null;
+        }
 
+        // Make sure normal happiness deduction is running again
+        ResumeHappinessDeduction();
+    }
+
+    private IEnumerator RegenerateHappinessFromMusic()
+    {
+        while (happiness_current < happiness_max)
+        {
+            happiness_current += 1;
+            if (happiness_current > happiness_max)
+                happiness_current = happiness_max;
+
+            GetHappinessFill();    // update sliders
+
+            yield return new WaitForSeconds(5f);
+        }
+
+        musicHappinessCoroutine = null;
     }
 
     public void updateSleepStatus()
     {
+        Debug.Log(isSleeping);
+        // Only run this logic when the pet is actually marked sleeping
+        if (!isSleeping)
+            return;
 
+        // Start energy regen while sleeping (if not already running)
+        if (sleepEnergyCoroutine == null)
+        {
+            sleepEnergyCoroutine = StartCoroutine(SleepEnergyRoutine());
+        }
+
+        // Start extra hunger deduction while sleeping (if not already running)
+        if (sleepHungerCoroutine == null)
+        {
+            sleepHungerCoroutine = StartCoroutine(SleepHungerRoutine());
+        }
+    }
+
+    public void stopSleepStatus()
+    {
+        isSleeping = false;
+
+        if (sleepEnergyCoroutine != null)
+        {
+            StopCoroutine(sleepEnergyCoroutine);
+            sleepEnergyCoroutine = null;
+        }
+
+        if (sleepHungerCoroutine != null)
+        {
+            StopCoroutine(sleepHungerCoroutine);
+            sleepHungerCoroutine = null;
+        }
+
+        
+    }
+
+    private IEnumerator SleepEnergyRoutine()
+    {
+        while (isSleeping)
+        {
+            Debug.Log("+1");
+            // +1 energy every 5 seconds
+            energy_current = Mathf.Min(energy_max, energy_current + 1);
+            GetEnergyFill();
+
+            yield return new WaitForSeconds(5f);
+
+            // If pet died / object destroyed, break safely
+            if (!this) yield break;
+        }
+
+        sleepEnergyCoroutine = null;
+    }
+
+    private IEnumerator SleepHungerRoutine()
+    {
+        while (isSleeping)
+        {
+            // Wait 30 seconds, but allow early exit if wake happens
+            float elapsed = 0f;
+            while (elapsed < 30f && isSleeping)
+            {
+                elapsed += Time.deltaTime;
+                yield return null;
+
+                if (!this) yield break;
+            }
+
+            if (!isSleeping) break;
+
+            // -1 hunger every 30 seconds (1% of max)
+            DeductHunger(1);
+
+            // If hunger reached 0, your Update() will handle death anyway
+            if (hunger_current <= 0)
+            {
+                sleepHungerCoroutine = null;
+                yield break;
+            }
+        }
+
+        sleepHungerCoroutine = null;
     }
 
     public void updateBathStatus()
     {
+        increaseHappiness(20);   // adjust value if you want
 
+        // Save new status so it persists
+        SavePetData();
     }
 
+    public void updateWhenDirty()
+    {
+        if (bathController == null)
+            return;
+
+        // If dirty >= 60 and the penalty coroutine is not running, start it
+        if (bathController.dirty >= 60f)
+        {
+            if (dirtyHappinessCoroutine == null)
+            {
+                dirtyHappinessCoroutine = StartCoroutine(DirtyHappinessPenaltyRoutine());
+            }
+        }
+        else
+        {
+            // Dirty below 60 → stop the penalty coroutine if it is running
+            if (dirtyHappinessCoroutine != null)
+            {
+                StopCoroutine(dirtyHappinessCoroutine);
+                dirtyHappinessCoroutine = null;
+            }
+        }
+    }
+
+    private IEnumerator DirtyHappinessPenaltyRoutine()
+    {
+        // Loop as long as pet is very dirty
+        while (bathController != null && bathController.dirty >= 60f)
+        {
+            float elapsed = 0f;
+
+            // Wait 25 seconds BUT allow early exit if cleaned during this period
+            while (elapsed < 25f)
+            {
+                if (bathController == null || bathController.dirty < 60f)
+                {
+                    dirtyHappinessCoroutine = null;
+                    yield break;
+                }
+
+                elapsed += Time.deltaTime;
+                yield return null;
+            }
+
+            // 25 seconds passed with dirty still >= 60 → lose 1 happiness
+            decreaseHappiness(1);
+
+            // Optional safety: if happiness reaches 0, stop this penalty loop
+            if (happiness_current <= 0)
+            {
+                dirtyHappinessCoroutine = null;
+                yield break;
+            }
+        }
+
+        dirtyHappinessCoroutine = null;
+    }
     public void updateEventStatus()
     {
 

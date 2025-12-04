@@ -10,6 +10,7 @@ public class LoginUI : MonoBehaviour
     public GameObject loginErrorObject;
     public TMP_Text loginSuccessText;
     public TMP_Text loginErrorText;
+    public GameUI gameUI;
     private void LoadGameUI()
     {
         Debug.Log("Login success → Returning to StartScene");
@@ -39,7 +40,7 @@ public class LoginUI : MonoBehaviour
 
     public void displayLoginPage()
     {
-        SceneManager.LoadScene("LoginScene");
+        gameUI.PlayAndLoad("LoginScene");
     }
 
     private IEnumerator HideLoginErrorAfterDelay()

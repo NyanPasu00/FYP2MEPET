@@ -69,6 +69,7 @@ public class GameUI : MonoBehaviour
     public GameObject foodItemPrefab;
     public GameObject FoodSelection;
     public Image selectedFoodIcon;
+    public TMP_Text petMessage;
 
 
     private int currentRoomIndex = 2;
@@ -212,12 +213,12 @@ public class GameUI : MonoBehaviour
     //---------------------------------------------------------------STATUS PANEL END--------------------------------------------------------------------------------
     public void displayGameplay()
     {
-        SceneManager.LoadScene("KidScene");
+        PlayAndLoad("KidScene");
     }
 
     public void displayNewGame()
     {
-        SceneManager.LoadScene("PetNameScene");
+        PlayAndLoad("PetNameScene");
     }
 
 
@@ -328,15 +329,9 @@ public class GameUI : MonoBehaviour
 
     public void displayPetMessage(string message)
     {
-
+        petMessage.text = message;
     }
 
-    
-
-    //public void resetMedicineLocation()
-    //{
-
-    //}
 
     //Display Kitchen Shop Product
     public void displayProduct()
