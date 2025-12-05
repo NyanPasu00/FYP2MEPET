@@ -95,6 +95,8 @@ public class UIController : MonoBehaviour , IBeginDragHandler, IDragHandler, IEn
     public Canvas Songcanvas;
 
     public GameObject Cloud;
+    public GameObject FoodCloud;
+    public GameObject LowEnergyCloud;
 
 
     void Start()
@@ -118,14 +120,31 @@ public class UIController : MonoBehaviour , IBeginDragHandler, IDragHandler, IEn
 
     void Update()
     {
+        if (petStatus != null)
+        {
+            if (petStatus.health_current <= 60 && petStatus.currentStage == PetStatus.PetStage.Old)
+            {
+                isHealth();
+            }
+            else if (petStatus.hunger_current <= 50)
+            {
+                isHunger();
+            }
+            else if(petStatus.health_current > 60 && petStatus.hunger_current > 50)
+            {
+                HideFoodandMedicineCloud();
+            }
+            
 
-        isHunger();
-        isHealth();
+
+        }
     }
 
     void Awake()
     {
         instance = this;
+
+        bgm = BGMScript.Instance;
 
         originalParent = draggableFood.parent;
         dragCanvasGroup = draggableFood.GetComponent<CanvasGroup>();
@@ -309,34 +328,46 @@ public class UIController : MonoBehaviour , IBeginDragHandler, IDragHandler, IEn
 
     public void isHunger()
     {
-        if (petStatus.hunger_current <= 50)
-        {
-            Cloud.SetActive(true);
-            gameUI.displayPetMessage("I am Hungry , Feed Me Please");
-        }
-        else
-        {
-            HideMessage();
-        }
-    }
 
-    public void HideMessage()
-    {
-        if (Cloud != null) Cloud.SetActive(false);
+        if (FoodCloud != null)
+        {
+            FoodCloud.SetActive(true);
+        }
+
+        if (gameUI != null)
+        {
+            gameUI.displayPetMessage("I am Hungry , Feed Me Please" , false);
+            
+        }
+            
         
     }
 
+    public void HideFoodandMedicineCloud()
+    {
+        if(FoodCloud != null)
+        {
+            FoodCloud.SetActive(false);
+        }
+    }
+
+   
+
     public void isHealth()
     {
-        if (petStatus.health_current <= 60 && petStatus.currentStage == PetStatus.PetStage.Old) 
+
+        if (FoodCloud != null)
         {
-            Cloud.SetActive(true);
-            gameUI.displayPetMessage("Not Feeling Good , Feed Me Medicine");
+            FoodCloud.SetActive(true);
         }
-        else
+
+        if (gameUI != null)
         {
-            HideMessage();
+            gameUI.displayPetMessage("Not Feeling Good , Feed Me Medicine", false);
+ 
         }
+            
+        
     }
 
     public void addItemToCart(ItemData item)
@@ -375,7 +406,7 @@ public class UIController : MonoBehaviour , IBeginDragHandler, IDragHandler, IEn
             gameUI.displayConfirmationPayment(moneyValue, totalCost);
         }
 
-        gameUI.displayPetMessage("unsuccessful");
+        //gameUI.displayPetMessage("unsuccessful");
     }
 
     public bool isValidateMoney(int moneyValue, int totalCost)
@@ -407,7 +438,40 @@ public class UIController : MonoBehaviour , IBeginDragHandler, IDragHandler, IEn
 
     public void validateSelectedGame()
     {
+        if (petStatus == null)
+        {
+            Debug.LogWarning("petStatus is not assigned on UIController.");
+            return;
+        }
 
+        // 1. Check energy first
+        if (petStatus.energy_current <= 30)
+        {
+            // Not enough energy → show cloud & message, block the game
+            isEnergyLow();
+            return;
+        }
+
+        // 2. Enough energy → allow game, consume energy and add happiness
+        //    (assumes stats are 0–100, adjust if your range is different)
+        petStatus.energy_current = Mathf.Max(0, petStatus.energy_current - 10);
+
+        // If your variable name is different (e.g. mood_current), change her
+        petStatus.happiness_current = Mathf.Clamp(petStatus.happiness_current + 20, 0, 100);
+
+        // Refresh UI bars (if you have these methods)
+        petStatus.GetEnergyFill();
+        petStatus.GetHappinessFill();   // rename if needed
+
+        // Save pet data
+        petStatus.SavePetData();
+
+        Debug.Log("Game validated: -10 energy, +20 happiness, data saved.");
+
+        if(gameUI != null)
+        {
+            gameUI.displaySelectedGame();
+        }
     }
 
     public void validateSelectedCategory()
@@ -448,7 +512,10 @@ public class UIController : MonoBehaviour , IBeginDragHandler, IDragHandler, IEn
 
             if (gameUI != null)
             {
-                gameUI.displayPetMessage("wakeup");
+                Cloud.SetActive(true);
+                gameUI.displayPetMessage("I Wake Up Now", true);
+
+                StartCoroutine(HideMessage());
             }
             return;
         }
@@ -461,7 +528,11 @@ public class UIController : MonoBehaviour , IBeginDragHandler, IDragHandler, IEn
         {
             if (gameUI != null)
             {
-                gameUI.displayPetMessage("rejectsleep");
+                Debug.Log("Going Here");
+                Cloud.SetActive(true);
+                gameUI.displayPetMessage("I still not tired", true);
+
+                StartCoroutine(HideMessage());
             }
             return;
         }
@@ -470,7 +541,10 @@ public class UIController : MonoBehaviour , IBeginDragHandler, IDragHandler, IEn
 
         if (gameUI != null)
         {
-            gameUI.displayPetMessage("sleep");
+            Cloud.SetActive(true);
+            gameUI.displayPetMessage("I am going to sleep", true);
+
+            StartCoroutine(HideMessage());
         }
     }
 
@@ -500,6 +574,12 @@ public class UIController : MonoBehaviour , IBeginDragHandler, IDragHandler, IEn
 
         PlayerPrefs.SetInt("IsSleeping", 0);
         PlayerPrefs.Save();
+    }
+
+    private IEnumerator HideMessage()
+    {
+        yield return new WaitForSeconds(2f);
+        Cloud.SetActive(false);
     }
 
     private void GoToSleep()
@@ -543,7 +623,28 @@ public class UIController : MonoBehaviour , IBeginDragHandler, IDragHandler, IEn
 
     public void isEnergyLow()
     {
+        if (petStatus.energy_current <= 30)
+        {
+            if (LowEnergyCloud != null)
+            {
+                LowEnergyCloud.SetActive(true);
 
+                CancelInvoke(nameof(HideLowEnergyCloud));
+                Invoke(nameof(HideLowEnergyCloud), 3f);
+            }      
+
+        }
+        else 
+            return;
+    }
+
+    private void HideLowEnergyCloud()
+    {
+        if (LowEnergyCloud != null)
+            LowEnergyCloud.SetActive(false);
+
+        // if you have a way to clear the message, do it here
+        // gameUI.displayLowEnergyMessage("");
     }
 
     public void isValidateDirty()
@@ -612,9 +713,10 @@ public class UIController : MonoBehaviour , IBeginDragHandler, IDragHandler, IEn
 
     private void PlayCategorySong(string categoryName)
     {
-        if (bgm != null)
+        BGMScript globalBgm = BGMScript.Instance;
+        if (globalBgm != null)
         {
-            bgm.StopMusic();
+            globalBgm.StopMusic();
         }
 
         MusicCategory category = musicCategories.Find(c => c.categoryName == categoryName);
@@ -821,9 +923,10 @@ public class UIController : MonoBehaviour , IBeginDragHandler, IDragHandler, IEn
             musicPlayer.Stop();
         }
 
-        if (bgm != null)
+        BGMScript globalBgm = BGMScript.Instance;
+        if (globalBgm != null)
         {
-            bgm.PlayMusic();
+            globalBgm.PlayMusic();
         }
 
         PlayerPrefs.SetInt("IsDancing", 0);

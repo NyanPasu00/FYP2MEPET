@@ -32,6 +32,7 @@ public class GameUI : MonoBehaviour
 
     public PetStatus stats;
 
+
     [SerializeField]
     [Header("Transition")]
     public Animator transition;
@@ -39,7 +40,6 @@ public class GameUI : MonoBehaviour
     public Transform KitchenCameraPosition;
     public Transform GameRoomCameraPosition;
     public Transform BathroomCameraPosition;
-    public Transform MedicationCameraPosition;
     public Transform MainCameraPosition;
     public float TransitionSpeed = 4f;
     public TextMeshProUGUI Title;
@@ -70,6 +70,7 @@ public class GameUI : MonoBehaviour
     public GameObject FoodSelection;
     public Image selectedFoodIcon;
     public TMP_Text petMessage;
+    public TMP_Text petFoodMessage;
 
 
     private int currentRoomIndex = 2;
@@ -160,7 +161,6 @@ public class GameUI : MonoBehaviour
     //--------------------------------------------------------------------STATUS PANEL START-------------------------------------------------------------------
     public void ToggleStatusPanel()
     {
-        Debug.Log("Correct");
         panelOpen = !panelOpen;
         statusPanel.SetActive(panelOpen);
 
@@ -327,10 +327,19 @@ public class GameUI : MonoBehaviour
         ui.draggableFood.GetComponent<CanvasGroup>().blocksRaycasts = true;
     }
 
-    public void displayPetMessage(string message)
+    public void displayPetMessage(string message , bool status)
     {
-        petMessage.text = message;
+        if (status)
+        {
+
+            petMessage.text = message;
+        }
+        else
+        {
+            petFoodMessage.text = message;
+        }
     }
+
 
 
     //Display Kitchen Shop Product
@@ -450,16 +459,17 @@ public class GameUI : MonoBehaviour
     public void displaySelectedGame()
     {
         PlayAndLoad("PlayBallScene");
+
     }
 
     public void gameBackScene()
     {
-        // Force room index to Hall
-        currentRoomIndex = 1; // 2 = Hall in your switch
+        // Force room index to Gameroom
+        currentRoomIndex = 1; 
 
         if (GameRoomCameraPosition != null && MainCameraPosition != null)
         {
-            // Snap the camera to Hall
+            // Snap the camera to Gameroom
             MainCameraPosition.position = new Vector3(
                 GameRoomCameraPosition.position.x,
                 GameRoomCameraPosition.position.y,
@@ -552,12 +562,6 @@ public class GameUI : MonoBehaviour
             currentRoomIndex = 3;
             target = KitchenCameraPosition;
         }
-        else if(stats.currentStage == PetStatus.PetStage.Old && currentRoomIndex == 3)
-        {
-            currentRoomIndex = 4;
-            target = MedicationCameraPosition;
-            Debug.Log(target);
-        }
         else
         {
 
@@ -595,11 +599,6 @@ public class GameUI : MonoBehaviour
         {
             currentRoomIndex = 0;
             target = BathroomCameraPosition;
-        }
-        else if (stats.currentStage == PetStatus.PetStage.Old && currentRoomIndex == 4)
-        {
-            currentRoomIndex = 3;
-            target = KitchenCameraPosition;
         }
         else
         {

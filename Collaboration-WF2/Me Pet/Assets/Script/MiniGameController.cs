@@ -341,8 +341,6 @@ public class MiniGameController : MonoBehaviour
         OnDestroy(); // if you want to keep this, otherwise you can remove this line
         GameUI gameUI = FindFirstObjectByType<GameUI>();
 
-        if (bgm == null)
-            bgm = BGMScript.Instance;
 
         if (bgm != null)
         {
@@ -360,20 +358,20 @@ public class MiniGameController : MonoBehaviour
                 break;
 
             case PetStatus.PetStage.Teen:
-                SceneManager.LoadScene("TeenScene");
+                gameUI.PlayAndLoad("TeenScene");
                 break;
 
             case PetStatus.PetStage.Adult:
-                SceneManager.LoadScene("AdultScene");
+                gameUI.PlayAndLoad("AdultScene");
                 break;
 
             case PetStatus.PetStage.Old:
-                SceneManager.LoadScene("OldScene");
+                gameUI.PlayAndLoad("OldScene");
                 break;
 
             default:
                 Debug.LogWarning("Unknown stage, defaulting to KidScene.");
-                SceneManager.LoadScene("KidScene");
+                gameUI.PlayAndLoad("KidScene");
                 break;
         }
     }
