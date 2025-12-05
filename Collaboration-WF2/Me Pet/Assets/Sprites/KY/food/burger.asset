@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: burger
   m_EditorClassIdentifier: 
   itemName: burger
-  price: 50
+  price: 100
   icon: {fileID: 6234330970754847308, guid: dbf66677b28e96a43950dc0bddcd70d1, type: 3}

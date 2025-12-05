@@ -110,7 +110,7 @@ public class DraggableFood : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
 
         // Increase food level
         if (energyBarScript != null)
-            energyBarScript.IncreaseFood();
+            //energyBarScript.IncreaseFood();
 
         yield return new WaitForSeconds(0.5f);
 

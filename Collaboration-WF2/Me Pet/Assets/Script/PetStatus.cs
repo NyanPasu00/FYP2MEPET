@@ -288,9 +288,9 @@ public class PetStatus : MonoBehaviour
         GetHealthFill();
     }
 
-    public void IncreaseFood()
+    public void IncreaseFood(int num)
     {
-        hunger_current = hunger_current + 10;
+        hunger_current = hunger_current + num;
         if (hunger_current >= 100)
         {
             hunger_current = 100;
@@ -372,23 +372,23 @@ public class PetStatus : MonoBehaviour
         energy_Slider.value = (float)energy_current / energy_max;
         energyDetail_Slider.value = (float)energy_current / energy_max;
     }
-    void GetHungerFill()
+    public void GetHungerFill()
     {
         hunger_Slider.value = (float)hunger_current / hunger_max;
         hungerDetail_Slider.value = (float)hunger_current / hunger_max;
     }
-    void GetHappinessFill()
+    public void GetHappinessFill()
     {
         happiness_Slider.value = (float)happiness_current / happiness_max;
         happinessDetail_Slider.value = (float)happiness_current / happiness_max;
     }
-    void GetHealthFill()
+    public void GetHealthFill()
     {
         health_Slider.value = (float)health_current / health_max;
         healthDetail_Slider.value = (float)health_current / health_max;
     }
 
-    void GetProgressFill()
+    public void GetProgressFill()
     {
         progress_Image.fillAmount = (float)progress_current / progress_max;
         progressDetail_Slider.value = (float)progress_current / progress_max;
@@ -1193,8 +1193,22 @@ public class PetStatus : MonoBehaviour
         }
 
         // apply food effect (increase hunger)
-        IncreaseFood();
+        if (currentFoodName == "milk" || currentFoodName == "water" || currentFoodName == "apple" || currentFoodName == "orange")
+        {
+            IncreaseFood(5);
 
+        } else if (currentFoodName == "porridge" || currentFoodName == "fried chicken" || currentFoodName == "noodle" || currentFoodName == "rice")
+        {
+            IncreaseFood(15);
+
+        } else if (currentFoodName == "fried egg" || currentFoodName == "avacado" || currentFoodName == "cola")
+        {
+            IncreaseFood(8);
+
+        } else
+        {
+            IncreaseFood(30);
+        }
         // save pet data
         SavePetData();  // internally converts dictionary to List<FoodEntry> before saving
         Debug.Log("Products updated & saved.");
