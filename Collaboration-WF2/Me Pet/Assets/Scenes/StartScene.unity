@@ -1211,10 +1211,11 @@ MonoBehaviour:
   KitchenCameraPosition: {fileID: 0}
   GameRoomCameraPosition: {fileID: 0}
   BathroomCameraPosition: {fileID: 0}
-  MedicationCameraPosition: {fileID: 0}
   MainCameraPosition: {fileID: 0}
   TransitionSpeed: 4
   Title: {fileID: 0}
+  leftbutton: {fileID: 0}
+  rightbutton: {fileID: 0}
   isCartOpen: 0
   ShopPage: {fileID: 0}
   CartPage: {fileID: 0}
@@ -1233,6 +1234,7 @@ MonoBehaviour:
   FoodSelection: {fileID: 0}
   selectedFoodIcon: {fileID: 0}
   petMessage: {fileID: 0}
+  petFoodMessage: {fileID: 0}
   isEating: 0
   isSleeping: 0
   isDancing: 0
@@ -2981,6 +2983,8 @@ MonoBehaviour:
   coinIcon: {fileID: 0}
   Songcanvas: {fileID: 0}
   Cloud: {fileID: 0}
+  FoodCloud: {fileID: 0}
+  LowEnergyCloud: {fileID: 0}
 --- !u!1001 &1318408673
 PrefabInstance:
   m_ObjectHideFlags: 0

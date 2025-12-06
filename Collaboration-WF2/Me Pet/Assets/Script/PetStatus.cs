@@ -80,6 +80,9 @@ public class PetStatus : MonoBehaviour
         public PetStage represent;
         public string lastSavedTime; // Store as string to serialize easily
         public bool firstTime;
+        public bool hasReachedTeenHalf;
+        public bool hasReachedAdultHalf;
+        public bool hasReachedOldHalf;
         public float lastEnergySecond;
         public float lastHealthSecond;
         public float lastProgressSecond;
@@ -565,7 +568,7 @@ public class PetStatus : MonoBehaviour
     {
         if (currentStage == PetStage.Teen)
         {
-            FindFirstObjectByType<PetStatus>()?.SavePetData();
+            //FindFirstObjectByType<PetStatus>()?.SavePetData();
             GameUI.PlayAndLoad("TeenScene");
         }
         else if (currentStage == PetStage.Adult)
@@ -665,6 +668,9 @@ public class PetStatus : MonoBehaviour
         data.stage = PetStage.Kid;
         data.lastSavedTime = System.DateTime.Now.ToString();
         data.firstTime = false;   // NEW pet created → not first time
+        data.hasReachedTeenHalf = false;
+        data.hasReachedAdultHalf = false;
+        data.hasReachedOldHalf = false;
         data.lastEnergySecond = 0;
         data.lastHappinessSecond = 0;
         data.lastHealthSecond = 0;
@@ -758,6 +764,9 @@ public class PetStatus : MonoBehaviour
         data.moneyValue = moneyValue;
         data.lastSavedTime = System.DateTime.Now.ToString();
         data.firstTime = false;
+        data.hasReachedTeenHalf = hasReachedTeenHalf;
+        data.hasReachedAdultHalf = hasReachedAdultHalf;
+        data.hasReachedOldHalf = hasReachedOldHalf;
         data.lastEnergySecond = lastEnergyTime;
         data.lastHappinessSecond = lastHappinessTime;
         data.lastHealthSecond = lastHealthTime;
@@ -780,11 +789,11 @@ public class PetStatus : MonoBehaviour
             string json = PlayerPrefs.GetString("PetData");
             PetData data = JsonUtility.FromJson<PetData>(json);
 
-            
 
-            hasReachedTeenHalf = PlayerPrefs.GetInt("hasReachedTeenHalf", 0) == 1;
-            hasReachedAdultHalf = PlayerPrefs.GetInt("hasReachedAdultHalf", 0) == 1;
-            hasReachedOldHalf = PlayerPrefs.GetInt("hasReachedOldHalf", 0) == 1;
+
+            hasReachedTeenHalf = data.hasReachedTeenHalf;
+            hasReachedAdultHalf = data.hasReachedAdultHalf;
+            hasReachedOldHalf = data.hasReachedOldHalf;
             firstTimePlay = data.firstTime;
 
             if (firstTimePlay == false)
@@ -1051,7 +1060,10 @@ public class PetStatus : MonoBehaviour
             PlayerPrefs.SetString("CurrentStage", currentStage.ToString()); // assume you have this variable
             PlayerPrefs.Save();
 
-            FindFirstObjectByType<BGMScript>().StopMusic();
+                if(FindFirstObjectByType<BGMScript>() != null)
+            {
+                FindFirstObjectByType<BGMScript>().StopMusic();
+            }
             // Load the 1LastWord scene
             petDead = true;
             hasReachedTeenHalf = false;

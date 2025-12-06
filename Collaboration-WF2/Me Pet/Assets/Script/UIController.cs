@@ -95,6 +95,7 @@ public class UIController : MonoBehaviour , IBeginDragHandler, IDragHandler, IEn
     public Canvas Songcanvas;
 
     public GameObject Cloud;
+    public GameObject FoodCloud;
     public GameObject LowEnergyCloud;
 
 
@@ -129,10 +130,11 @@ public class UIController : MonoBehaviour , IBeginDragHandler, IDragHandler, IEn
             {
                 isHunger();
             }
-            else
+            else if(petStatus.health_current > 60 && petStatus.hunger_current > 50)
             {
-                HideMessage();
+                HideFoodandMedicineCloud();
             }
+            
 
 
         }
@@ -327,39 +329,42 @@ public class UIController : MonoBehaviour , IBeginDragHandler, IDragHandler, IEn
     public void isHunger()
     {
 
-        if (Cloud != null)
+        if (FoodCloud != null)
         {
-            Cloud.SetActive(true);
+            FoodCloud.SetActive(true);
         }
 
         if (gameUI != null)
         {
-            gameUI.displayPetMessage("I am Hungry , Feed Me Please");
+            gameUI.displayPetMessage("I am Hungry , Feed Me Please" , false);
+            
         }
             
         
     }
 
-    public void HideMessage()
+    public void HideFoodandMedicineCloud()
     {
-        if (Cloud != null) 
-        { 
-            Cloud.SetActive(false);
+        if(FoodCloud != null)
+        {
+            FoodCloud.SetActive(false);
         }
-        
     }
+
+   
 
     public void isHealth()
     {
 
-        if (Cloud != null)
+        if (FoodCloud != null)
         {
-            Cloud.SetActive(true);
+            FoodCloud.SetActive(true);
         }
 
         if (gameUI != null)
         {
-            gameUI.displayPetMessage("Not Feeling Good , Feed Me Medicine");
+            gameUI.displayPetMessage("Not Feeling Good , Feed Me Medicine", false);
+ 
         }
             
         
@@ -401,7 +406,7 @@ public class UIController : MonoBehaviour , IBeginDragHandler, IDragHandler, IEn
             gameUI.displayConfirmationPayment(moneyValue, totalCost);
         }
 
-        gameUI.displayPetMessage("unsuccessful");
+        //gameUI.displayPetMessage("unsuccessful");
     }
 
     public bool isValidateMoney(int moneyValue, int totalCost)
@@ -507,7 +512,10 @@ public class UIController : MonoBehaviour , IBeginDragHandler, IDragHandler, IEn
 
             if (gameUI != null)
             {
-                gameUI.displayPetMessage("wakeup");
+                Cloud.SetActive(true);
+                gameUI.displayPetMessage("I Wake Up Now", true);
+
+                StartCoroutine(HideMessage());
             }
             return;
         }
@@ -520,7 +528,11 @@ public class UIController : MonoBehaviour , IBeginDragHandler, IDragHandler, IEn
         {
             if (gameUI != null)
             {
-                gameUI.displayPetMessage("rejectsleep");
+                Debug.Log("Going Here");
+                Cloud.SetActive(true);
+                gameUI.displayPetMessage("I still not tired", true);
+
+                StartCoroutine(HideMessage());
             }
             return;
         }
@@ -529,7 +541,10 @@ public class UIController : MonoBehaviour , IBeginDragHandler, IDragHandler, IEn
 
         if (gameUI != null)
         {
-            gameUI.displayPetMessage("sleep");
+            Cloud.SetActive(true);
+            gameUI.displayPetMessage("I am going to sleep", true);
+
+            StartCoroutine(HideMessage());
         }
     }
 
@@ -559,6 +574,12 @@ public class UIController : MonoBehaviour , IBeginDragHandler, IDragHandler, IEn
 
         PlayerPrefs.SetInt("IsSleeping", 0);
         PlayerPrefs.Save();
+    }
+
+    private IEnumerator HideMessage()
+    {
+        yield return new WaitForSeconds(2f);
+        Cloud.SetActive(false);
     }
 
     private void GoToSleep()

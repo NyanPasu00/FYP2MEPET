@@ -43,6 +43,8 @@ public class GameUI : MonoBehaviour
     public Transform MainCameraPosition;
     public float TransitionSpeed = 4f;
     public TextMeshProUGUI Title;
+    public UnityEngine.UI.Button leftbutton;
+    public UnityEngine.UI.Button rightbutton;
 
     //Kitchen Shop and Cart Design
     [SerializeField]
@@ -70,6 +72,7 @@ public class GameUI : MonoBehaviour
     public GameObject FoodSelection;
     public Image selectedFoodIcon;
     public TMP_Text petMessage;
+    public TMP_Text petFoodMessage;
 
 
     private int currentRoomIndex = 2;
@@ -160,7 +163,6 @@ public class GameUI : MonoBehaviour
     //--------------------------------------------------------------------STATUS PANEL START-------------------------------------------------------------------
     public void ToggleStatusPanel()
     {
-        Debug.Log("Correct");
         panelOpen = !panelOpen;
         statusPanel.SetActive(panelOpen);
 
@@ -213,7 +215,30 @@ public class GameUI : MonoBehaviour
     //---------------------------------------------------------------STATUS PANEL END--------------------------------------------------------------------------------
     public void displayGameplay()
     {
-        PlayAndLoad("KidScene");
+        string json = PlayerPrefs.GetString("PetData");
+        PetStatus.PetData data = JsonUtility.FromJson<PetStatus.PetData>(json);
+        
+            if (data.stage == PetStatus.PetStage.Kid)
+            {
+                PlayAndLoad("KidScene");
+            }
+            else if (data.stage == PetStatus.PetStage.Teen)
+            {
+                PlayAndLoad("TeenScene");
+            }
+            else if (data.stage == PetStatus.PetStage.Adult)
+            {
+                PlayAndLoad("AdultScene");
+            }
+            else if (data.stage == PetStatus.PetStage.Old)
+            {
+                PlayAndLoad("OldScene");
+            }
+            else
+            {
+                PlayAndLoad("KidScene");
+            }
+        
     }
 
     public void displayNewGame()
@@ -327,9 +352,17 @@ public class GameUI : MonoBehaviour
         ui.draggableFood.GetComponent<CanvasGroup>().blocksRaycasts = true;
     }
 
-    public void displayPetMessage(string message)
+    public void displayPetMessage(string message , bool status)
     {
-        petMessage.text = message;
+        if (status)
+        {
+
+            petMessage.text = message;
+        }
+        else
+        {
+            petFoodMessage.text = message;
+        }
     }
 
 
@@ -482,6 +515,14 @@ public class GameUI : MonoBehaviour
     public void ShowMusicScreen()
     {
         SongMenuPanel.SetActive(false);
+        if (leftbutton != null)
+        {
+            leftbutton.interactable = false;
+        }
+        if (rightbutton != null)
+        {
+            rightbutton.interactable = false;
+        }
 
         if (HallPanel != null)
             HallPanel.SetActive(false);
@@ -496,6 +537,15 @@ public class GameUI : MonoBehaviour
     // Hook this to your "Back" button on the music screen
     public void HideMusicScreen()
     {
+        if (leftbutton != null)
+        {
+            leftbutton.interactable = true;
+        }
+        if (rightbutton != null)
+        {
+            rightbutton.interactable = true;
+        }
+
         if (MusicScreenPanel != null)
             MusicScreenPanel.SetActive(false);
 

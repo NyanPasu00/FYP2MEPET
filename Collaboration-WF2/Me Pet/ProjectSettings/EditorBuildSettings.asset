@@ -50,6 +50,12 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/DieModuleScene/3Cause.unity
     guid: 54c1f6cb2ff26364cb61216ed1174447
+  - enabled: 1
+    path: Assets/Scenes/EventScene/FindFriendSceneTest.unity
+    guid: 1c48e4bf19178e24bb53b8e72b8f684a
+  - enabled: 1
+    path: Assets/Scenes/EventScene/AdultStressEvent.unity
+    guid: c1401bc67b787714f8fdfd708b49806f
   m_configObjects:
     com.unity.adaptiveperformance.simulator.provider_settings: {fileID: 11400000, guid: 7ce01ab533dc43d4b93271488de3d6e4, type: 2}
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}

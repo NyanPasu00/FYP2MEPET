@@ -318,7 +318,7 @@ public class MiniGameController : MonoBehaviour
 
         Time.timeScale = 0f;
         if (pausePanel != null)
-            pausePanel.SetActive(!pausePanel);
+            pausePanel.SetActive(true);
     }
 
     public void ResumeGame()
