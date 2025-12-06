@@ -78,6 +78,7 @@ public class BathController : MonoBehaviour
     // store original cat position so it doesn't "teleport"
     private Vector3 originalCatPosition;
 
+    private bool hasGivenBathReward = false;
     private void Awake()
     {
         if (audioSource == null)
@@ -125,10 +126,10 @@ public class BathController : MonoBehaviour
         }
 
         // --------- Fully clean while showering ----------
-        if (dirty <= 0 && isShowering)
-        {
-            HandleFullyCleaned();
-        }
+        //if (dirty <= 0 && isShowering)
+        //{
+        //    HandleFullyCleaned();
+        //}
     }
 
     /* ===================== PUBLIC POSE API ===================== */
@@ -170,6 +171,7 @@ public class BathController : MonoBehaviour
 
         isShowering = true;
         showerTimer = 0f;
+        hasGivenBathReward = false;
 
         if (showerHead != null)
         {
@@ -238,15 +240,7 @@ public class BathController : MonoBehaviour
                 cat.transform.position = originalCatPosition;
 
             catAnimator.SetBool("isClean", true);
-            if (energy != null)
-            {
-                energy.updateBathStatus();
-            }
-
-            if (energy != null)
-            {
-                energy.updateWhenDirty();   // dirty now 0, will stop penalty coroutine
-            }
+            
 
             ShowCloudMessage("All clean! Great job!", 2.5f);
 
@@ -272,6 +266,17 @@ public class BathController : MonoBehaviour
         rightButton.interactable = true;
         hasUsedSoap = false;
         isBathing = false;
+        if (!hasGivenBathReward && dirty == 0f)
+        {
+            hasGivenBathReward = true;
+            Debug.Log("[BathController] Bath reward given (+20 happiness?)");
+
+            if (energy != null)
+            {
+                energy.updateBathStatus();  // your +20
+                energy.updateWhenDirty();   // stop dirty penalty
+            }
+        }
         CheckMilestoneAndSpawn();
         PlayerPrefs.SetInt("IsBathing", isBathing ? 1 : 0);
         PlayerPrefs.Save();

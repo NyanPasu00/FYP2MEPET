@@ -185,26 +185,33 @@ public class GameUI : MonoBehaviour
 
         string json = PlayerPrefs.GetString("PetData", string.Empty);
 
-    string petName = "Pet";
-    if (!string.IsNullOrEmpty(json))
-    {
+        string petName = "Pet";
+        if (!string.IsNullOrEmpty(json))
+        {
             PetStatus.PetData data = JsonUtility.FromJson<PetStatus.PetData>(json);
             if (data != null && !string.IsNullOrEmpty(data.petName))
-        {
-            petName = data.petName;
+            {
+                petName = data.petName;
+            }
         }
-    }
 
-        statusTitle.text = $"{petName}'s Conditions";
+        if (statusTitle != null)
+        {
+            statusTitle.text = $"{petName}'s Conditions";
 
-        stageText.text = $"Stage: {stats.currentStage}";
+        }
 
-        statusText.text = $"Progress: {progressPercent:F0}%\n" +
-                          $"Energy: {stats.energy_current}%\n" +
-                          $"Hunger: {stats.hunger_current}%\n" +
-                          $"Happiness: {stats.happiness_current}%\n" +
-                          $"Health: {stats.health_current}%";
+        if (statusText != null)
+        {
+            stageText.text = $"Stage: {stats.currentStage}";
 
+            statusText.text = $"Progress: {progressPercent:F0}%\n" +
+                              $"Energy: {stats.energy_current}%\n" +
+                              $"Hunger: {stats.hunger_current}%\n" +
+                              $"Happiness: {stats.happiness_current}%\n" +
+                              $"Health: {stats.health_current}%";
+
+        }
     }
 
     bool IsPointerOverUIElement()
@@ -509,8 +516,38 @@ public class GameUI : MonoBehaviour
     {
         Debug.Log("Button Clicked! Toggling Song Menu");
         SongMenuPanel.SetActive(!SongMenuPanel.activeSelf);
+        if (SongMenuPanel.activeSelf && leftbutton != null && rightbutton != null)
+        {
+            leftbutton.interactable = false;
+            rightbutton.interactable = false;
+        }
+        else if (!SongMenuPanel.activeSelf && rightbutton != null && rightbutton != null)
+        {
+            leftbutton.interactable = true;
+            rightbutton.interactable= true;
+        }
     }
 
+    public void turnOffTransition()
+    {
+        if (leftbutton != null && leftbutton.interactable == false)
+        {
+            leftbutton.interactable = true;
+        }
+        else if (leftbutton != null)
+        {
+            leftbutton.interactable = false;
+        }
+
+        if (rightbutton != null && rightbutton.interactable == false)
+        {
+            rightbutton.interactable = true;
+        }
+        else if (rightbutton != null)
+        {
+            rightbutton.interactable = false;
+        }
+    }
     // Called by UIController when a category is chosen
     public void ShowMusicScreen()
     {

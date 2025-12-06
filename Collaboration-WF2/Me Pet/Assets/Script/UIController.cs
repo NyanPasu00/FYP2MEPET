@@ -106,7 +106,11 @@ public class UIController : MonoBehaviour , IBeginDragHandler, IDragHandler, IEn
 
         originalParent = draggableFood.parent;
 
+        if(petPosition != null)
+        {
+
         originalPetPosition = petPosition.position;
+        }
 
         InitMusicPreferences();
 
@@ -553,6 +557,11 @@ public class UIController : MonoBehaviour , IBeginDragHandler, IDragHandler, IEn
         isLightOn = true;
         isSleep = false;
 
+        if (gameUI != null)
+        {
+            gameUI.turnOffTransition();
+        }
+
         if (HallLightScreen != null) HallLightScreen.SetActive(true);
         if (HallDarkScreen != null) HallDarkScreen.SetActive(false);
 
@@ -586,6 +595,11 @@ public class UIController : MonoBehaviour , IBeginDragHandler, IDragHandler, IEn
     {
         isLightOn = false;
         isSleep = true;
+
+        if (gameUI != null)
+        {
+            gameUI.turnOffTransition();
+        }
 
         if (HallLightScreen != null) HallLightScreen.SetActive(false);
         if (HallDarkScreen != null) HallDarkScreen.SetActive(true);
