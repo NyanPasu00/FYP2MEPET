@@ -106,7 +106,11 @@ public class UIController : MonoBehaviour , IBeginDragHandler, IDragHandler, IEn
 
         originalParent = draggableFood.parent;
 
+        if(petPosition != null)
+        {
+
         originalPetPosition = petPosition.position;
+        }
 
         InitMusicPreferences();
 

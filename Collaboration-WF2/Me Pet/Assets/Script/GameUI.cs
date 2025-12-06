@@ -43,6 +43,8 @@ public class GameUI : MonoBehaviour
     public Transform MainCameraPosition;
     public float TransitionSpeed = 4f;
     public TextMeshProUGUI Title;
+    public UnityEngine.UI.Button leftbutton;
+    public UnityEngine.UI.Button rightbutton;
 
     //Kitchen Shop and Cart Design
     [SerializeField]
@@ -183,26 +185,33 @@ public class GameUI : MonoBehaviour
 
         string json = PlayerPrefs.GetString("PetData", string.Empty);
 
-    string petName = "Pet";
-    if (!string.IsNullOrEmpty(json))
-    {
+        string petName = "Pet";
+        if (!string.IsNullOrEmpty(json))
+        {
             PetStatus.PetData data = JsonUtility.FromJson<PetStatus.PetData>(json);
             if (data != null && !string.IsNullOrEmpty(data.petName))
-        {
-            petName = data.petName;
+            {
+                petName = data.petName;
+            }
         }
-    }
 
-        statusTitle.text = $"{petName}'s Conditions";
+        if (statusTitle != null)
+        {
+            statusTitle.text = $"{petName}'s Conditions";
 
-        stageText.text = $"Stage: {stats.currentStage}";
+        }
 
-        statusText.text = $"Progress: {progressPercent:F0}%\n" +
-                          $"Energy: {stats.energy_current}%\n" +
-                          $"Hunger: {stats.hunger_current}%\n" +
-                          $"Happiness: {stats.happiness_current}%\n" +
-                          $"Health: {stats.health_current}%";
+        if (statusText != null)
+        {
+            stageText.text = $"Stage: {stats.currentStage}";
 
+            statusText.text = $"Progress: {progressPercent:F0}%\n" +
+                              $"Energy: {stats.energy_current}%\n" +
+                              $"Hunger: {stats.hunger_current}%\n" +
+                              $"Happiness: {stats.happiness_current}%\n" +
+                              $"Health: {stats.health_current}%";
+
+        }
     }
 
     bool IsPointerOverUIElement()
@@ -213,7 +222,30 @@ public class GameUI : MonoBehaviour
     //---------------------------------------------------------------STATUS PANEL END--------------------------------------------------------------------------------
     public void displayGameplay()
     {
-        PlayAndLoad("KidScene");
+        string json = PlayerPrefs.GetString("PetData");
+        PetStatus.PetData data = JsonUtility.FromJson<PetStatus.PetData>(json);
+        
+            if (data.stage == PetStatus.PetStage.Kid)
+            {
+                PlayAndLoad("KidScene");
+            }
+            else if (data.stage == PetStatus.PetStage.Teen)
+            {
+                PlayAndLoad("TeenScene");
+            }
+            else if (data.stage == PetStatus.PetStage.Adult)
+            {
+                PlayAndLoad("AdultScene");
+            }
+            else if (data.stage == PetStatus.PetStage.Old)
+            {
+                PlayAndLoad("OldScene");
+            }
+            else
+            {
+                PlayAndLoad("KidScene");
+            }
+        
     }
 
     public void displayNewGame()
@@ -490,6 +522,14 @@ public class GameUI : MonoBehaviour
     public void ShowMusicScreen()
     {
         SongMenuPanel.SetActive(false);
+        if (leftbutton != null)
+        {
+            leftbutton.interactable = false;
+        }
+        if (rightbutton != null)
+        {
+            rightbutton.interactable = false;
+        }
 
         if (HallPanel != null)
             HallPanel.SetActive(false);
@@ -504,6 +544,15 @@ public class GameUI : MonoBehaviour
     // Hook this to your "Back" button on the music screen
     public void HideMusicScreen()
     {
+        if (leftbutton != null)
+        {
+            leftbutton.interactable = true;
+        }
+        if (rightbutton != null)
+        {
+            rightbutton.interactable = true;
+        }
+
         if (MusicScreenPanel != null)
             MusicScreenPanel.SetActive(false);
 

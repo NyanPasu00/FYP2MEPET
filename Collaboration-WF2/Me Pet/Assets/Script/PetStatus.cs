@@ -94,8 +94,8 @@ public class PetStatus : MonoBehaviour
         public List<PetAlbumRecord> albumDataList = new List<PetAlbumRecord>();
     }
 
-   
 
+    public string petName;
     public int moneyValue;
     public Dictionary<string, int> ownedItems = new Dictionary<string, int>();
 
@@ -318,6 +318,7 @@ public class PetStatus : MonoBehaviour
     public void increaseHappiness(int happiness)
     {
         happiness_current = happiness_current + happiness;
+        Debug.Log(happiness_current);
         if (happiness_current >= 100)
         {
             happiness_current = 100;
@@ -372,29 +373,47 @@ public class PetStatus : MonoBehaviour
 
     public void GetEnergyFill()
     {
-        energy_Slider.value = (float)energy_current / energy_max;
-        energyDetail_Slider.value = (float)energy_current / energy_max;
+        if(energy_Slider != null)
+        {
+            energy_Slider.value = (float)energy_current / energy_max;
+            energyDetail_Slider.value = (float)energy_current / energy_max;
+
+        }
     }
     public void GetHungerFill()
     {
-        hunger_Slider.value = (float)hunger_current / hunger_max;
-        hungerDetail_Slider.value = (float)hunger_current / hunger_max;
+        if(hunger_Slider != null)
+        {
+            hunger_Slider.value = (float)hunger_current / hunger_max;
+            hungerDetail_Slider.value = (float)hunger_current / hunger_max;
+
+        }
     }
     public void GetHappinessFill()
     {
-        happiness_Slider.value = (float)happiness_current / happiness_max;
-        happinessDetail_Slider.value = (float)happiness_current / happiness_max;
+        if (happiness_Slider != null)
+        {
+            happiness_Slider.value = (float)happiness_current / happiness_max;
+            happinessDetail_Slider.value = (float)happiness_current / happiness_max;
+        }
     }
     public void GetHealthFill()
     {
-        health_Slider.value = (float)health_current / health_max;
-        healthDetail_Slider.value = (float)health_current / health_max;
+        if (health_Slider != null)
+        {
+            health_Slider.value = (float)health_current / health_max;
+            healthDetail_Slider.value = (float)health_current / health_max;
+        }
     }
 
     public void GetProgressFill()
     {
+        if(progress_Image != null)
+        {
         progress_Image.fillAmount = (float)progress_current / progress_max;
         progressDetail_Slider.value = (float)progress_current / progress_max;
+
+        }
     }
     public void IncreaseProgress(int value)
     {
@@ -730,6 +749,7 @@ public class PetStatus : MonoBehaviour
 
             // Save Album Data
             data.albumDataList = new List<PetAlbumRecord>();
+
             foreach (var entry in albumManager.petAlbumDataDict.Values)
             {
                 data.albumDataList.Add(new PetAlbumRecord
@@ -789,7 +809,7 @@ public class PetStatus : MonoBehaviour
             string json = PlayerPrefs.GetString("PetData");
             PetData data = JsonUtility.FromJson<PetData>(json);
 
-
+            petName = data.petName;
 
             hasReachedTeenHalf = data.hasReachedTeenHalf;
             hasReachedAdultHalf = data.hasReachedAdultHalf;
@@ -902,36 +922,46 @@ public class PetStatus : MonoBehaviour
 
                 if (currentStage == PetStage.Kid)
                 {
-                    stageRepresent.text = $"{PetStageRepresent.K}\n";
+                    if(stageRepresent != null)
+                    {
+
+                        stageRepresent.text = $"{PetStageRepresent.K}\n";
+                    }
 
                 }
                 else if (currentStage == PetStage.Teen)
                 {
-
-                    stageRepresent.text = $"{PetStageRepresent.T}\n";
-                    if (progress_current >= 50 && !hasReachedTeenHalf)
+                    if (stageRepresent != null)
                     {
-                        progress_current = 49;
+                        stageRepresent.text = $"{PetStageRepresent.T}\n";
+                        if (progress_current >= 50 && !hasReachedTeenHalf)
+                        {
+                            progress_current = 49;
+                        }
                     }
 
                 }
                 else if (currentStage == PetStage.Adult)
                 {
-
-                    stageRepresent.text = $"{PetStageRepresent.A}\n";
-                    if (progress_current >= 50 && !hasReachedAdultHalf)
+                    if (stageRepresent != null)
                     {
-                        progress_current = 49;
+                        stageRepresent.text = $"{PetStageRepresent.A}\n";
+                        if (progress_current >= 50 && !hasReachedAdultHalf)
+                        {
+                            progress_current = 49;
+                        }
                     }
 
                 }
                 else if (currentStage == PetStage.Old)
                 {
-
-                    stageRepresent.text = $"{PetStageRepresent.O}\n";
-                    if (progress_current >= 50 && !hasReachedOldHalf)
+                    if (stageRepresent != null)
                     {
-                        progress_current = 49;
+                        stageRepresent.text = $"{PetStageRepresent.O}\n";
+                        if (progress_current >= 50 && !hasReachedOldHalf)
+                        {
+                            progress_current = 49;
+                        }
                     }
 
                 }
@@ -1060,7 +1090,10 @@ public class PetStatus : MonoBehaviour
             PlayerPrefs.SetString("CurrentStage", currentStage.ToString()); // assume you have this variable
             PlayerPrefs.Save();
 
-            FindFirstObjectByType<BGMScript>().StopMusic();
+                if(FindFirstObjectByType<BGMScript>() != null)
+            {
+                FindFirstObjectByType<BGMScript>().StopMusic();
+            }
             // Load the 1LastWord scene
             petDead = true;
             hasReachedTeenHalf = false;

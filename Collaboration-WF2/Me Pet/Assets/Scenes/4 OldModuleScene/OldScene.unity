@@ -8694,6 +8694,8 @@ MonoBehaviour:
   MainCameraPosition: {fileID: 519420032}
   TransitionSpeed: 4
   Title: {fileID: 1036534297}
+  leftbutton: {fileID: 0}
+  rightbutton: {fileID: 0}
   isCartOpen: 0
   ShopPage: {fileID: 886982680}
   CartPage: {fileID: 837306894}
@@ -22897,6 +22899,8 @@ MonoBehaviour:
   MainCameraPosition: {fileID: 519420032}
   TransitionSpeed: 4
   Title: {fileID: 0}
+  leftbutton: {fileID: 1615036141}
+  rightbutton: {fileID: 1925945812}
   isCartOpen: 0
   ShopPage: {fileID: 886982680}
   CartPage: {fileID: 837306894}
