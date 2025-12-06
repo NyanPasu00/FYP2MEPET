@@ -298,7 +298,7 @@ public class UIController : MonoBehaviour , IBeginDragHandler, IDragHandler, IEn
 
     private void FinishEating()
     {
-        if (petAnimator != null)
+        if (kitchenPetAnimator != null)
             kitchenPetAnimator.SetBool("Eating", false);
 
         if (eatingSound != null)
@@ -557,6 +557,11 @@ public class UIController : MonoBehaviour , IBeginDragHandler, IDragHandler, IEn
         isLightOn = true;
         isSleep = false;
 
+        if (gameUI != null)
+        {
+            gameUI.turnOffTransition();
+        }
+
         if (HallLightScreen != null) HallLightScreen.SetActive(true);
         if (HallDarkScreen != null) HallDarkScreen.SetActive(false);
 
@@ -590,6 +595,11 @@ public class UIController : MonoBehaviour , IBeginDragHandler, IDragHandler, IEn
     {
         isLightOn = false;
         isSleep = true;
+
+        if (gameUI != null)
+        {
+            gameUI.turnOffTransition();
+        }
 
         if (HallLightScreen != null) HallLightScreen.SetActive(false);
         if (HallDarkScreen != null) HallDarkScreen.SetActive(true);

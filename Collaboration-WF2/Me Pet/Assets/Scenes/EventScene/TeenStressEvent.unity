@@ -8845,6 +8845,21 @@ MonoBehaviour:
   LetDrinkPanel: {fileID: 683712088}
   PlayGamePanel: {fileID: 965038265}
   happiness: {fileID: 1681957404}
+  lonelyText: {fileID: 0}
+  friendLikedText: {fileID: 0}
+  lonelyPanel: {fileID: 0}
+  ChooseFriendPanel: {fileID: 0}
+  DialogForFriend: {fileID: 0}
+  petAnimator: {fileID: 0}
+  petTransform: {fileID: 0}
+  NewFriendButton: {fileID: 0}
+  BackHallButton: {fileID: 0}
+  stressTextTwo: {fileID: 0}
+  stressPanelTwo: {fileID: 0}
+  ChooseRelieveStressPanel: {fileID: 0}
+  ResignPanel: {fileID: 0}
+  MoviePanel: {fileID: 0}
+  TravelPanel: {fileID: 0}
 --- !u!1 &1620118570
 GameObject:
   m_ObjectHideFlags: 0
@@ -8942,9 +8957,9 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: SceneLoader, Assembly-CSharp
-        m_MethodName: playAudio
+      - m_Target: {fileID: 1684873607}
+        m_TargetAssemblyTypeName: GameUI, Assembly-CSharp
+        m_MethodName: PlayUIClick
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -9472,6 +9487,7 @@ MonoBehaviour:
   isAlbumOpen: 0
   progressStop: 0
   nameInputField: {fileID: 0}
+  petName: 
   moneyValue: 0
   bathController: {fileID: 0}
   energy_max: 100
@@ -9543,6 +9559,7 @@ MonoBehaviour:
   isAlbumOpen: 0
   progressStop: 0
   nameInputField: {fileID: 0}
+  petName: 
   moneyValue: 0
   bathController: {fileID: 0}
   energy_max: 100

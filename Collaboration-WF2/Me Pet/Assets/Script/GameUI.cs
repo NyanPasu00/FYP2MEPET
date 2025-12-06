@@ -516,8 +516,38 @@ public class GameUI : MonoBehaviour
     {
         Debug.Log("Button Clicked! Toggling Song Menu");
         SongMenuPanel.SetActive(!SongMenuPanel.activeSelf);
+        if (SongMenuPanel.activeSelf && leftbutton != null && rightbutton != null)
+        {
+            leftbutton.interactable = false;
+            rightbutton.interactable = false;
+        }
+        else if (!SongMenuPanel.activeSelf && rightbutton != null && rightbutton != null)
+        {
+            leftbutton.interactable = true;
+            rightbutton.interactable= true;
+        }
     }
 
+    public void turnOffTransition()
+    {
+        if (leftbutton != null && leftbutton.interactable == false)
+        {
+            leftbutton.interactable = true;
+        }
+        else if (leftbutton != null)
+        {
+            leftbutton.interactable = false;
+        }
+
+        if (rightbutton != null && rightbutton.interactable == false)
+        {
+            rightbutton.interactable = true;
+        }
+        else if (rightbutton != null)
+        {
+            rightbutton.interactable = false;
+        }
+    }
     // Called by UIController when a category is chosen
     public void ShowMusicScreen()
     {
