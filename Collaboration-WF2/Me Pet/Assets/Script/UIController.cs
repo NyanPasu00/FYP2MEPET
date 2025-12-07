@@ -298,7 +298,7 @@ public class UIController : MonoBehaviour , IBeginDragHandler, IDragHandler, IEn
 
     private void FinishEating()
     {
-        if (petAnimator != null)
+        if (kitchenPetAnimator != null)
             kitchenPetAnimator.SetBool("Eating", false);
 
         if (eatingSound != null)

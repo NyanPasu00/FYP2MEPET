@@ -491,9 +491,6 @@ PrefabInstance:
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 3620823946669642996, guid: f898235a8dc6903439bc2079f64841c3, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 12776917}
-    - targetCorrespondingSourceObject: {fileID: 3620823946669642996, guid: f898235a8dc6903439bc2079f64841c3, type: 3}
-      insertIndex: -1
       addedObject: {fileID: 12776916}
   m_SourcePrefab: {fileID: 100100000, guid: f898235a8dc6903439bc2079f64841c3, type: 3}
 --- !u!4 &12776914 stripped
@@ -533,23 +530,6 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
---- !u!114 &12776917
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 12776915}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5553df00a4505fb47882ade8e30b9ec1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  bathController: {fileID: 1681957407}
-  waterDropStartPos: {fileID: 12776914}
-  messageText: {fileID: 0}
-  cloud: {fileID: 0}
-  initialPosition: {x: 0, y: 0, z: 0}
 --- !u!1 &13620999
 GameObject:
   m_ObjectHideFlags: 0
@@ -21853,7 +21833,7 @@ MonoBehaviour:
   m_ChildAlignment: 0
   m_StartCorner: 0
   m_StartAxis: 0
-  m_CellSize: {x: 200, y: 200}
+  m_CellSize: {x: 300, y: 300}
   m_Spacing: {x: 20, y: 20}
   m_Constraint: 0
   m_ConstraintCount: 2

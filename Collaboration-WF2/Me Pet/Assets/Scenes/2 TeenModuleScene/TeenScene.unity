@@ -2543,12 +2543,12 @@ MonoBehaviour:
   cart: {fileID: 189801725}
   gameUI: {fileID: 1424680416}
   nameInputField: {fileID: 0}
-  kitchenPetAnimator: {fileID: 0}
+  kitchenPetAnimator: {fileID: 1546619570}
   draggableFood: {fileID: 120878896}
   canvas: {fileID: 2147230737}
   FoodFullDialog: {fileID: 124634469}
   FeedSuccessDialogue: {fileID: 881832721}
-  eatingSound: {fileID: 0}
+  eatingSound: {fileID: 1546619571}
   isEating: 0
   originalParent: {fileID: 0}
   originalAnchoredPosition: {x: 0, y: 0}
@@ -3653,7 +3653,7 @@ MonoBehaviour:
   m_ChildAlignment: 0
   m_StartCorner: 0
   m_StartAxis: 0
-  m_CellSize: {x: 200, y: 200}
+  m_CellSize: {x: 300, y: 300}
   m_Spacing: {x: 20, y: 20}
   m_Constraint: 0
   m_ConstraintCount: 2
@@ -23253,7 +23253,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2262169225891608259, guid: dde047afb0b15bc43b41531e603af947, type: 3}
       propertyPath: m_SortingOrder
-      value: 0
+      value: -2
       objectReference: {fileID: 0}
     - target: {fileID: 2262169225891608259, guid: dde047afb0b15bc43b41531e603af947, type: 3}
       propertyPath: m_SortingLayerID

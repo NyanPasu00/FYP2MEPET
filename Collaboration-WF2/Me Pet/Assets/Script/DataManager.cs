@@ -26,7 +26,7 @@ public class DataManager : MonoBehaviour
             {
                 { PET_DATA_KEY, json }
             };
-
+            Debug.Log(json);
             await CloudSaveService.Instance.Data.ForceSaveAsync(data);
             Debug.Log("Cloud Save Success.");
         }

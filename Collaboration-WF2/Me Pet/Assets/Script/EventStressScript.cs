@@ -51,7 +51,7 @@ public class EventStressTrigger : MonoBehaviour
                 stressTextTwo.text = $"{petName}'s Felt Work Stress Always scold by Boss , Let Help Him to relieve stress ";
             }
 
-            if(lonelyText.text != null)
+            if(lonelyText != null)
             {
                 lonelyText.text = $"{petName}'s Felt Lonely is time to find him a friend";
             }
@@ -111,6 +111,7 @@ public class EventStressTrigger : MonoBehaviour
             petTransform.localPosition = new Vector3(-0.32f, -2.71f, 0f);
             petAnimator.SetBool("Excited", true);
             happiness.increaseHappiness(30);
+            happiness.SavePetData();
 
         }
         else
@@ -123,6 +124,7 @@ public class EventStressTrigger : MonoBehaviour
             //petTransform.localPosition = new Vector3(-2.06f, -2.62f, 0f);
             petAnimator.SetBool("Sad", true);
             happiness.decreaseHappiness(20);
+            happiness.SavePetData();
             NewFriendButton.SetActive(true);
         }
     }
@@ -141,9 +143,12 @@ public class EventStressTrigger : MonoBehaviour
 
     public void ChooseTravel()
     {
+        Debug.Log(happiness.happiness_current);
         ChooseRelieveStressPanel.SetActive(false);
         TravelPanel.SetActive(true);
         happiness.increaseHappiness(20);
+        Debug.Log(happiness.happiness_current);
+        happiness.SavePetData();
     }
 
     public void ChooseResign()
@@ -151,6 +156,7 @@ public class EventStressTrigger : MonoBehaviour
         ChooseRelieveStressPanel.SetActive(false);
         ResignPanel.SetActive(true);
         happiness.decreaseHappiness(20);
+        happiness.SavePetData();
     }
 
     public void ChooseMovie()
@@ -158,5 +164,6 @@ public class EventStressTrigger : MonoBehaviour
         ChooseRelieveStressPanel.SetActive(false);
         MoviePanel.SetActive(true);
         happiness.increaseHappiness(20);
+        happiness.SavePetData();
     }
 }

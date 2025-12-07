@@ -587,17 +587,17 @@ public class PetStatus : MonoBehaviour
     {
         if (currentStage == PetStage.Teen)
         {
-            //FindFirstObjectByType<PetStatus>()?.SavePetData();
+           
             GameUI.PlayAndLoad("TeenScene");
         }
         else if (currentStage == PetStage.Adult)
         {
-            FindFirstObjectByType<PetStatus>()?.SavePetData();
+            
             GameUI.PlayAndLoad("AdultScene");
         }
         else if (currentStage == PetStage.Old)
         {
-            FindFirstObjectByType<PetStatus>()?.SavePetData();
+           
             GameUI.PlayAndLoad("OldScene");
         }
 
