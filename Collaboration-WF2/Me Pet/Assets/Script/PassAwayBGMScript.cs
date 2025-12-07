@@ -12,14 +12,14 @@ public class PassAwayBGMScript : MonoBehaviour
         {
             Instance = this;
             DontDestroyOnLoad(gameObject);
+
             audioSource = GetComponent<AudioSource>();
-            audioSource.Play(); // Auto-play when loaded
+            audioSource.Play(); // Auto-play
         }
         else
         {
             Destroy(gameObject);
         }
-        FindFirstObjectByType<PassAwayBGMScript>().PlayMusic();
     }
 
     public void PlayMusic()

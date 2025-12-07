@@ -1,6 +1,15 @@
 ﻿using UnityEngine;
 using UnityEngine.SceneManagement;
 
+public enum CauseOfDeath
+{
+    Hunger = 0,
+    LowHappiness = 1,
+    Stress = 2,
+    LackMedication = 3,
+    OldAge = 4
+}
+
 public class DigitalSceneControl : MonoBehaviour
 {
     [Header("Scene 1 - Last Word")]
@@ -64,16 +73,27 @@ public class DigitalSceneControl : MonoBehaviour
         {
             // Only stop music if scene 3 exists
             var bgm = FindFirstObjectByType<PassAwayBGMScript>();
-            if (bgm != null)
-                bgm.StopMusic();
+   
 
             // Load the next scene based on current scene
             if (isScene1)
+            {
+
                 SceneManager.LoadScene("2Heartfelt");
+            }
             else if (hungerHeartfelt != null)
+            {
                 SceneManager.LoadScene("3Cause");
-            else
+
+            }
+            else if (hungerCause != null)
+            {
+                if(bgm != null)
+                {
+                bgm.StopMusic();
+                }
                 SceneManager.LoadScene("StartScene");
+            }
         }
     }
 
@@ -144,5 +164,6 @@ public class DigitalSceneControl : MonoBehaviour
                 break;
         }
     }
+
 }
 

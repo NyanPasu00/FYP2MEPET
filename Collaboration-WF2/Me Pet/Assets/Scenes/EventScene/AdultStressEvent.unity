@@ -4927,7 +4927,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 1681957406}
         m_TargetAssemblyTypeName: PetStatus, Assembly-CSharp
         m_MethodName: eventBackScene
         m_Mode: 1
@@ -5278,6 +5278,9 @@ MonoBehaviour:
   selectedFoodIcon: {fileID: 0}
   petMessage: {fileID: 0}
   petFoodMessage: {fileID: 0}
+  petListPanel: {fileID: 0}
+  petAlbumPanel: {fileID: 0}
+  digitalAlbumParent: {fileID: 0}
   isEating: 0
   isSleeping: 0
   isDancing: 0
@@ -6179,6 +6182,9 @@ MonoBehaviour:
   selectedFoodIcon: {fileID: 0}
   petMessage: {fileID: 0}
   petFoodMessage: {fileID: 0}
+  petListPanel: {fileID: 0}
+  petAlbumPanel: {fileID: 0}
+  digitalAlbumParent: {fileID: 0}
   isEating: 0
   isSleeping: 0
   isDancing: 0

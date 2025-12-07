@@ -491,10 +491,10 @@ PrefabInstance:
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 3620823946669642996, guid: f898235a8dc6903439bc2079f64841c3, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 12776917}
+      addedObject: {fileID: 12776916}
     - targetCorrespondingSourceObject: {fileID: 3620823946669642996, guid: f898235a8dc6903439bc2079f64841c3, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 12776916}
+      addedObject: {fileID: 12776917}
   m_SourcePrefab: {fileID: 100100000, guid: f898235a8dc6903439bc2079f64841c3, type: 3}
 --- !u!4 &12776914 stripped
 Transform:
@@ -547,8 +547,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   bathController: {fileID: 1681957407}
   waterDropStartPos: {fileID: 12776914}
-  messageText: {fileID: 0}
-  cloud: {fileID: 0}
+  messageText: {fileID: 49846114}
+  cloud: {fileID: 259933053}
   initialPosition: {x: 0, y: 0, z: 0}
 --- !u!1 &13620999
 GameObject:
@@ -7704,6 +7704,9 @@ MonoBehaviour:
   selectedFoodIcon: {fileID: 0}
   petMessage: {fileID: 0}
   petFoodMessage: {fileID: 0}
+  petListPanel: {fileID: 0}
+  petAlbumPanel: {fileID: 0}
+  digitalAlbumParent: {fileID: 0}
   isEating: 0
   isSleeping: 0
   isDancing: 0
@@ -8284,8 +8287,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1681957405}
-        m_TargetAssemblyTypeName: BackButtonHandler, Assembly-CSharp
+      - m_Target: {fileID: 1424680416}
+        m_TargetAssemblyTypeName: GameUI, Assembly-CSharp
         m_MethodName: OnBackButtonClicked
         m_Mode: 1
         m_Arguments:
@@ -8296,9 +8299,9 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: SceneLoader, Assembly-CSharp
-        m_MethodName: playAudio
+      - m_Target: {fileID: 1424680416}
+        m_TargetAssemblyTypeName: GameUI, Assembly-CSharp
+        m_MethodName: PlayUIClick
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -10280,8 +10283,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1681957405}
-        m_TargetAssemblyTypeName: BackButtonHandler, Assembly-CSharp
+      - m_Target: {fileID: 1424680416}
+        m_TargetAssemblyTypeName: GameUI, Assembly-CSharp
         m_MethodName: OnBackButtonClicked
         m_Mode: 1
         m_Arguments:
@@ -10292,9 +10295,9 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: SceneLoader, Assembly-CSharp
-        m_MethodName: playAudio
+      - m_Target: {fileID: 1424680416}
+        m_TargetAssemblyTypeName: GameUI, Assembly-CSharp
+        m_MethodName: PlayUIClick
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -15803,7 +15806,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1115633399}
   - component: {fileID: 1115633398}
-  - component: {fileID: 1115633397}
   m_Layer: 0
   m_Name: DigitalAlbumParent
   m_TagString: Untagged
@@ -15811,21 +15813,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &1115633397
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1115633396}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ecae52f7b31dde44b88b4134975ae3c9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  petListPanel: {fileID: 197129820}
-  petAlbumPanel: {fileID: 1667632807}
-  digitalAlbumParent: {fileID: 1115633396}
 --- !u!114 &1115633398
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -16753,8 +16740,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 68c1f3c31c2abd242b63774bf26d7a03, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  light2D: {fileID: 2143277371}
-  colorChangeSpeed: 1
 --- !u!1 &1247207777
 GameObject:
   m_ObjectHideFlags: 0
@@ -19612,7 +19597,6 @@ GameObject:
   - component: {fileID: 1384520486}
   - component: {fileID: 1384520485}
   - component: {fileID: 1384520484}
-  - component: {fileID: 1384520483}
   m_Layer: 5
   m_Name: GalleryButton
   m_TagString: Untagged
@@ -19639,19 +19623,6 @@ RectTransform:
   m_AnchoredPosition: {x: 440.0011, y: 954}
   m_SizeDelta: {x: 117.9, y: 110.8}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &1384520483
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1384520481}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6f984646b5e571040bdfb6edd6c67578, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  digitalAlbumManager: {fileID: 1115633398}
 --- !u!114 &1384520484
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -19696,9 +19667,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1384520483}
-        m_TargetAssemblyTypeName: GalleryButtonHandler, Assembly-CSharp
-        m_MethodName: OnGalleryButtonClicked
+      - m_Target: {fileID: 1115633398}
+        m_TargetAssemblyTypeName: DigitalAlbumManager, Assembly-CSharp
+        m_MethodName: ToggleDigitalAlbum
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -19708,9 +19679,9 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: SceneLoader, Assembly-CSharp
-        m_MethodName: playAudio
+      - m_Target: {fileID: 1424680416}
+        m_TargetAssemblyTypeName: GameUI, Assembly-CSharp
+        m_MethodName: PlayUIClick
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -20235,6 +20206,9 @@ MonoBehaviour:
   selectedFoodIcon: {fileID: 120878898}
   petMessage: {fileID: 1399151533}
   petFoodMessage: {fileID: 162363236}
+  petListPanel: {fileID: 543057509}
+  petAlbumPanel: {fileID: 353661910}
+  digitalAlbumParent: {fileID: 1115633396}
   isEating: 0
   isSleeping: 0
   isDancing: 0
@@ -23634,9 +23608,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ecae52f7b31dde44b88b4134975ae3c9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  petListPanel: {fileID: 543057509}
-  petAlbumPanel: {fileID: 353661910}
-  digitalAlbumParent: {fileID: 1115633396}
 --- !u!114 &1681957406
 MonoBehaviour:
   m_ObjectHideFlags: 0

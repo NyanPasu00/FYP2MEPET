@@ -7911,6 +7911,9 @@ MonoBehaviour:
   selectedFoodIcon: {fileID: 0}
   petMessage: {fileID: 0}
   petFoodMessage: {fileID: 0}
+  petListPanel: {fileID: 0}
+  petAlbumPanel: {fileID: 0}
+  digitalAlbumParent: {fileID: 0}
   isEating: 0
   isSleeping: 0
   isDancing: 0
@@ -8636,8 +8639,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1681957405}
-        m_TargetAssemblyTypeName: BackButtonHandler, Assembly-CSharp
+      - m_Target: {fileID: 1424680416}
+        m_TargetAssemblyTypeName: GameUI, Assembly-CSharp
         m_MethodName: OnBackButtonClicked
         m_Mode: 1
         m_Arguments:
@@ -8648,9 +8651,9 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 1681957401}
-        m_TargetAssemblyTypeName: SceneLoader, Assembly-CSharp
-        m_MethodName: playAudio
+      - m_Target: {fileID: 1424680416}
+        m_TargetAssemblyTypeName: GameUI, Assembly-CSharp
+        m_MethodName: PlayUIClick
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -10809,8 +10812,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1681957405}
-        m_TargetAssemblyTypeName: BackButtonHandler, Assembly-CSharp
+      - m_Target: {fileID: 1424680416}
+        m_TargetAssemblyTypeName: GameUI, Assembly-CSharp
         m_MethodName: OnBackButtonClicked
         m_Mode: 1
         m_Arguments:
@@ -10821,9 +10824,9 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 1681957401}
-        m_TargetAssemblyTypeName: SceneLoader, Assembly-CSharp
-        m_MethodName: playAudio
+      - m_Target: {fileID: 1424680416}
+        m_TargetAssemblyTypeName: GameUI, Assembly-CSharp
+        m_MethodName: PlayUIClick
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -17047,7 +17050,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1115633399}
   - component: {fileID: 1115633398}
-  - component: {fileID: 1115633397}
   m_Layer: 0
   m_Name: DigitalAlbumParent
   m_TagString: Untagged
@@ -17055,21 +17057,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &1115633397
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1115633396}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ecae52f7b31dde44b88b4134975ae3c9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  petListPanel: {fileID: 197129820}
-  petAlbumPanel: {fileID: 1667632807}
-  digitalAlbumParent: {fileID: 1115633396}
 --- !u!114 &1115633398
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -19433,9 +19420,9 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 1681957401}
-        m_TargetAssemblyTypeName: SceneLoader, Assembly-CSharp
-        m_MethodName: playAudio
+      - m_Target: {fileID: 1424680416}
+        m_TargetAssemblyTypeName: GameUI, Assembly-CSharp
+        m_MethodName: PlayUIClick
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -20920,7 +20907,6 @@ GameObject:
   - component: {fileID: 1384520486}
   - component: {fileID: 1384520485}
   - component: {fileID: 1384520484}
-  - component: {fileID: 1384520483}
   m_Layer: 5
   m_Name: GalleryButton
   m_TagString: Untagged
@@ -20947,19 +20933,6 @@ RectTransform:
   m_AnchoredPosition: {x: 440.0011, y: 954}
   m_SizeDelta: {x: 117.9, y: 110.8}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &1384520483
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1384520481}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6f984646b5e571040bdfb6edd6c67578, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  digitalAlbumManager: {fileID: 1115633398}
 --- !u!114 &1384520484
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -21004,9 +20977,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1384520483}
-        m_TargetAssemblyTypeName: GalleryButtonHandler, Assembly-CSharp
-        m_MethodName: OnGalleryButtonClicked
+      - m_Target: {fileID: 1115633398}
+        m_TargetAssemblyTypeName: DigitalAlbumManager, Assembly-CSharp
+        m_MethodName: ToggleDigitalAlbum
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -21016,9 +20989,9 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 1681957401}
-        m_TargetAssemblyTypeName: SceneLoader, Assembly-CSharp
-        m_MethodName: playAudio
+      - m_Target: {fileID: 1424680416}
+        m_TargetAssemblyTypeName: GameUI, Assembly-CSharp
+        m_MethodName: PlayUIClick
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -21392,6 +21365,9 @@ MonoBehaviour:
   selectedFoodIcon: {fileID: 120878898}
   petMessage: {fileID: 429153774}
   petFoodMessage: {fileID: 2109302501}
+  petListPanel: {fileID: 543057509}
+  petAlbumPanel: {fileID: 353661910}
+  digitalAlbumParent: {fileID: 1115633396}
   isEating: 0
   isSleeping: 0
   isDancing: 0
@@ -24467,11 +24443,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1681957396}
-  - component: {fileID: 1681957400}
-  - component: {fileID: 1681957401}
   - component: {fileID: 1681957403}
   - component: {fileID: 1681957404}
-  - component: {fileID: 1681957405}
   - component: {fileID: 1681957406}
   - component: {fileID: 1681957407}
   - component: {fileID: 1681957408}
@@ -24497,43 +24470,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1681957400
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1681957395}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1f720006fc09d854d83fc71066feac67, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  digitalAlbumPanel: {fileID: 0}
---- !u!114 &1681957401
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1681957395}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3435e9f082ff2f44ba2cbefda3f64032, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  audioClip: {fileID: 1681957403}
-  energy: {fileID: 0}
-  hall: 0
-  kitchen: 0
-  bathroom: 0
-  gameroom: 0
-  currentStage: 0
-  isEating: 0
-  isSleeping: 0
-  isDancing: 0
-  isBathing: 0
-  isAlbumOpen: 0
 --- !u!82 &1681957403
 AudioSource:
   m_ObjectHideFlags: 0
@@ -24728,21 +24664,6 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
---- !u!114 &1681957405
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1681957395}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ecae52f7b31dde44b88b4134975ae3c9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  petListPanel: {fileID: 543057509}
-  petAlbumPanel: {fileID: 353661910}
-  digitalAlbumParent: {fileID: 1115633396}
 --- !u!114 &1681957406
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -29168,8 +29089,8 @@ Transform:
   m_GameObject: {fileID: 1942541914}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0.27006993, z: -0, w: 0.96284074}
-  m_LocalPosition: {x: -18.759998, y: 2.72, z: 0.39999962}
-  m_LocalScale: {x: 1.7126, y: 1.6323999, z: 1}
+  m_LocalPosition: {x: -19.0633, y: 2.6694, z: 0.2153}
+  m_LocalScale: {x: 2.4603212, y: 1.7040623, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 260259139}
@@ -31050,8 +30971,8 @@ Transform:
   m_GameObject: {fileID: 2042155637}
   serializedVersion: 2
   m_LocalRotation: {x: 0.018349161, y: -0.9648391, z: -0.24048422, w: 0.1044811}
-  m_LocalPosition: {x: -15.529999, y: 1.81, z: 0.6999998}
-  m_LocalScale: {x: 1.5266198, y: 1.8252901, z: 1}
+  m_LocalPosition: {x: -15.3783, y: 1.6583, z: 0.5821}
+  m_LocalScale: {x: 1.8363711, y: 2.1129558, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 260259139}

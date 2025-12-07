@@ -787,7 +787,7 @@ MonoBehaviour:
   ContinueLearningPanel: {fileID: 0}
   LetDrinkPanel: {fileID: 0}
   PlayGamePanel: {fileID: 0}
-  happiness: {fileID: 0}
+  happiness: {fileID: 1681957404}
   lonelyText: {fileID: 38678961}
   friendLikedText: {fileID: 2124661032}
   lonelyPanel: {fileID: 1620118570}
@@ -1488,7 +1488,7 @@ MonoBehaviour:
   ContinueLearningPanel: {fileID: 0}
   LetDrinkPanel: {fileID: 0}
   PlayGamePanel: {fileID: 0}
-  happiness: {fileID: 0}
+  happiness: {fileID: 1681957404}
   lonelyText: {fileID: 38678961}
   friendLikedText: {fileID: 2124661032}
   lonelyPanel: {fileID: 1620118570}
@@ -2313,7 +2313,7 @@ MonoBehaviour:
   ContinueLearningPanel: {fileID: 0}
   LetDrinkPanel: {fileID: 0}
   PlayGamePanel: {fileID: 0}
-  happiness: {fileID: 0}
+  happiness: {fileID: 1681957404}
   lonelyText: {fileID: 38678961}
   friendLikedText: {fileID: 2124661032}
   lonelyPanel: {fileID: 1620118570}
@@ -2686,7 +2686,7 @@ MonoBehaviour:
   ContinueLearningPanel: {fileID: 0}
   LetDrinkPanel: {fileID: 0}
   PlayGamePanel: {fileID: 0}
-  happiness: {fileID: 0}
+  happiness: {fileID: 1681957404}
   lonelyText: {fileID: 38678961}
   friendLikedText: {fileID: 2124661032}
   lonelyPanel: {fileID: 1620118570}
@@ -2831,7 +2831,7 @@ MonoBehaviour:
   ContinueLearningPanel: {fileID: 0}
   LetDrinkPanel: {fileID: 0}
   PlayGamePanel: {fileID: 0}
-  happiness: {fileID: 0}
+  happiness: {fileID: 1681957404}
   lonelyText: {fileID: 38678961}
   friendLikedText: {fileID: 2124661032}
   lonelyPanel: {fileID: 1620118570}
@@ -3939,6 +3939,9 @@ MonoBehaviour:
   selectedFoodIcon: {fileID: 0}
   petMessage: {fileID: 0}
   petFoodMessage: {fileID: 0}
+  petListPanel: {fileID: 0}
+  petAlbumPanel: {fileID: 0}
+  digitalAlbumParent: {fileID: 0}
   isEating: 0
   isSleeping: 0
   isDancing: 0
@@ -4780,7 +4783,7 @@ MonoBehaviour:
   ContinueLearningPanel: {fileID: 0}
   LetDrinkPanel: {fileID: 0}
   PlayGamePanel: {fileID: 0}
-  happiness: {fileID: 0}
+  happiness: {fileID: 1681957404}
   lonelyText: {fileID: 38678961}
   friendLikedText: {fileID: 2124661032}
   lonelyPanel: {fileID: 1620118570}
