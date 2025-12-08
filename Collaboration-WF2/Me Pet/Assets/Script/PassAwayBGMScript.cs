@@ -36,6 +36,7 @@ public class PassAwayBGMScript : MonoBehaviour
         {
             audioSource.Stop();
         }
+        Destroy(gameObject);
     }
 
     public void ChangeVolume(float volume)

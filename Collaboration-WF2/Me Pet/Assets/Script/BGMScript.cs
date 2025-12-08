@@ -22,7 +22,7 @@ public class BGMScript : MonoBehaviour
         // Optional: auto-play only in the first scene
         if (audioSource != null && audioSource.playOnAwake)
         {
-            audioSource.Play();
+            PlayMusic();
         }
     }
 
@@ -40,6 +40,7 @@ public class BGMScript : MonoBehaviour
         {
             audioSource.Stop();
         }
+        Destroy(gameObject);
     }
 
     public void ChangeVolume(float volume)

@@ -18658,7 +18658,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1240928666}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 68c1f3c31c2abd242b63774bf26d7a03, type: 3}
+  m_Script: {fileID: 11500000, guid: 8779fc0e6c398204c98051c12bf701ea, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   light2D: {fileID: 2143277371}
