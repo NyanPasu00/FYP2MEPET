@@ -313,7 +313,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 388585452}
-  - component: {fileID: 388585451}
   - component: {fileID: 388585455}
   - component: {fileID: 388585456}
   - component: {fileID: 388585458}
@@ -325,19 +324,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &388585451
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 388585450}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1f720006fc09d854d83fc71066feac67, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  digitalAlbumPanel: {fileID: 0}
 --- !u!4 &388585452
 Transform:
   m_ObjectHideFlags: 0
@@ -515,6 +501,9 @@ MonoBehaviour:
   selectedFoodIcon: {fileID: 0}
   petMessage: {fileID: 0}
   petFoodMessage: {fileID: 0}
+  petListPanel: {fileID: 0}
+  petAlbumPanel: {fileID: 0}
+  digitalAlbumParent: {fileID: 0}
   isEating: 0
   isSleeping: 0
   isDancing: 0

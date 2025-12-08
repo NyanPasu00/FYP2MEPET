@@ -74,6 +74,10 @@ public class GameUI : MonoBehaviour
     public TMP_Text petMessage;
     public TMP_Text petFoodMessage;
 
+    //DigitalAlbum
+    public GameObject petListPanel;
+    public GameObject petAlbumPanel;
+    public GameObject digitalAlbumParent;
 
     private int currentRoomIndex = 2;
     private bool isMoving = false;
@@ -838,29 +842,20 @@ public class GameUI : MonoBehaviour
         toastCoroutine = null;
     }
 
-    public void spawnBubbleOnPet()
+    public void OnBackButtonClicked()
     {
-
-    }
-
-    public void displayShower()
-    {
-
-    }
-
-    public void displayCleanPet()
-    {
-
-    }
-
-    public void resetShowerLocation()
-    {
-
-    }
-
-    public void displayGameSelection()
-    {
-
+        if (petAlbumPanel.activeSelf)
+        {
+            // If viewing pet album, return to pet list
+            petAlbumPanel.SetActive(false);
+            petListPanel.SetActive(true);
+        }
+        else if (petListPanel.activeSelf)
+        {
+            // If already on pet list, close the digital album
+            FindFirstObjectByType<DigitalAlbumManager>().ToggleDigitalAlbum();
+            digitalAlbumParent.SetActive(false);
+        }
     }
 
 }
