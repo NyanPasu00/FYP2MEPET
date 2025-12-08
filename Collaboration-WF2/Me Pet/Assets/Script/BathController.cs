@@ -248,10 +248,10 @@ public class BathController : MonoBehaviour
         }
 
         // 5. sync to PetData (optional but good)
-        if (energy != null)
-        {
-            energy.SavePetData();   // this will store dirty = 0
-        }
+        //if (energy != null)
+        //{
+        //    energy.SavePetData();   // this will store dirty = 0
+        //}
     }
 
     private void ResetToIdle()
