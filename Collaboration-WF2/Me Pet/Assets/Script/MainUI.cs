@@ -1,26 +1,24 @@
+using fbg;
+using System.Collections;
+using TMPro;
 using UnityEngine;
 
 public class MainUI : MonoBehaviour
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    public GameObject connectionPanel;
+    public TMP_Text connectionMessage;
+
+    public void displayConnectionError(string message)
     {
-        
+        connectionPanel.SetActive(true);
+        connectionMessage.text = message;
+
+        StartCoroutine(HideConnectionMessage());
     }
 
-    // Update is called once per frame
-    void Update()
+    private IEnumerator HideConnectionMessage()
     {
-        
-    }
-
-    public void showErrorConnection()
-    {
-
-    }
-
-    public void displayConnectionError()
-    {
-
+        yield return new WaitForSeconds(2f);
+        connectionPanel.SetActive(false);
     }
 }

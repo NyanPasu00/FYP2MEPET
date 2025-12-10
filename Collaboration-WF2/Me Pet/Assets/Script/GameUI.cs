@@ -486,6 +486,9 @@ public class GameUI : MonoBehaviour
 
     public void closeCartandShop()
     {
+        isCartOpen = false;
+        isShopOpen = false;
+        isPaymentOpen = false;
         ShopPage.SetActive(false);
         PaymentPage.SetActive(false);
         CartPage.SetActive(false);

@@ -151,7 +151,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   firstTimePlay: 1
   petDead: 1
-  dirtyManager: {fileID: 0}
+  isEating: 0
+  isDancing: 0
+  isSleeping: 0
+  isBathing: 0
+  isAlbumOpen: 0
+  progressStop: 0
+  nameInputField: {fileID: 0}
+  petName: 
+  moneyValue: 0
+  bathController: {fileID: 0}
   energy_max: 100
   energy_current: 0
   energy_Slider: {fileID: 0}
@@ -179,6 +188,8 @@ MonoBehaviour:
   progress_increase_time: 60
   currentStage: 0
   stageRepresent: {fileID: 0}
+  moneyText: {fileID: 0}
+  GameUI: {fileID: 0}
 --- !u!4 &953223478
 Transform:
   m_ObjectHideFlags: 0

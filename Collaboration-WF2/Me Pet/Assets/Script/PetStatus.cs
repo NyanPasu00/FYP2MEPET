@@ -1522,10 +1522,7 @@ public class PetStatus : MonoBehaviour
 
         dirtyHappinessCoroutine = null;
     }
-    public void updateEventStatus()
-    {
-
-    }
+    
 
     //public void onConnectionReload()
     //{
