@@ -173,7 +173,7 @@ public class PetStatus : MonoBehaviour
     private Coroutine musicHappinessCoroutine;
     private Coroutine dirtyHappinessCoroutine;
 
-
+    
     void Start()
     {
         if (GameUI == null)
@@ -516,9 +516,11 @@ public class PetStatus : MonoBehaviour
     void AdvanceStage()
     {
         string currentScene = SceneManager.GetActiveScene().name;
+        var bgm = FindFirstObjectByType<BGMScript>();
         progress_increase_time = 60f;
         if (currentStage == PetStage.Kid)
         {
+            bgm.StopMusic();
             progressStop = false;
             currentStage = PetStage.Teen;
             stageRepresent.text = $"{PetStageRepresent.T}\n";
@@ -532,6 +534,7 @@ public class PetStatus : MonoBehaviour
         }
         else if (currentStage == PetStage.Teen)
         {
+            bgm.StopMusic();
             progressStop = false;
             currentStage = PetStage.Adult;
             stageRepresent.text = $"{PetStageRepresent.A}\n";
@@ -544,6 +547,7 @@ public class PetStatus : MonoBehaviour
         }
         else if (currentStage == PetStage.Adult)
         {
+            bgm.StopMusic();
             progressStop = false;
             currentStage = PetStage.Old;
             stageRepresent.text = $"{PetStageRepresent.O}\n";
@@ -556,6 +560,7 @@ public class PetStatus : MonoBehaviour
         }
         else
         {
+            bgm.StopMusic();
             progressStop = false;
             PlayerPrefs.SetInt("CauseOfDeath", 4); // 5 = Energy death (you can define it)
             PlayerPrefs.SetString("CurrentStage", currentStage.ToString()); // assume you have this variable
@@ -1517,10 +1522,7 @@ public class PetStatus : MonoBehaviour
 
         dirtyHappinessCoroutine = null;
     }
-    public void updateEventStatus()
-    {
-
-    }
+    
 
     //public void onConnectionReload()
     //{

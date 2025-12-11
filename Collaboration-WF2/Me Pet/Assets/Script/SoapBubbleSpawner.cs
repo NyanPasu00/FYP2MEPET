@@ -91,7 +91,7 @@ public class SoapBubbleSpawner : MonoBehaviour
             return;
         }
 
-        // ✅ Dirty enough: spawn bubbles / apply soap
+        // Dirty enough: spawn bubbles / apply soap
         if (Time.time - lastBubbleTime > bubbleDelay && activeBubbles.Count < maxBubbles)
         {
             isBathing = true;

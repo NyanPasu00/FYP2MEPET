@@ -35,12 +35,6 @@ public class LoginManager : MonoBehaviour
             Debug.Log("Unity Services initialized");
             _ugsInitialized = true;
 
-            // Anonymous login first
-            //if (!AuthenticationService.Instance.IsSignedIn)
-            //{
-            //    await AuthenticationService.Instance.SignInAnonymouslyAsync();
-            //    Debug.Log("Anonymous sign-in completed");
-            //}
         }
         catch (Exception ex)
         {

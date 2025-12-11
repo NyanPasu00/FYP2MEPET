@@ -43,6 +43,7 @@ public class UIController : MonoBehaviour , IBeginDragHandler, IDragHandler, IEn
     //Kitchen Cart
     public Cart cart;
     public GameUI gameUI;
+    public MainUI mainUI;
   
 
     public TMP_InputField nameInputField;
@@ -178,7 +179,7 @@ public class UIController : MonoBehaviour , IBeginDragHandler, IDragHandler, IEn
     {
         if (!internetChecker.isConnect())
         {
-            Debug.Log("No internet");
+            mainUI.displayConnectionError("No internet");
             return;
         }
         Debug.Log("Validating");
@@ -189,7 +190,7 @@ public class UIController : MonoBehaviour , IBeginDragHandler, IDragHandler, IEn
     {
         if (!internetChecker.isValidateConnectionStatus())
         {
-            Debug.Log("Connection unstable");
+            mainUI.displayConnectionError("Connection unstable");
             return;
         }
         Debug.Log("Check is Login?");
@@ -410,7 +411,6 @@ public class UIController : MonoBehaviour , IBeginDragHandler, IDragHandler, IEn
             gameUI.displayConfirmationPayment(moneyValue, totalCost);
         }
 
-        //gameUI.displayPetMessage("unsuccessful");
     }
 
     public bool isValidateMoney(int moneyValue, int totalCost)
@@ -477,32 +477,6 @@ public class UIController : MonoBehaviour , IBeginDragHandler, IDragHandler, IEn
             gameUI.displaySelectedGame();
         }
     }
-
-    public void validateSelectedCategory()
-    {
-
-    }
-
-    public void IsLikeCategory()
-    {
-
-    }
-
-    public void setLikePercentage(int percentage)
-    {
-
-    }
-
-    public void randomPlayMusic()
-    {
-
-    }
-
-    public void IsLikeMusic()
-    {
-
-    }
-
     public bool IsSleep()
     {
         return isSleep;
@@ -657,38 +631,6 @@ public class UIController : MonoBehaviour , IBeginDragHandler, IDragHandler, IEn
         if (LowEnergyCloud != null)
             LowEnergyCloud.SetActive(false);
 
-        // if you have a way to clear the message, do it here
-        // gameUI.displayLowEnergyMessage("");
-    }
-
-    public void isValidateDirty()
-    {
-
-    }
-
-    public void requestShower()
-    {
-
-    }
-
-    public void isValidateBubble()
-    {
-
-    }
-
-    public void IsOnPet()
-    {
-
-    }
-
-    public void validateEventOption()
-    {
-
-    }
-
-    public void isValidateEventOption()
-    {
-
     }
 
     private void InitMusicPreferences()
@@ -730,7 +672,7 @@ public class UIController : MonoBehaviour , IBeginDragHandler, IDragHandler, IEn
         BGMScript globalBgm = BGMScript.Instance;
         if (globalBgm != null)
         {
-            globalBgm.StopMusic();
+            globalBgm.PauseMusic();
         }
 
         MusicCategory category = musicCategories.Find(c => c.categoryName == categoryName);

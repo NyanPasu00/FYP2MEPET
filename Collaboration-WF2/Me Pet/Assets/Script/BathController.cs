@@ -124,12 +124,6 @@ public class BathController : MonoBehaviour
                 StopShower();
             }
         }
-
-        // --------- Fully clean while showering ----------
-        //if (dirty <= 0 && isShowering)
-        //{
-        //    HandleFullyCleaned();
-        //}
     }
 
     /* ===================== PUBLIC POSE API ===================== */
@@ -247,11 +241,6 @@ public class BathController : MonoBehaviour
             Invoke(nameof(ResetToIdle), 2f);
         }
 
-        // 5. sync to PetData (optional but good)
-        //if (energy != null)
-        //{
-        //    energy.SavePetData();   // this will store dirty = 0
-        //}
     }
 
     private void ResetToIdle()

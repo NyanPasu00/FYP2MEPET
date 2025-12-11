@@ -81,42 +81,6 @@ public class DigitalAlbumManager : MonoBehaviour
         PopulatePetList();
     }
 
-    //void PopulatePetList()
-    //{
-
-    //    foreach (Transform child in petListContent)
-    //        Destroy(child.gameObject);
-
-    //    foreach (var pet in allPetList)
-    //    {
-
-    //        //custom UI layout showing a pet's image and name
-    //        GameObject petGO = Instantiate(petItemPrefab, petListContent);
-
-    //        //Sets the displayed text to the pet's name
-    //        petGO.transform.Find("PetNameText").GetComponent<TextMeshProUGUI>().text = pet.name;
-
-    //        //pre-chosen image names for Kid/Teen/Adult/Old stages
-    //        PetAlbumData albumData = petAlbumDataDict[pet.id];
-
-    //        //Chooses the most appropriate available stage image for preview
-    //        string stageFolder = GetPreviewStage(albumData, out string imageName);
-
-    //        //Loads the image
-    //        Sprite sprite = Resources.Load<Sprite>($"DigitalAlbum/{stageFolder}/{imageName}");
-
-    //        //If the sprite was loaded, sets it to the Image UI component named PetImage inside the prefab
-    //        if (sprite != null)
-    //            petGO.transform.Find("PetImage").GetComponent<Image>().sprite = sprite;
-
-    //        //switches to the album panel and shows that pet's stage images
-
-    //        string capturedId = pet.id;
-    //        string capturedName = pet.name;
-    //        petGO.GetComponent<Button>().onClick.AddListener(() => ShowPetAlbum(capturedId, capturedName));
-    //    }
-    //}
-
     void PopulatePetList()
     {
         // Clear old UI

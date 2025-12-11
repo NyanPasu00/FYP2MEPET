@@ -9,8 +9,7 @@ public class Internet : MonoBehaviour
     }
 
     public bool isValidateConnectionStatus()
-    {
-        // Here we just return true. You can add ping test later if needed.
+    { 
         return isConnect();
     }
 

@@ -2542,6 +2542,7 @@ MonoBehaviour:
   bathController: {fileID: 0}
   cart: {fileID: 189801725}
   gameUI: {fileID: 1424680416}
+  mainUI: {fileID: 0}
   nameInputField: {fileID: 0}
   kitchenPetAnimator: {fileID: 1546619570}
   draggableFood: {fileID: 120878896}
@@ -24807,7 +24808,7 @@ AudioSource:
   m_audioClip: {fileID: 8300000, guid: c84afdabc20a6ab4c8e7b93b0812ef75, type: 3}
   m_Resource: {fileID: 8300000, guid: c84afdabc20a6ab4c8e7b93b0812ef75, type: 3}
   m_PlayOnAwake: 1
-  m_Volume: 0.1
+  m_Volume: 0.5
   m_Pitch: 1
   Loop: 1
   Mute: 0
@@ -25871,6 +25872,7 @@ MonoBehaviour:
   bathController: {fileID: 1681957407}
   cart: {fileID: 189801725}
   gameUI: {fileID: 1424680416}
+  mainUI: {fileID: 0}
   nameInputField: {fileID: 0}
   kitchenPetAnimator: {fileID: 1546619570}
   draggableFood: {fileID: 120878896}
